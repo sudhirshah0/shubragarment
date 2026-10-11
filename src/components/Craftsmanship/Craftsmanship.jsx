@@ -91,6 +91,9 @@ const Craftsmanship = () => {
                 decoding="async"
               />
 
+              {/* Realistic contact floor shadow */}
+              <div className="about__ground-shadow" aria-hidden="true" />
+
               <div className="about__image-badge">
                 <span className="about__badge-dot" />
                 <span>SHARJAH, UAE • HEADQUARTERS</span>
