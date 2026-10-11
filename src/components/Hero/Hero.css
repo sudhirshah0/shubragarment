@@ -9,7 +9,7 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding-top: clamp(6.5rem, 12vh, 8.5rem);
+  padding-top: calc(clamp(6.5rem, 12vh, 8.5rem) + 10px);
   padding-bottom: clamp(4rem, 8vh, 6rem);
   overflow: hidden;
   background-color: var(--cream);
@@ -392,7 +392,7 @@
 
 @media (max-width: 640px) {
   .hero {
-    padding-top: 5.5rem;
+    padding-top: calc(5.5rem + 10px);
     padding-bottom: 3.5rem;
   }
 
@@ -450,7 +450,7 @@
 
 @media (max-width: 380px) {
   .hero {
-    padding-top: 5rem;
+    padding-top: calc(5rem + 10px);
     padding-bottom: 2.5rem;
   }
 
@@ -473,7 +473,7 @@
 
 @media (max-width: 360px) {
   .hero {
-    padding-top: 4.5rem;
+    padding-top: calc(4.5rem + 10px);
     padding-bottom: 2rem;
   }
 
