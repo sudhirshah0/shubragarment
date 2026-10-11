@@ -1,0 +1,167 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Loader — Styles
+   Luxury full-screen entrance with gold stroke animation & split curtain
+   ═══════════════════════════════════════════════════════════════════ */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ── Dual Split Curtains ───────────────────────────────────────── */
+.loader__curtain {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50.5%;
+  background-color: var(--cream);
+  z-index: 1;
+  will-change: transform;
+}
+
+.loader__curtain--top {
+  top: 0;
+}
+
+.loader__curtain--bottom {
+  bottom: 0;
+}
+
+/* ── Central Stage Content ─────────────────────────────────────── */
+.loader__center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-md);
+  max-width: 480px;
+  will-change: transform, opacity;
+}
+
+/* ── SVG Logo Mark Container ───────────────────────────────────── */
+.loader__svg-wrap {
+  position: relative;
+  width: clamp(90px, 16vw, 130px);
+  height: clamp(90px, 16vw, 130px);
+  margin-bottom: var(--space-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+}
+
+.loader__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 12px rgba(166, 124, 46, 0.15));
+}
+
+.loader__stroke-petal {
+  will-change: stroke-dashoffset, fill-opacity;
+}
+
+/* ── Typography ────────────────────────────────────────────────── */
+.loader__text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.loader__brand-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: var(--fw-regular);
+  color: var(--espresso);
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.loader__brand-subtitle {
+  color: var(--bronze);
+  font-size: 0.6875rem;
+  letter-spacing: 0.35em;
+  margin-top: 2px;
+}
+
+.loader__origin {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  color: var(--taupe);
+  margin-top: 0.5rem;
+}
+
+/* ── Progress & Counter ────────────────────────────────────────── */
+.loader__progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--space-md);
+  width: 140px;
+}
+
+.loader__count {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: var(--fw-medium);
+  color: var(--espresso);
+  letter-spacing: 0.08em;
+  display: inline-block;
+}
+
+.loader__percent-symbol {
+  font-size: 0.75rem;
+  color: var(--bronze);
+  margin-left: 2px;
+}
+
+.loader__progress-bar {
+  width: 100%;
+  height: 1px;
+  background-color: var(--sand);
+  margin-top: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.loader__progress-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--bronze), var(--champagne));
+  transition: width 0.08s linear;
+}
+
+.loader__skip-hint {
+  margin-top: var(--space-sm);
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--taupe);
+  opacity: 0.45;
+  transition: opacity var(--transition-fast);
+}
+
+.loader:hover .loader__skip-hint {
+  opacity: 0.85;
+}
+
+/* ── Reduced motion fallback ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    display: none !important;
+  }
+}

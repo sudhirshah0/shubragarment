@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Shubra Garments four-petal interlocking mark (simplified) -->
+  <g transform="translate(32,32)">
+    <!-- Top-left petal -->
+    <ellipse cx="-6" cy="-6" rx="12" ry="8" transform="rotate(-45)" fill="#A67C2E" opacity="0.9"/>
+    <!-- Top-right petal -->
+    <ellipse cx="6" cy="-6" rx="12" ry="8" transform="rotate(45)" fill="#A67C2E" opacity="0.85"/>
+    <!-- Bottom-right petal -->
+    <ellipse cx="6" cy="6" rx="12" ry="8" transform="rotate(-45)" fill="#A67C2E" opacity="0.8"/>
+    <!-- Bottom-left petal -->
+    <ellipse cx="-6" cy="6" rx="12" ry="8" transform="rotate(45)" fill="#A67C2E" opacity="0.75"/>
+  </g>
+</svg>

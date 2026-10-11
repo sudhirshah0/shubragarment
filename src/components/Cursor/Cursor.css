@@ -1,0 +1,87 @@
+/* ═══════════════════════════════════════════════════════════════
+   Cursor — Styles
+   Desktop only with hardware acceleration, luxury gold radial
+   gradient aura glow and precision core dot (no follower ring, no text badges)
+   ═══════════════════════════════════════════════════════════════ */
+
+.cursor-wrapper {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-wrapper {
+    display: block;
+  }
+}
+
+.cursor-wrapper.cursor--visible {
+  opacity: 1;
+}
+
+/* ── Soft Gradient Follower Aura Glow ────────────────────────── */
+.cursor__gradient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 140px;
+  margin-top: -70px;
+  margin-left: -70px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(217, 188, 122, 0.32) 0%,
+    rgba(166, 124, 46, 0.16) 35%,
+    rgba(247, 242, 236, 0) 70%
+  );
+  filter: blur(16px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transition: width 0.4s ease, height 0.4s ease, margin 0.4s ease, opacity 0.3s ease;
+}
+
+.cursor--hovered .cursor__gradient-glow {
+  width: 220px;
+  height: 220px;
+  margin-top: -110px;
+  margin-left: -110px;
+  background: radial-gradient(
+    circle,
+    rgba(217, 188, 122, 0.45) 0%,
+    rgba(166, 124, 46, 0.22) 40%,
+    rgba(247, 242, 236, 0) 75%
+  );
+  filter: blur(20px);
+}
+
+/* ── Central Precision Gold Gradient Core ────────────────────── */
+.cursor__dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff1d0 0%, #d9bc7a 40%, #a67c2e 100%);
+  box-shadow: 0 0 12px rgba(217, 188, 122, 0.85),
+              0 0 24px rgba(166, 124, 46, 0.45);
+  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease;
+}
+
+.cursor--hovered .cursor__dot {
+  transform: scale(1.4);
+  box-shadow: 0 0 16px rgba(217, 188, 122, 1),
+              0 0 28px rgba(166, 124, 46, 0.6);
+}

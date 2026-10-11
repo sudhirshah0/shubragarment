@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════════════════════════
+   App.css — Minimal app-level styles
+   Component-specific styles live in their own folders.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Lenis requires html/body to be full height */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Smooth page load — content fades in after loader */
+main {
+  opacity: 1;
+  transition: opacity var(--transition-slow);
+}

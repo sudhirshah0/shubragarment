@@ -1,0 +1,370 @@
+/* ═══════════════════════════════════════════════════════════════
+   Contact — Styles
+   Atelier concierge details, booking form, and floating WhatsApp pill
+   ═══════════════════════════════════════════════════════════════ */
+
+.contact {
+  position: relative;
+  background-color: var(--cream);
+  overflow: hidden;
+}
+
+.contact__container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* ── Section Header ───────────────────────────────────────────── */
+.contact__header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact__eyebrow-line {
+  width: 24px;
+  height: 1px;
+  background-color: var(--bronze);
+}
+
+.contact__eyebrow-text {
+  color: var(--brass);
+  letter-spacing: 0.22em;
+}
+
+.contact__title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 820px;
+}
+
+.contact__title {
+  font-size: var(--fs-h1);
+  color: var(--espresso);
+  line-height: 1.12;
+}
+
+.contact__subtitle {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  color: var(--taupe);
+  line-height: 1.5;
+}
+
+/* ── Main 2-Column Grid ───────────────────────────────────────── */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .contact__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+}
+
+/* ── Left Column: Atelier Info ────────────────────────────────── */
+.contact__info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact__atelier-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(2rem, 3.5vw, 2.75rem);
+  background-color: var(--cream);
+  border: 1px solid rgba(221, 208, 190, 0.8);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 40px rgba(43, 33, 26, 0.08);
+}
+
+.contact__atelier-name {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  color: var(--espresso);
+  line-height: 1.2;
+}
+
+.contact__atelier-address {
+  font-size: 0.95rem;
+  color: var(--taupe);
+  line-height: 1.6;
+}
+
+.contact__coords {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  color: var(--bronze);
+  letter-spacing: 0.08em;
+}
+
+.contact__divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--sand);
+  margin-block: 0.25rem;
+}
+
+/* Hours */
+.contact__hours {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact__hours-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--espresso);
+}
+
+.contact__hours-row span {
+  color: var(--taupe);
+}
+
+/* Direct Lines */
+.contact__direct-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.contact__line-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.contact__line-link {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--espresso);
+  transition: color var(--transition-fast);
+}
+
+.contact__line-link:hover {
+  color: var(--bronze);
+}
+
+/* Mobile Service Banner */
+.contact__mobile-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem;
+  background-color: var(--linen);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-md);
+}
+
+.contact__mobile-badge {
+  color: var(--brass);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+}
+
+.contact__mobile-banner h4 {
+  font-size: 1.15rem;
+  color: var(--espresso);
+}
+
+.contact__mobile-banner p {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--taupe);
+}
+
+/* ── Right Column: Form Card ──────────────────────────────────── */
+.contact__form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(2rem, 3.5vw, 3rem);
+  background-color: var(--cream);
+  border: 1px solid rgba(221, 208, 190, 0.8);
+  border-radius: var(--radius-md);
+  box-shadow: 0 16px 44px rgba(43, 33, 26, 0.08);
+}
+
+.contact__form-heading {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  color: var(--espresso);
+}
+
+.contact__form-sub {
+  font-size: 1.05rem;
+  color: var(--taupe);
+}
+
+.contact__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.15rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .contact__form {
+    grid-template-columns: 1fr;
+  }
+  .contact__field--full {
+    grid-column: span 1;
+  }
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contact__field--full {
+  grid-column: span 2;
+}
+
+.contact__input,
+.contact__select,
+.contact__textarea {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  background-color: var(--linen);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  color: var(--espresso);
+}
+
+.contact__input:focus,
+.contact__select:focus,
+.contact__textarea:focus {
+  outline: none;
+  border-color: var(--bronze);
+}
+
+.contact__submit-wrap {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+
+.contact__submit-btn {
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .contact__submit-btn {
+    width: auto;
+  }
+}
+
+.contact__success-box {
+  padding: 1rem;
+  background-color: rgba(46, 125, 50, 0.12);
+  border: 1px solid #2e7d32;
+  border-radius: var(--radius-sm);
+  color: #1b5e20;
+  font-size: 0.8125rem;
+}
+
+/* ── Persistent Floating WhatsApp Concierge Button ────────────── */
+.contact__floating-aside {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: var(--z-modal);
+  pointer-events: auto;
+}
+
+.contact__floating-wa {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1.25rem 0.75rem 1rem;
+  background-color: #25d366;
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.38);
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.contact__floating-wa:hover {
+  transform: translateY(-3px) scale(1.03);
+  background-color: #1ebc59;
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.5);
+}
+
+.contact__floating-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-full);
+  border: 2px solid #25d366;
+  opacity: 0.7;
+  animation: wa-pulse 2.2s infinite;
+  pointer-events: none;
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+.contact__floating-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact__floating-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .contact__floating-aside {
+    bottom: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .contact__floating-label {
+    display: none;
+  }
+
+  .contact__floating-wa {
+    padding: 0.85rem;
+    width: 52px;
+    height: 52px;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,174 @@
+/* ═══════════════════════════════════════════════════════════════
+   SHUBRA GARMENTS — Global Styles
+   Reset, font imports, base typography, utility classes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ────────────────────────────────────────────── */
+@import './variables.css';
+
+/* ── Reset ────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--espresso);
+  background-color: var(--cream);
+  overflow-x: hidden;
+}
+
+/* ── Focus states (accessibility) ─────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--bronze);
+  outline-offset: 3px;
+}
+
+/* ── Skip to main content (keyboard accessibility) ───────────── */
+.skip-to-content {
+  position: absolute;
+  top: -999px;
+  left: 1rem;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--espresso);
+  color: var(--cream);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--bronze);
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 1rem;
+}
+
+/* ── Base typography ──────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-heading);
+  color: var(--espresso);
+  letter-spacing: -0.015em;
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  max-width: 65ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ── Labels & nav text ────────────────────────────────────────── */
+.label {
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-label);
+  color: var(--taupe);
+}
+
+/* ── Taglines ─────────────────────────────────────────────────── */
+.tagline {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: var(--fw-regular);
+  color: var(--taupe);
+}
+
+/* ── Container ────────────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-px);
+}
+
+/* ── Section spacing ──────────────────────────────────────────── */
+.section {
+  padding-block: var(--section-padding);
+}
+
+/* ── Decorative thin line divider ─────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--sand);
+}
+
+.divider--bronze {
+  background-color: var(--bronze);
+}
+
+/* ── Four-petal logo mark (SVG inline usage) ──────────────────── */
+.logo-mark {
+  display: inline-block;
+  color: var(--bronze);
+  transition: transform var(--transition-base);
+}
+
+.logo-mark:hover {
+  transform: rotate(90deg);
+}
+
+/* ── Scroll-locked body (when loader / modal is active) ───────── */
+body.scroll-locked {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Selection colour ─────────────────────────────────────────── */
+::selection {
+  background-color: var(--champagne);
+  color: var(--espresso);
+}
