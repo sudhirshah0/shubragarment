@@ -12,6 +12,7 @@ import './App.css';
 
 /* ── Hooks ───────────────────────────────────────────────────────── */
 import useLenis from './hooks/useLenis';
+import useScrollReveal from './hooks/useScrollReveal';
 
 /* ── Components ──────────────────────────────────────────────────── */
 import Loader          from './components/Loader/Loader';
@@ -34,10 +35,14 @@ const App = () => {
   const handleLoaderComplete = useCallback(() => {
     setIsLoading(false);
     document.body.classList.remove('scroll-locked');
+    window.dispatchEvent(new CustomEvent('shubra:loader-complete'));
   }, []);
 
   /* ── Lenis smooth scroll (paused while loader is active) ───── */
   const lenisRef = useLenis();
+
+  /* ── CrispyBite-style scroll reveal animation for all sections ── */
+  useScrollReveal();
 
   return (
     <>

@@ -252,7 +252,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll and close on outside click when mobile menu is open
   useEffect(() => {
     if (isMobileOpen) {
       document.body.classList.add('mobile-nav-locked');
@@ -266,8 +266,23 @@ const Navbar = () => {
       }
     };
 
+    const handlePointerDown = (e) => {
+      if (!isMobileOpen) return;
+      // If click is inside the mobile drawer content or the hamburger toggle button, ignore
+      const isInsideMenu = e.target.closest && e.target.closest('.navbar__mobile-content');
+      const isHamburger = e.target.closest && e.target.closest('.navbar__hamburger');
+      if (!isInsideMenu && !isHamburger) {
+        setIsMobileOpen(false);
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener('pointerdown', handlePointerDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('pointerdown', handlePointerDown);
+    };
   }, [isMobileOpen]);
 
   const handleLinkClick = () => {
@@ -360,38 +375,30 @@ const Navbar = () => {
       >
         <div className="navbar__mobile-backdrop" onClick={() => setIsMobileOpen(false)} />
         <div className="navbar__mobile-content">
-          <div className="navbar__mobile-header">
-            <div className="navbar__mobile-brand">
-              <img
-                src="/images/logo.png"
-                alt="Shubra Garments"
-                className="navbar__mobile-logo-img"
-                width="34"
-                height="34"
-              />
-              <img
-                src="/images/logo-text.png"
-                alt="Shubra Garments"
-                className="navbar__mobile-text-img"
-                height="18"
-              />
-            </div>
-            <span className="tagline">Bespoke Atelier • Dubai</span>
-          </div>
+          <button
+            type="button"
+            className="navbar__mobile-close-corner-btn"
+            onClick={() => setIsMobileOpen(false)}
+            aria-label="Close navigation menu"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
 
           <ul className="navbar__mobile-list">
             {NAV_LINKS.map((item, index) => (
               <li
                 key={item.label}
                 className="navbar__mobile-item"
-                style={{ '--stagger': `${index * 0.08}s` }}
+                style={{ '--stagger': `${index * 0.06}s` }}
               >
                 <a
                   href={item.href}
                   className="navbar__mobile-link"
                   onClick={handleLinkClick}
                 >
-                  <span className="navbar__mobile-num">0{index + 1}</span>
                   <span className="navbar__mobile-text">{item.label}</span>
                 </a>
               </li>
@@ -399,6 +406,20 @@ const Navbar = () => {
           </ul>
 
           <div className="navbar__mobile-footer">
+            <button
+              type="button"
+              className="navbar__mobile-cart-btn"
+              onClick={() => {
+                setIsMobileOpen(false);
+                openCart();
+              }}
+              aria-label={`Open Cart (${cartCount} items)`}
+            >
+              <span className="navbar__cart-icon">🛒</span>
+              <span>SHOPPING CART</span>
+              <span className="navbar__cart-count">{cartCount}</span>
+            </button>
+
             <MagneticButton
               href="#custom-designer"
               variant="primary"
@@ -408,13 +429,6 @@ const Navbar = () => {
             >
               Launch Custom Designer
             </MagneticButton>
-
-            <div className="navbar__mobile-meta">
-              <p>Showroom & Atelier • Business Bay, Dubai, UAE</p>
-              <a href="tel:+97140000000" className="navbar__mobile-tel">
-                +971 4 000 0000
-              </a>
-            </div>
           </div>
         </div>
       </div>

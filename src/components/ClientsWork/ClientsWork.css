@@ -166,6 +166,9 @@
   white-space: nowrap;
   animation: marquee-scroll 35s linear infinite;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .clients-work__marquee:hover .clients-work__track {

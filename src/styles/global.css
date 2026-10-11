@@ -181,8 +181,57 @@ body.scroll-locked .navbar-cart {
   }
 }
 
+/* ── Universal Form Select Arrow Styling ──────────────────────── */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238C7D70' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px 14px;
+  padding-right: 2.75rem !important;
+  cursor: pointer;
+}
+
+select:focus {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23C89B60' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
 /* ── Selection colour ─────────────────────────────────────────── */
 ::selection {
   background-color: var(--champagne);
   color: var(--espresso);
 }
+
+/* ── Global Mobile Responsiveness Safeguards ─────────────────── */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: clamp(3.5rem, 7vh, 5.5rem);
+    --container-px: 1.15rem;
+  }
+
+  /* Prevent button and link tap highlights on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: clamp(3rem, 6vh, 4.5rem);
+    --container-px: 1rem;
+  }
+
+  .section {
+    padding-block: var(--section-padding);
+  }
+}
+
+

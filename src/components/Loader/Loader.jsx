@@ -116,33 +116,71 @@ const Loader = ({ onComplete }) => {
         1.5
       );
 
-      // ── Step 7: Content lifts softly ────────────────────────
-      tl.to('.loader__center', {
-        y: -30,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power3.in',
-      }, 2.4);
+      // ── Step 7: Seamless Flight into Navbar Logo ───────────
+      tl.add(() => {
+        const navLogoSymbol = document.querySelector('.navbar__logo-symbol');
+        const loaderLogoEl = document.querySelector('.loader__svg-wrap');
+
+        if (navLogoSymbol && loaderLogoEl) {
+          const navRect = navLogoSymbol.getBoundingClientRect();
+          const loaderRect = loaderLogoEl.getBoundingClientRect();
+
+          // Calculate delta to position the loader logo exactly over the navbar logo
+          const deltaX = (navRect.left + navRect.width / 2) - (loaderRect.left + loaderRect.width / 2);
+          const deltaY = (navRect.top + navRect.height / 2) - (loaderRect.top + loaderRect.height / 2);
+          const targetScale = navRect.width / loaderRect.width;
+
+          // Fade out texts and progress bar while logo flies
+          gsap.to('.loader__text-block, .loader__progress', {
+            opacity: 0,
+            y: 15,
+            duration: 0.4,
+            ease: 'power2.in',
+          });
+
+          // Fly and scale loader logo into the navbar logo's exact position
+          gsap.to(loaderLogoEl, {
+            x: deltaX,
+            y: deltaY,
+            scale: targetScale,
+            duration: 0.85,
+            ease: 'power4.inOut',
+            onComplete: () => {
+              // Smooth pop on the navbar logo
+              gsap.fromTo(navLogoSymbol,
+                { scale: 0.85, opacity: 0.8 },
+                { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.7)' }
+              );
+            },
+          });
+        } else {
+          gsap.to('.loader__center', {
+            y: -20,
+            opacity: 0,
+            duration: 0.5,
+          });
+        }
+      }, 2.3);
 
       // ── Step 8: Elegant dual curtain wipe exit ─────────────
       tl.to('.loader__curtain--top', {
         scaleY: 0,
         transformOrigin: 'top center',
-        duration: 0.85,
+        duration: 0.8,
         ease: 'power4.inOut',
-      }, 2.65);
+      }, 2.7);
 
       tl.to('.loader__curtain--bottom', {
         scaleY: 0,
         transformOrigin: 'bottom center',
-        duration: 0.85,
+        duration: 0.8,
         ease: 'power4.inOut',
-      }, 2.65);
+      }, 2.7);
 
       tl.to(containerRef.current, {
         opacity: 0,
         pointerEvents: 'none',
-        duration: 0.2,
+        duration: 0.25,
       });
 
     }, containerRef);
@@ -276,8 +314,6 @@ const Loader = ({ onComplete }) => {
             />
           </div>
         </div>
-
-        <span className="loader__skip-hint">Click anywhere to skip</span>
       </div>
     </div>
   );

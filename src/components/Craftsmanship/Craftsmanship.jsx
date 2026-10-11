@@ -54,7 +54,8 @@ const Craftsmanship = () => {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 75%',
-            toggleActions: 'play none none none',
+            end: 'bottom 15%',
+            toggleActions: 'play reverse play reverse',
           },
         }
       );

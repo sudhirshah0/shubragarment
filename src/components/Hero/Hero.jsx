@@ -33,25 +33,49 @@ const Hero = () => {
   const cardRef = useRef(null);
   const sliderTrackRef = useRef(null);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Infinite loop slides: [last slide clone, ...MODEL_SLIDES, first slide clone]
+  // Real indices in infiniteSlides: 1 to totalSlides
+  const [currentIndex, setCurrentIndex] = useState(1); // Start at real slide 0 (index 1)
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartX = useRef(0);
   const dragDeltaX = useRef(0);
   const autoplayTimerRef = useRef(null);
 
   const totalSlides = MODEL_SLIDES.length;
-
-  const goToSlide = useCallback((index) => {
-    setCurrentIndex((index + totalSlides) % totalSlides);
-  }, [totalSlides]);
+  const infiniteSlides = [
+    MODEL_SLIDES[totalSlides - 1], // clone of last
+    ...MODEL_SLIDES,
+    MODEL_SLIDES[0],              // clone of first
+  ];
 
   const nextSlide = useCallback(() => {
-    goToSlide(currentIndex + 1);
-  }, [currentIndex, goToSlide]);
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  }, []);
 
   const prevSlide = useCallback(() => {
-    goToSlide(currentIndex - 1);
-  }, [currentIndex, goToSlide]);
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  }, []);
+
+  const goToSlide = useCallback((realIdx) => {
+    setIsTransitioning(true);
+    setCurrentIndex(realIdx + 1);
+  }, []);
+
+  // When transition completes at clone boundaries, seamlessly jump without animation
+  const handleTransitionEnd = () => {
+    if (currentIndex >= totalSlides + 1) {
+      // Reached clone of first slide -> snap instantly to real first slide (index 1)
+      setIsTransitioning(false);
+      setCurrentIndex(1);
+    } else if (currentIndex <= 0) {
+      // Reached clone of last slide -> snap instantly to real last slide (index totalSlides)
+      setIsTransitioning(false);
+      setCurrentIndex(totalSlides);
+    }
+  };
 
   // Autoplay effect
   useEffect(() => {
@@ -99,43 +123,78 @@ const Hero = () => {
     if (isReduced) return;
 
     const ctx = gsap.context(() => {
-      // ── Main Entrance Timeline ────────────────────────────────
-      const tl = gsap.timeline({
-        defaults: { ease: 'power3.out' },
-        delay: 0.2,
-      });
+      // Function to trigger the post-refresh hero entrance
+      const playHeroEntrance = () => {
+        const tl = gsap.timeline({
+          defaults: { ease: 'power3.out' },
+        });
 
-      // Masked headline lines staggered slide up
-      tl.fromTo(
-        '.hero__title-line span',
-        { yPercent: 120, rotateZ: 2 },
-        { yPercent: 0, rotateZ: 0, duration: 1.1, stagger: 0.12, ease: 'power4.out' },
-        0
-      );
+        // 1. Headline masked lines slide & tilt up smoothly
+        tl.fromTo(
+          '.hero__title-line span',
+          { yPercent: 120, rotateZ: 3, opacity: 0 },
+          { yPercent: 0, rotateZ: 0, opacity: 1, duration: 1.15, stagger: 0.12, ease: 'power4.out' },
+          0.05
+        );
 
-      // Subtitle fade up
-      tl.fromTo(
-        '.hero__description',
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9 },
-        0.5
-      );
+        // 2. Subtitle soft fade up
+        tl.fromTo(
+          '.hero__description',
+          { y: 35, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out' },
+          0.35
+        );
 
-      // Actions buttons fade and pop
-      tl.fromTo(
-        '.hero__actions',
-        { y: 25, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        0.7
-      );
+        // 3. CTA Action buttons pop and fade
+        tl.fromTo(
+          '.hero__actions',
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+          0.55
+        );
 
-      // Visual composition entrance with 3D scale
-      tl.fromTo(
-        visualRef.current,
-        { scale: 0.92, opacity: 0, y: 40 },
-        { scale: 1, opacity: 1, y: 0, duration: 1.3, ease: 'power3.out' },
-        0.3
-      );
+        // 4. Hero Model Visual with Incline Animation (rotateZ: 4deg -> 0deg, rotateX: 6deg -> 0deg, scale: 0.92 -> 1)
+        tl.fromTo(
+          visualRef.current,
+          {
+            opacity: 0,
+            scale: 0.9,
+            y: 50,
+            rotateZ: 4.5,
+            rotateX: 8,
+            transformPerspective: 1200,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            rotateZ: 0,
+            rotateX: 0,
+            duration: 1.45,
+            ease: 'power3.out',
+          },
+          0.2
+        );
+      };
+
+      // Listen for loader completion from page refresh
+      const handleLoaderComplete = () => {
+        playHeroEntrance();
+      };
+
+      window.addEventListener('shubra:loader-complete', handleLoaderComplete);
+
+      // Fallback: If loader is already done or not present, run after 300ms
+      const fallbackTimer = setTimeout(() => {
+        if (!document.querySelector('.loader')) {
+          playHeroEntrance();
+        }
+      }, 300);
+
+      return () => {
+        window.removeEventListener('shubra:loader-complete', handleLoaderComplete);
+        clearTimeout(fallbackTimer);
+      };
 
       // ── Subtle 3D Mouse Parallax on Visual Area ───────────────
       const heroEl = heroRef.current;
@@ -265,23 +324,26 @@ const Hero = () => {
               <div className="hero__pedestal-glow" aria-hidden="true" />
               <div className="hero__pedestal-ellipse" aria-hidden="true" />
 
-              {/* Slider Track with Swipe Animation */}
+              {/* Slider Track with Infinite Swipe Animation */}
               <div
                 ref={sliderTrackRef}
                 className="hero__slider-track"
+                onTransitionEnd={handleTransitionEnd}
                 style={{
                   transform: `translateX(-${currentIndex * 100}%)`,
-                  transition: isDragging ? 'none' : 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)',
+                  transition: isTransitioning && !isDragging
+                    ? 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)'
+                    : 'none',
                 }}
               >
-                {MODEL_SLIDES.map((slide, idx) => (
+                {infiniteSlides.map((slide, idx) => (
                   <div key={idx} className="hero__slide" aria-hidden={idx !== currentIndex}>
                     <div className="hero__model-wrapper">
                       <img
                         src={slide.src}
                         alt={slide.alt}
                         className="hero__model-img"
-                        loading={idx === 0 ? 'eager' : 'lazy'}
+                        loading={idx === 1 ? 'eager' : 'lazy'}
                         draggable={false}
                       />
                     </div>
@@ -322,18 +384,26 @@ const Hero = () => {
 
               {/* Slide Pagination Indicator Dots */}
               <div className="hero__slider-pagination">
-                {MODEL_SLIDES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`hero__slider-dot ${idx === currentIndex ? 'hero__slider-dot--active' : ''}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      goToSlide(idx);
-                    }}
-                    aria-label={`Go to model slide ${idx + 1}`}
-                  />
-                ))}
+                {MODEL_SLIDES.map((_, realIdx) => {
+                  // Active when current index corresponds to real slide index
+                  const isActive =
+                    (currentIndex === realIdx + 1) ||
+                    (currentIndex === 0 && realIdx === totalSlides - 1) ||
+                    (currentIndex === totalSlides + 1 && realIdx === 0);
+
+                  return (
+                    <button
+                      key={realIdx}
+                      type="button"
+                      className={`hero__slider-dot ${isActive ? 'hero__slider-dot--active' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goToSlide(realIdx);
+                      }}
+                      aria-label={`Go to model slide ${realIdx + 1}`}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>

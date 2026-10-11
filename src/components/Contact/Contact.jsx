@@ -1,10 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
-   Contact — Atelier Appointment & Concierge Desk
-   Features:
-   - Private atelier consultation & mobile VIP tailor booking form
-   - Dubai flagship location card with coordinates & opening hours
-   - Floating persistent WhatsApp Concierge Button with pulse glow
-   - Direct WhatsApp / phone integration
+   Contact — Atelier Concierge & Private Appointments
+   - Centered luxury heading and concise paragraph
+   - Minimalist, high-end design with direct VIP WhatsApp concierge
+   - Streamlined appointment request form with zero clutter
    ═══════════════════════════════════════════════════════════════ */
 
 import { useState } from 'react';
@@ -13,35 +11,29 @@ import './Contact.css';
 
 const CONSULT_TYPES = [
   'Private Atelier Fitting (Dubai)',
-  'Mobile VIP Master Tailor (UAE Home / Office)',
-  'Corporate Uniform Fleet Consultation',
-  'Wedding & Formal Black-Tie Suiting',
-  'General Inquiry & Cloth Sourcing',
+  'Mobile VIP Tailor (UAE Home / Office)',
+  'Corporate Uniform Consultation',
 ];
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [consultType, setConsultType] = useState(CONSULT_TYPES[0]);
-  const [preferredDate, setPreferredDate] = useState('');
-  const [message, setMessage] = useState('');
+  const [notes, setNotes] = useState('');
   const [isBooked, setIsBooked] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const lines = [
-      '🏛️ *SHUBRA GARMENTS — CONSULTATION APPOINTMENT*',
+      '🏛️ *SHUBRA GARMENTS — ATELIER APPOINTMENT*',
       '══════════════════════════════',
       `• *Client Name:* ${name}`,
-      `• *Phone / WhatsApp:* ${phone}`,
-      `• *Email:* ${email || 'Not provided'}`,
+      `• *WhatsApp / Phone:* ${phone}`,
       `• *Consultation Type:* ${consultType}`,
-      preferredDate ? `• *Preferred Date/Time:* ${preferredDate}` : '',
-      message ? `• *Notes / Requests:* ${message}` : '',
+      notes ? `• *Notes:* ${notes}` : '',
       '══════════════════════════════',
-      '⚜️ _Atelier Appointment Requested via Website_',
+      '⚜️ _Requested via Shubra Website Concierge_',
     ].filter(Boolean);
 
     const waUrl = `https://wa.me/971500000000?text=${encodeURIComponent(lines.join('\n'))}`;
@@ -51,95 +43,68 @@ const Contact = () => {
 
   return (
     <section className="contact section" id="contact" aria-label="Contact and Atelier Booking">
+      <div className="contact__glow-orb" aria-hidden="true" />
       <div className="contact__container container">
-        {/* ── Section Header ─────────────────────────────────── */}
-        <div className="contact__header">
-          <div className="contact__title-row">
-            <h2 className="contact__title">Schedule Your Private Fitting</h2>
-            <p className="contact__subtitle tagline">
-              Visit our Jumeirah atelier or reserve our mobile master tailor for an exclusive on-site fitting across Dubai and the Emirates.
-            </p>
+        {/* ── Centered Header ─────────────────────────────────── */}
+        <div className="contact__header contact__header--centered">
+          <div className="contact__badge">
+            <span className="contact__badge-dot" />
+            <span className="label">PRIVATE ATELIER & CONCIERGE</span>
           </div>
+          <h2 className="contact__title">Schedule Your Private Fitting</h2>
+          <p className="contact__subtitle">
+            Experience bespoke sartorial craftsmanship at our Dubai atelier or reserve our mobile master tailor anywhere across the UAE.
+          </p>
         </div>
 
-        {/* ── Main 2-Column Grid (Left: Atelier Info, Right: Form) ── */}
-        <div className="contact__grid">
-          {/* Left Column: Flagship Atelier Details & Map Card */}
-          <div className="contact__info-col">
-            <div className="contact__atelier-card">
-              <span className="label">FLAGSHIP ATELIER • DUBAI</span>
-              <h3 className="contact__atelier-name">Shubra Garments Haute Atelier</h3>
-              <p className="contact__atelier-address">
-                Villa 14, Al Wasl Road, Jumeirah 1<br />
-                Dubai, United Arab Emirates
-              </p>
-
-              <div className="contact__coords">
-                <span>Coordinates: 25.2048° N, 55.2708° E</span>
-                <span>Private Valet Parking Available</span>
+        {/* ── Premium Minimalist Grid ─────────────────────────── */}
+        <div className="contact__card-wrapper">
+          {/* Atelier Quick Connect Bar */}
+          <div className="contact__channels">
+            <a href="https://wa.me/971500000000" target="_blank" rel="noopener noreferrer" className="contact__channel-chip">
+              <span className="contact__channel-icon wa">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2zm0 18.15c-1.49 0-2.95-.4-4.22-1.16l-.3-.18-3.13.82.84-3.05-.2-.31a8.16 8.16 0 01-1.25-4.36c0-4.52 3.68-8.2 8.2-8.2 2.19 0 4.25.85 5.8 2.4 1.55 1.55 2.41 3.61 2.41 5.8 0 4.52-3.68 8.2-8.2 8.2zm4.49-6.14c-.25-.12-1.46-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.65.81-.8 1-.15.19-.29.21-.54.08-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.48-1.39-1.73-.15-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.54.61.19 1.16.17 1.6.1 0.49-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.22-.17-.47-.3z"/>
+                </svg>
+              </span>
+              <div className="contact__channel-info">
+                <span className="contact__channel-label">Direct WhatsApp</span>
+                <span className="contact__channel-val">+971 50 000 0000</span>
               </div>
+            </a>
 
-              <div className="contact__divider" />
-
-              {/* Atelier Schedule */}
-              <div className="contact__hours">
-                <span className="label">OPENING HOURS</span>
-                <div className="contact__hours-row">
-                  <span>Saturday – Thursday:</span>
-                  <strong>10:00 AM – 9:00 PM</strong>
-                </div>
-                <div className="contact__hours-row">
-                  <span>Friday:</span>
-                  <strong>2:00 PM – 9:00 PM</strong>
-                </div>
+            <a href="tel:+97140000000" className="contact__channel-chip">
+              <span className="contact__channel-icon tel">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              </span>
+              <div className="contact__channel-info">
+                <span className="contact__channel-label">Concierge Desk</span>
+                <span className="contact__channel-val">+971 4 000 0000</span>
               </div>
+            </a>
 
-              <div className="contact__divider" />
-
-              {/* Direct Concierge Line */}
-              <div className="contact__direct-lines">
-                <div className="contact__line-item">
-                  <span className="label">TELEPHONE</span>
-                  <a href="tel:+97140000000" className="contact__line-link">
-                    +971 4 000 0000
-                  </a>
-                </div>
-                <div className="contact__line-item">
-                  <span className="label">WHATSAPP CONCIERGE</span>
-                  <a href="https://wa.me/971500000000" className="contact__line-link">
-                    +971 50 000 0000
-                  </a>
-                </div>
-                <div className="contact__line-item">
-                  <span className="label">ELECTRONIC MAIL</span>
-                  <a href="mailto:concierge@shubragarments.com" className="contact__line-link">
-                    concierge@shubragarments.com
-                  </a>
-                </div>
+            <div className="contact__channel-chip">
+              <span className="contact__channel-icon loc">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              <div className="contact__channel-info">
+                <span className="contact__channel-label">Flagship Atelier</span>
+                <span className="contact__channel-val">Jumeirah 1, Dubai</span>
               </div>
-            </div>
-
-            {/* Mobile Tailor Banner */}
-            <div className="contact__mobile-banner">
-              <span className="contact__mobile-badge label">VIP MOBILE SERVICE</span>
-              <h4>Traveling Master Tailor</h4>
-              <p>
-                Unable to visit our Jumeirah salon? Our master cutters carry over 200 cloth books directly to your home, yacht, or boardroom across Dubai and Abu Dhabi.
-              </p>
             </div>
           </div>
 
-          {/* Right Column: Appointment Booking Form */}
-          <div className="contact__form-col">
-            <div className="contact__form-card">
-              <h3 className="contact__form-heading">Reserve An Atelier Consultation</h3>
-              <p className="contact__form-sub tagline">
-                Select your preferred consultation format and date. We will confirm your private suite within 2 hours.
-              </p>
-
-              <form onSubmit={handleSubmit} className="contact__form">
+          {/* Minimalist Booking Form */}
+          <div className="contact__form-panel">
+            <form onSubmit={handleSubmit} className="contact__form">
+              <div className="contact__input-grid">
                 <div className="contact__field">
-                  <label className="label" htmlFor="client-name">FULL NAME *</label>
+                  <label className="label" htmlFor="client-name">YOUR NAME</label>
                   <input
                     id="client-name"
                     type="text"
@@ -152,7 +117,7 @@ const Contact = () => {
                 </div>
 
                 <div className="contact__field">
-                  <label className="label" htmlFor="client-phone">WHATSAPP / PHONE NUMBER *</label>
+                  <label className="label" htmlFor="client-phone">PHONE / WHATSAPP</label>
                   <input
                     id="client-phone"
                     type="tel"
@@ -165,76 +130,59 @@ const Contact = () => {
                 </div>
 
                 <div className="contact__field">
-                  <label className="label" htmlFor="client-email">EMAIL ADDRESS</label>
-                  <input
-                    id="client-email"
-                    type="email"
-                    placeholder="name@domain.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="contact__input"
-                  />
+                  <label className="label" htmlFor="consult-type">CONSULTATION FORMAT</label>
+                  <div className="contact__select-wrapper">
+                    <select
+                      id="consult-type"
+                      value={consultType}
+                      onChange={(e) => setConsultType(e.target.value)}
+                      className="contact__select"
+                    >
+                      {CONSULT_TYPES.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="contact__select-arrow" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
 
                 <div className="contact__field">
-                  <label className="label" htmlFor="consult-date">PREFERRED DATE & TIME</label>
+                  <label className="label" htmlFor="client-notes">DATE OR REQUEST (OPTIONAL)</label>
                   <input
-                    id="consult-date"
+                    id="client-notes"
                     type="text"
-                    placeholder="e.g. Tomorrow at 3:00 PM"
-                    value={preferredDate}
-                    onChange={(e) => setPreferredDate(e.target.value)}
+                    placeholder="e.g. Tomorrow 4 PM, wedding suiting"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
                     className="contact__input"
                   />
                 </div>
+              </div>
 
-                <div className="contact__field contact__field--full">
-                  <label className="label" htmlFor="consult-type">CONSULTATION FORMAT</label>
-                  <select
-                    id="consult-type"
-                    value={consultType}
-                    onChange={(e) => setConsultType(e.target.value)}
-                    className="contact__select"
-                  >
-                    {CONSULT_TYPES.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
-                      </option>
-                    ))}
-                  </select>
+              <div className="contact__submit-row">
+                <MagneticButton
+                  type="submit"
+                  variant="primary"
+                  size="lg"
+                  cursorText="BOOK"
+                  className="contact__submit-btn"
+                >
+                  Reserve Appointment via WhatsApp
+                </MagneticButton>
+              </div>
+
+              {isBooked && (
+                <div className="contact__success-box">
+                  <span>✓ Request sent. Our concierge will confirm your suite reservation shortly.</span>
                 </div>
-
-                <div className="contact__field contact__field--full">
-                  <label className="label" htmlFor="client-message">SPECIFIC REQUESTS / OCCASION</label>
-                  <textarea
-                    id="client-message"
-                    rows={4}
-                    placeholder="Tell us about the desired garments, specific mills (Loro Piana, Zegna), event dates, or fitting preferences..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="contact__textarea"
-                  />
-                </div>
-
-                <div className="contact__submit-wrap contact__field--full">
-                  <MagneticButton
-                    type="submit"
-                    variant="primary"
-                    size="lg"
-                    cursorText="BOOK"
-                    className="contact__submit-btn"
-                  >
-                    Confirm Atelier Booking via WhatsApp
-                  </MagneticButton>
-                </div>
-
-                {isBooked && (
-                  <div className="contact__success-box contact__field--full">
-                    <span>✓ Appointment requested. Your private suite concierge will reach out via WhatsApp shortly to finalize timing.</span>
-                  </div>
-                )}
-              </form>
-            </div>
+              )}
+            </form>
           </div>
         </div>
       </div>
