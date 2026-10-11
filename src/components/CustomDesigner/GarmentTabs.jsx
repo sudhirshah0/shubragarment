@@ -41,8 +41,7 @@ const GarmentTabs = ({ selectedGarment, onSelectGarment }) => {
 
             <div className="garment-tab__info">
               <span className="garment-tab__name">{garment.name}</span>
-              <span className="garment-tab__category">{garment.category}</span>
-              <span className="garment-tab__price">From AED {garment.basePrice}</span>
+              <span className="garment-tab__price">AED {garment.basePrice}</span>
             </div>
 
             {isSelected && <span className="garment-tab__indicator" aria-hidden="true" />}

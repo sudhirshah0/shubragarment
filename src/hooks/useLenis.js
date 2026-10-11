@@ -30,11 +30,13 @@ const useLenis = () => {
 
     if (prefersReduced) return;
 
-    /* Create Lenis instance */
+    /* Create Lenis instance with crisp responsiveness */
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo-out
-      touchMultiplier: 1.5,
+      lerp: 0.1, // Snappy 60-120fps direct response without floaty lag
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.0,
+      smoothWheel: true,
+      syncTouch: false, // Let mobile touch devices use responsive native touch physics
       infinite: false,
     });
 
@@ -50,8 +52,8 @@ const useLenis = () => {
     };
     gsap.ticker.add(onTick);
 
-    /* Disable GSAP's default lag smoothing so Lenis stays snappy */
-    gsap.ticker.lagSmoothing(0);
+    /* Allow GSAP lag smoothing to absorb any frame drops smoothly */
+    gsap.ticker.lagSmoothing(500, 33);
 
     /* Cleanup */
     return () => {

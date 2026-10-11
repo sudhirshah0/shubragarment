@@ -10,7 +10,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { clientLogos, caseStudiesData, clientStatsData } from '../../data/clients';
+import { clientLogos, clientStatsData } from '../../data/clients';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import './ClientsWork.css';
 
@@ -35,7 +35,7 @@ const ClientsWork = () => {
     }
 
     const ctx = gsap.context(() => {
-      // ── Animate Count-Up Stats on Scroll ─────────────────────
+      // ── Animate Count-Up Stats on Scroll (Direct DOM update for 60fps performance) ──
       ScrollTrigger.create({
         trigger: '.clients-work__stats-grid',
         start: 'top 85%',
@@ -43,41 +43,25 @@ const ClientsWork = () => {
         onEnter: () => {
           clientStatsData.forEach((stat, index) => {
             const countObj = { val: 0 };
+            const statCard = statsRef.current[index];
+            const numEl = statCard ? statCard.querySelector('.clients-work__stat-num') : null;
+
             gsap.to(countObj, {
               val: stat.value,
-              duration: 2.2,
+              duration: 2.0,
               ease: 'power2.out',
               onUpdate: () => {
-                setStatsDisplay((prev) => {
-                  const next = [...prev];
-                  next[index] = stat.decimals
-                    ? countObj.val.toFixed(stat.decimals)
-                    : Math.round(countObj.val).toLocaleString();
-                  return next;
-                });
+                const text = stat.decimals
+                  ? countObj.val.toFixed(stat.decimals)
+                  : Math.round(countObj.val).toLocaleString();
+                if (numEl) {
+                  numEl.textContent = text;
+                }
               },
             });
           });
         },
       });
-
-      // ── Case Studies Staggered Scroll Reveal ─────────────────
-      gsap.fromTo(
-        '.clients-work__case-card',
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          stagger: 0.18,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.clients-work__cases-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none none',
-          },
-        }
-      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -92,12 +76,10 @@ const ClientsWork = () => {
     >
       <div id="clients" style={{ position: 'absolute', top: '-80px' }} />
       <div className="clients-work__container container">
-        {/* ── Section Header ─────────────────────────────────── */}
+        {/* ── Section Header (Centered) ─────────────────────── */}
         <div className="clients-work__header">
-
-
           <div className="clients-work__title-wrap">
-            <h2 className="clients-work__title">Trusted By Dubai’s Premier Enterprises</h2>
+            <h2 className="clients-work__title">Lookbook & Client Atelier</h2>
             <p className="clients-work__subtitle tagline">
               From flagship luxury resorts and diplomatic missions to private aviation fleets, our atelier manufactures garments of uncompromising distinction.
             </p>
@@ -159,69 +141,7 @@ const ClientsWork = () => {
       </div>
 
       <div className="clients-work__container container">
-        {/* ── 3 Rich Case-Study Cards ─────────────────────────── */}
-        <div className="clients-work__cases-header">
-          <span className="label">PORTFOLIO CASE STUDIES</span>
-          <h3 className="clients-work__cases-heading">Exemplary Enterprise Commissions</h3>
-        </div>
 
-        <div className="clients-work__cases-grid">
-          {caseStudiesData.map((study) => (
-            <article
-              key={study.id}
-              className="clients-work__case-card"
-              data-cursor-text="CASE"
-            >
-              {/* Image Frame with Zoom */}
-              <div className="clients-work__case-media">
-                <img
-                  src={study.image}
-                  alt={study.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="clients-work__case-img"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-                <div className="clients-work__case-overlay" aria-hidden="true" />
-                <span className="clients-work__case-sector label">{study.sector}</span>
-              </div>
-
-              {/* Case Content */}
-              <div className="clients-work__case-body">
-                <h4 className="clients-work__case-title">{study.title}</h4>
-                <p className="clients-work__case-headline tagline">{study.headline}</p>
-                <p className="clients-work__case-desc">{study.description}</p>
-
-                {/* Key Metrics Row */}
-                <div className="clients-work__case-metrics">
-                  {study.metrics.map((m) => (
-                    <div key={m.label} className="clients-work__case-metric">
-                      <span className="clients-work__case-metric-val">{m.value}</span>
-                      <span className="clients-work__case-metric-lbl">{m.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Deliverables Pills */}
-                <div className="clients-work__case-tags">
-                  {study.features.map((feat) => (
-                    <span key={feat} className="clients-work__case-tag">
-                      {feat}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Client Quote Callout */}
-                <blockquote className="clients-work__case-quote">
-                  <p>{study.quote}</p>
-                  <cite>— {study.author}</cite>
-                </blockquote>
-              </div>
-            </article>
-          ))}
-        </div>
 
         {/* ── Bottom Section Inquire CTA ─────────────────────── */}
         <div className="clients-work__bottom-banner">

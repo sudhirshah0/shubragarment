@@ -49,13 +49,6 @@ const Contact = () => {
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
-  const handleFloatingWhatsApp = () => {
-    const greeting = encodeURIComponent(
-      'Hello Shubra Garments, I would like to inquire about bespoke tailoring and schedule a private fitting in Dubai.'
-    );
-    window.open(`https://wa.me/971500000000?text=${greeting}`, '_blank', 'noopener,noreferrer');
-  };
-
   return (
     <section className="contact section" id="contact" aria-label="Contact and Atelier Booking">
       <div className="contact__container container">
@@ -245,25 +238,6 @@ const Contact = () => {
           </div>
         </div>
       </div>
-
-      {/* ── Persistent Floating WhatsApp Concierge Button ──────── */}
-      <aside aria-label="WhatsApp Concierge" className="contact__floating-aside">
-        <button
-          type="button"
-          onClick={handleFloatingWhatsApp}
-          className="contact__floating-wa"
-          data-cursor-text="CHAT"
-          aria-label="Direct WhatsApp Concierge"
-        >
-          <span className="contact__floating-pulse" aria-hidden="true" />
-          <span className="contact__floating-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.78 14.07c-.24.67-1.4 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.68-4.08-4.82-4.27-.14-.19-1.16-1.55-1.16-2.95 0-1.4.73-2.09.99-2.37.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.16.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.31.4-.44.54-.15.15-.3.32-.13.62.17.3 1.05 1.73 2.25 2.8 1.55 1.38 2.85 1.81 3.26 2.01.41.2.65.17.89-.11.24-.28 1.03-1.2 1.3-1.61.27-.41.55-.35.92-.21.37.14 2.37 1.12 2.78 1.32.41.2.68.3.78.47.1.17.1.98-.14 1.65z" />
-            </svg>
-          </span>
-          <span className="contact__floating-label">WhatsApp Concierge</span>
-        </button>
-      </aside>
     </section>
   );
 };

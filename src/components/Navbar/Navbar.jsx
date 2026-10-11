@@ -237,14 +237,13 @@ const Navbar = () => {
   }, 0);
 
   useEffect(() => {
+    let lastScrolled = false;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Add background glass once past hero top
-      if (currentScrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const nextScrolled = currentScrollY > 20;
+      if (nextScrolled !== lastScrolled) {
+        lastScrolled = nextScrolled;
+        setIsScrolled(nextScrolled);
       }
     };
 

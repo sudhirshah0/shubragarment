@@ -21,6 +21,7 @@ const OrderForm = ({
   color,
   onDownloadPreview,
   currentStep,
+  onPrevStep,
 }) => {
   // Sizing & Specs State
   const [selectedSize, setSelectedSize] = useState('M');
@@ -95,29 +96,28 @@ const OrderForm = ({
     <div className="order-form">
       {/* ── Section 1: Sizing Selection ───────────────────────── */}
       <div className="order-form__section">
-        <div className="order-form__section-header">
-          <h3 className="order-form__heading">Anatomical Fit & Sizing</h3>
+        <div className="order-form__group">
+          <label className="order-form__label">Select Size</label>
+          <div className="order-form__sizes-grid">
+            {SIZES_LIST.map((sz) => (
+              <button
+                key={sz}
+                type="button"
+                className={`order-form__size-btn ${
+                  selectedSize === sz ? 'order-form__size-btn--active' : ''
+                }`}
+                onClick={() => setSelectedSize(sz)}
+              >
+                {sz}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="order-form__sizes-grid">
-          {SIZES_LIST.map((sz) => (
-            <button
-              key={sz}
-              type="button"
-              className={`order-form__size-btn ${
-                selectedSize === sz ? 'order-form__size-btn--active' : ''
-              }`}
-              onClick={() => setSelectedSize(sz)}
-            >
-              {sz}
-            </button>
-          ))}
-        </div>
-
-        {/* Custom Measurements Input when Custom Bespoke chosen */}
-        {selectedSize === 'Custom Bespoke' && (
+        {/* Custom Measurements Input when Bespoke chosen */}
+        {(selectedSize === 'Bespoke' || selectedSize === 'Custom Bespoke') && (
           <div className="order-form__bespoke-inputs">
-            <span className="label">EXACT MEASUREMENTS (CM):</span>
+            <span className="order-form__label">Measurements (cm)</span>
             <div className="order-form__measurements-row">
               <input
                 type="number"
@@ -141,42 +141,33 @@ const OrderForm = ({
                 onChange={(e) => setCustomShoulder(e.target.value)}
               />
             </div>
-            <span className="order-form__hint">
-              *Our master tailor will also verify your measurements via VIP fitting.
-            </span>
           </div>
         )}
 
-        {/* Fit Profiles */}
-        <div className="order-form__fit-row">
-          <span className="label">FIT SILHOUETTE:</span>
-          <div className="order-form__fit-options">
+        {/* Fit Profiles - Minimal Segmented Pills */}
+        <div className="order-form__group">
+          <label className="order-form__label">Fit Profile</label>
+          <div className="order-form__fit-pills">
             {FIT_PROFILES.map((fit) => (
-              <label
+              <button
                 key={fit.id}
-                className={`order-form__fit-card ${
-                  fitProfile === fit.id ? 'order-form__fit-card--active' : ''
+                type="button"
+                className={`order-form__fit-pill ${
+                  fitProfile === fit.id ? 'order-form__fit-pill--active' : ''
                 }`}
+                onClick={() => setFitProfile(fit.id)}
               >
-                <input
-                  type="radio"
-                  name="fitProfile"
-                  value={fit.id}
-                  checked={fitProfile === fit.id}
-                  onChange={() => setFitProfile(fit.id)}
-                  className="order-form__radio-hidden"
-                />
-                <strong>{fit.name}</strong>
-                <span>{fit.desc}</span>
-              </label>
+                {fit.name}
+              </button>
             ))}
           </div>
         </div>
 
         {/* Fabric Grade Selection */}
-        <div className="order-form__fabric-select-wrap">
-          <span className="label">FABRIC WEAVE & SPECIFICATION:</span>
+        <div className="order-form__group">
+          <label className="order-form__label" htmlFor="order-fabric">Fabric Grade</label>
           <select
+            id="order-fabric"
             className="order-form__select"
             value={fabricGrade}
             onChange={(e) => setFabricGrade(e.target.value)}
@@ -190,61 +181,49 @@ const OrderForm = ({
         </div>
       </div>
 
-      {/* ── Section 2: Quantity & Live Pricing ────────────────── */}
-      <div className="order-form__section order-form__section--pricing">
-        <div className="order-form__qty-row">
-          <div className="order-form__qty-controls">
-            <span className="label">ORDER QUANTITY:</span>
-            <div className="order-form__stepper">
-              <button
-                type="button"
-                className="order-form__stepper-btn"
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              >
-                −
-              </button>
-              <input
-                type="number"
-                min="1"
-                max="500"
-                value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                className="order-form__qty-input"
-              />
-              <button
-                type="button"
-                className="order-form__stepper-btn"
-                onClick={() => setQuantity(quantity + 1)}
-              >
-                +
-              </button>
-            </div>
+      {/* ── Section 2: Quantity & Live Pricing Card ───────────── */}
+      <div className="order-form__price-card">
+        <div className="order-form__qty-group">
+          <span className="order-form__label">Quantity</span>
+          <div className="order-form__stepper">
+            <button
+              type="button"
+              className="order-form__stepper-btn"
+              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              aria-label="Decrease quantity"
+            >
+              −
+            </button>
+            <span className="order-form__qty-val">{quantity}</span>
+            <button
+              type="button"
+              className="order-form__stepper-btn"
+              onClick={() => setQuantity(quantity + 1)}
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
           </div>
+        </div>
 
-          {/* Pricing summary */}
-          <div className="order-form__price-box">
-            <span className="label">ESTIMATED TOTAL</span>
-            <div className="order-form__total-price">
-              AED {totalPrice.toLocaleString()}
-            </div>
-            {discountPercent > 0 && (
-              <span className="order-form__discount-badge">
-                🎉 {discountPercent}% Volume Discount Included
-              </span>
-            )}
+        <div className="order-form__price-group">
+          <span className="order-form__label">Estimated Total</span>
+          <div className="order-form__total-price">
+            AED {totalPrice.toLocaleString()}
           </div>
+          {discountPercent > 0 && (
+            <span className="order-form__discount-badge">
+              {discountPercent}% volume savings
+            </span>
+          )}
         </div>
       </div>
 
-      {/* ── Section 3: Customer Details & WhatsApp Submission ─── */}
+      {/* ── Section 3: Contact & Order Submission ─────────────── */}
       <div className="order-form__section">
-        <div className="order-form__section-header">
-          <h3 className="order-form__heading">Finalize Consultation & Order</h3>
-        </div>
-
         <form onSubmit={handleWhatsAppSubmit} className="order-form__contact-grid">
           <div className="order-form__field">
-            <label className="label" htmlFor="order-name">FULL NAME *</label>
+            <label className="order-form__label" htmlFor="order-name">Full Name *</label>
             <input
               id="order-name"
               type="text"
@@ -257,7 +236,7 @@ const OrderForm = ({
           </div>
 
           <div className="order-form__field">
-            <label className="label" htmlFor="order-phone">WHATSAPP / PHONE NUMBER *</label>
+            <label className="order-form__label" htmlFor="order-phone">WhatsApp / Phone *</label>
             <input
               id="order-phone"
               type="tel"
@@ -270,19 +249,7 @@ const OrderForm = ({
           </div>
 
           <div className="order-form__field">
-            <label className="label" htmlFor="order-email">EMAIL ADDRESS</label>
-            <input
-              id="order-email"
-              type="email"
-              placeholder="name@company.ae"
-              value={customerEmail}
-              onChange={(e) => setCustomerEmail(e.target.value)}
-              className="order-form__input"
-            />
-          </div>
-
-          <div className="order-form__field">
-            <label className="label" htmlFor="order-emirate">DELIVERY EMIRATE / CITY</label>
+            <label className="order-form__label" htmlFor="order-emirate">Emirate</label>
             <select
               id="order-emirate"
               value={emirate}
@@ -297,55 +264,64 @@ const OrderForm = ({
             </select>
           </div>
 
-          <div className="order-form__field order-form__field--full">
-            <label className="label" htmlFor="order-company">COMPANY / BRAND (FOR CORPORATE UNIFORMS)</label>
+          <div className="order-form__field">
+            <label className="order-form__label" htmlFor="order-email">Email (Optional)</label>
             <input
-              id="order-company"
-              type="text"
-              placeholder="e.g. Emirates Luxury Holdings"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
+              id="order-email"
+              type="email"
+              placeholder="name@example.ae"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
               className="order-form__input"
             />
           </div>
 
           <div className="order-form__field order-form__field--full">
-            <label className="label" htmlFor="order-notes">BESPOKE EMBROIDERY NOTES OR INSTRUCTIONS</label>
-            <textarea
+            <label className="order-form__label" htmlFor="order-notes">Special Requests (Optional)</label>
+            <input
               id="order-notes"
-              rows={3}
-              placeholder="Specify custom monogram placements, inside pocket embroidery, or delivery timelines..."
+              type="text"
+              placeholder="Fitting preferences, embroidery placement..."
               value={specialNotes}
               onChange={(e) => setSpecialNotes(e.target.value)}
-              className="order-form__textarea"
+              className="order-form__input"
             />
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons: Unified in One Single Row */}
           <div className="order-form__actions">
-            <button
-              type="button"
-              className="order-form__download-btn"
-              onClick={onDownloadPreview}
-              data-cursor-text="DOWNLOAD"
-            >
-              <span>📥 Download Design Preview (PNG)</span>
-            </button>
+            {onPrevStep && (
+              <button
+                type="button"
+                className="order-form__back-btn"
+                onClick={onPrevStep}
+              >
+                ← Back
+              </button>
+            )}
 
-            <MagneticButton
-              type="submit"
-              variant="primary"
-              size="lg"
-              cursorText="WHATSAPP"
-              className="order-form__submit-btn"
-              icon={
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <div className="order-form__right-actions">
+              <button
+                type="button"
+                className="order-form__download-btn"
+                onClick={onDownloadPreview}
+                data-cursor-text="PNG"
+                title="Download preview PNG"
+              >
+                <span>Download Preview</span>
+              </button>
+
+              <button
+                type="submit"
+                className="order-form__wa-btn"
+                data-cursor-text="WHATSAPP"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm5.78 14.07c-.24.67-1.4 1.29-1.93 1.37-.51.08-1.18.11-3.41-.81-2.85-1.18-4.68-4.08-4.82-4.27-.14-.19-1.16-1.55-1.16-2.95 0-1.4.73-2.09.99-2.37.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.66.5.24.58.82 2.01.89 2.16.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.18-.31.4-.44.54-.15.15-.3.32-.13.62.17.3 1.05 1.73 2.25 2.8 1.55 1.38 2.85 1.81 3.26 2.01.41.2.65.17.89-.11.24-.28 1.03-1.2 1.3-1.61.27-.41.55-.35.92-.21.37.14 2.37 1.12 2.78 1.32.41.2.68.3.78.47.1.17.1.98-.14 1.65z" />
                 </svg>
-              }
-            >
-              Submit Order Via WhatsApp
-            </MagneticButton>
+                <span>Order via WhatsApp</span>
+              </button>
+            </div>
           </div>
         </form>
 

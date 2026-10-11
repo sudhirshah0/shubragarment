@@ -344,7 +344,7 @@ const CanvasStage = forwardRef(
         backgroundColor: '#FAF7F2',
         preserveObjectStacking: true,
         selection: true,
-        allowTouchScrolling: false, // ensures pinch/drag touches act on canvas
+        allowTouchScrolling: true, // lets users scroll the page naturally on mobile touch
       });
 
       fabricCanvasRef.current = canvas;
@@ -617,13 +617,6 @@ const CanvasStage = forwardRef(
               Back View
             </button>
           </div>
-
-          <div className="canvas-stage__status">
-            <span className="canvas-stage__status-dot" />
-            <span className="label">
-              {garment.name} • {color.name}
-            </span>
-          </div>
         </div>
 
         {/* ── Canvas Viewport Container ───────────────────────── */}
@@ -631,53 +624,29 @@ const CanvasStage = forwardRef(
           <canvas ref={canvasElRef} className="canvas-stage__canvas" />
 
           {/* Printable Area Subtle Guide Frame */}
-          <div className="canvas-stage__printable-guide" aria-hidden="true">
-            <span className="canvas-stage__guide-label label">EMBROIDERY & PRINT ZONE</span>
-          </div>
+          <div className="canvas-stage__printable-guide" aria-hidden="true" />
 
-          {/* Quick Object Floating Action Bar when Object Selected */}
+          {/* Minimal Object Floating Action Bar when Object Selected */}
           {hasSelection && (
             <div className="canvas-stage__selection-bar">
-              <span className="label">ELEMENT SELECTED:</span>
               <button
                 type="button"
                 className="canvas-stage__quick-btn"
                 onClick={() => ref.current?.centerSelected()}
-                title="Center Horizontally"
+                title="Center on garment"
               >
                 Center
               </button>
               <button
                 type="button"
-                className="canvas-stage__quick-btn"
-                onClick={() => ref.current?.bringForward()}
-                title="Bring Forward"
-              >
-                ↑ Up
-              </button>
-              <button
-                type="button"
-                className="canvas-stage__quick-btn"
-                onClick={() => ref.current?.sendBackward()}
-                title="Send Backward"
-              >
-                ↓ Down
-              </button>
-              <button
-                type="button"
                 className="canvas-stage__quick-btn canvas-stage__quick-btn--danger"
                 onClick={() => ref.current?.deleteSelected()}
-                title="Delete Object"
+                title="Remove object"
               >
-                ✕ Delete
+                Remove
               </button>
             </div>
           )}
-        </div>
-
-        {/* ── Mobile Touch Gesture Hint ───────────────────────── */}
-        <div className="canvas-stage__touch-hint">
-          <span>💡 Tap to select • Drag to position • Pinch / corner to resize & rotate</span>
         </div>
       </div>
     );

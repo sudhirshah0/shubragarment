@@ -62,6 +62,18 @@
   max-width: 440px;
 }
 
+@media (max-width: 520px) {
+  .footer__newsletter-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer__newsletter-input,
+  .footer__newsletter-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .footer__newsletter-input {
   flex: 1;
   padding: 0.85rem 1.15rem;

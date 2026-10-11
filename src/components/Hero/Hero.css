@@ -19,9 +19,9 @@
 .hero__bg-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(120px);
   pointer-events: none;
   z-index: 0;
+  transform: translateZ(0);
 }
 
 .hero__bg-glow--top {
@@ -29,7 +29,7 @@
   right: 5%;
   width: clamp(300px, 45vw, 650px);
   height: clamp(300px, 45vw, 650px);
-  background: radial-gradient(circle, rgba(217, 188, 122, 0.16) 0%, rgba(247, 242, 236, 0) 70%);
+  background: radial-gradient(circle, rgba(217, 188, 122, 0.22) 0%, rgba(217, 188, 122, 0.08) 40%, rgba(247, 242, 236, 0) 70%);
 }
 
 .hero__bg-glow--bottom {
@@ -37,7 +37,7 @@
   left: -5%;
   width: clamp(350px, 50vw, 700px);
   height: clamp(350px, 50vw, 700px);
-  background: radial-gradient(circle, rgba(166, 124, 46, 0.09) 0%, rgba(247, 242, 236, 0) 70%);
+  background: radial-gradient(circle, rgba(166, 124, 46, 0.14) 0%, rgba(166, 124, 46, 0.04) 45%, rgba(247, 242, 236, 0) 70%);
 }
 
 
@@ -174,6 +174,7 @@
   cursor: grab;
   transform-style: preserve-3d;
   will-change: transform;
+  touch-action: pan-y;
 }
 
 .hero__stage:active {

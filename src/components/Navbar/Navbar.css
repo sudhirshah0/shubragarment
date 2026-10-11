@@ -481,10 +481,10 @@ body.mobile-nav-locked {
 .navbar-cart__panel {
   position: absolute;
   top: clamp(4.2rem, 7.5vh, 5rem);
-  right: clamp(1rem, 3.5vw, 3rem);
+  right: clamp(0.75rem, 3.5vw, 3rem);
   z-index: 2;
-  width: min(92vw, 420px);
-  max-height: min(78vh, 560px);
+  width: min(94vw, 420px);
+  max-height: min(80vh, 560px);
   background-color: #FAF6F0;
   box-shadow: 0 20px 48px rgba(31, 24, 18, 0.35),
               0 2px 12px rgba(166, 124, 46, 0.2);
@@ -496,6 +496,21 @@ body.mobile-nav-locked {
   overflow: hidden;
   transform-origin: top right;
   animation: popDownRightCart 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 480px) {
+  .navbar-cart__panel {
+    right: 3vw;
+    width: 94vw;
+    top: 4.4rem;
+    max-height: 82vh;
+  }
+  .navbar-cart__header {
+    padding: 0.95rem 1.15rem;
+  }
+  .navbar-cart__footer {
+    padding: 1rem 1.15rem;
+  }
 }
 
 @keyframes popDownRightCart {
@@ -768,7 +783,7 @@ body.mobile-nav-locked {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
   overflow: hidden;
   animation: modalFadeIn 0.25s ease-out forwards;
 }
@@ -818,8 +833,8 @@ body.mobile-nav-locked {
   z-index: 2;
   width: 100%;
   max-width: 620px;
-  max-height: calc(100vh - 3rem);
-  max-height: calc(100dvh - 3rem);
+  max-height: calc(100vh - 1.5rem);
+  max-height: calc(100dvh - 1.5rem);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -828,7 +843,7 @@ body.mobile-nav-locked {
   border: 1px solid rgba(217, 188, 122, 0.6);
   border-radius: var(--radius-lg, 20px);
   box-shadow: 0 32px 80px rgba(31, 24, 18, 0.45);
-  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  padding: clamp(1.15rem, 3.5vw, 2.5rem);
   margin: auto;
   animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

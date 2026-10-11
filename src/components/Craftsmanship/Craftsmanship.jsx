@@ -25,16 +25,17 @@ const Craftsmanship = () => {
       if (imageRef.current) {
         gsap.fromTo(
           imageRef.current,
-          { yPercent: -8, scale: 1.05 },
+          { yPercent: -6, scale: 1.03 },
           {
-            yPercent: 8,
-            scale: 1.05,
+            yPercent: 6,
+            scale: 1.03,
             ease: 'none',
             scrollTrigger: {
               trigger: sectionRef.current,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 1.2,
+              scrub: 0.5,
+              fastScrollEnd: true,
             },
           }
         );

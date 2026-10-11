@@ -21,10 +21,9 @@ import MagneticButton from '../MagneticButton/MagneticButton';
 import './CustomDesigner.css';
 
 const STEPS = [
-  { num: 1, label: 'Silhouette & Color', desc: 'Select garment & cloth' },
-  { num: 2, label: 'Art & Monogram', desc: 'Add embroidery & logo' },
-  { num: 3, label: 'Sizing & Specs', desc: 'Fit profile & fabric grade' },
-  { num: 4, label: 'Review & Submit', desc: 'Direct WhatsApp order' },
+  { num: 1, label: 'Select colour' },
+  { num: 2, label: 'Personalize' },
+  { num: 3, label: 'Size & Order' },
 ];
 
 const CustomDesigner = () => {
@@ -83,9 +82,34 @@ const CustomDesigner = () => {
     document.body.removeChild(link);
   };
 
-  // ── Step Navigation ──────────────────────────────────────────
-  const progressPercent = ((currentStep - 1) / (STEPS.length - 1)) * 100;
+  const handleAddToCart = () => {
+    const previewUrl = stageRef.current?.getPreviewDataURL();
+    window.dispatchEvent(
+      new CustomEvent('shubra:add-to-cart', {
+        detail: {
+          id: `custom-${selectedGarment.id}-${selectedColor.id}`,
+          title: `Custom ${selectedGarment.name}`,
+          color: selectedColor.name,
+          size: 'Custom Fit',
+          price: `AED ${selectedGarment.basePrice}`,
+          quantity: 1,
+          image: previewUrl || selectedGarment.thumbnail,
+        },
+      })
+    );
 
+    // Trigger cart bounce & open cart popup
+    const cartBtnEl = document.querySelector('.navbar__cart-btn');
+    if (cartBtnEl) {
+      cartBtnEl.classList.add('navbar__cart-btn--bounce');
+      setTimeout(() => cartBtnEl.classList.remove('navbar__cart-btn--bounce'), 600);
+    }
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('shubra:open-cart'));
+    }, 400);
+  };
+
+  // ── Step Navigation ──────────────────────────────────────────
   const goToNextStep = () => {
     if (currentStep < STEPS.length) {
       setCurrentStep(currentStep + 1);
@@ -113,47 +137,8 @@ const CustomDesigner = () => {
           <div className="custom-designer__title-row">
             <h2 className="custom-designer__title">Design Your Signature Garment</h2>
             <p className="custom-designer__subtitle tagline">
-              Configure cloth shades, personal embroidery, and corporate insignia with live interactive preview.
+              Configure silhouette, fabric shade, and bespoke embroidery with live interactive preview.
             </p>
-          </div>
-        </div>
-
-        {/* ── 4-Step Interactive Progress Bar ────────────────── */}
-        <div className="custom-designer__progress-panel">
-          <div className="custom-designer__progress-bar-bg">
-            <div
-              className="custom-designer__progress-bar-fill"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-
-          <div className="custom-designer__steps-nav" role="tablist">
-            {STEPS.map((s) => {
-              const isCurrent = currentStep === s.num;
-              const isPassed = currentStep > s.num;
-
-              return (
-                <button
-                  key={s.num}
-                  type="button"
-                  role="tab"
-                  aria-selected={isCurrent}
-                  className={`custom-designer__step-btn ${
-                    isCurrent ? 'custom-designer__step-btn--active' : ''
-                  } ${isPassed ? 'custom-designer__step-btn--passed' : ''}`}
-                  onClick={() => setCurrentStep(s.num)}
-                  data-cursor-text="STEP"
-                >
-                  <span className="custom-designer__step-badge">
-                    {isPassed ? '✓' : `0${s.num}`}
-                  </span>
-                  <div className="custom-designer__step-meta">
-                    <span className="custom-designer__step-label">{s.label}</span>
-                    <span className="custom-designer__step-desc">{s.desc}</span>
-                  </div>
-                </button>
-              );
-            })}
           </div>
         </div>
 
@@ -172,77 +157,84 @@ const CustomDesigner = () => {
 
             {/* Stage Quick Actions Bar */}
             <div className="custom-designer__stage-actions">
-              <button
-                type="button"
-                className="custom-designer__stage-action-btn custom-designer__stage-action-btn--cart"
-                onClick={() => {
-                  const previewUrl = stageRef.current?.getPreviewDataURL();
-                  window.dispatchEvent(
-                    new CustomEvent('shubra:add-to-cart', {
-                      detail: {
-                        id: `custom-${selectedGarment.id}-${selectedColor.id}`,
-                        title: `Custom Bespoke ${selectedGarment.name}`,
-                        color: selectedColor.name,
-                        size: 'Custom Fit',
-                        price: `AED ${selectedGarment.basePrice}`,
-                        quantity: 1,
-                        image: previewUrl || selectedGarment.thumbnail,
-                      },
-                    })
-                  );
+              <div className="custom-designer__stage-left">
+                <button
+                  type="button"
+                  className="custom-designer__stage-action-btn custom-designer__stage-action-btn--cart"
+                  onClick={handleAddToCart}
+                  title="Add to bag"
+                  data-cursor-text="ADD"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                  </svg>
+                  <span>Add to Bag</span>
+                </button>
 
-                  // Trigger cart bounce & open cart popup
-                  const cartBtnEl = document.querySelector('.navbar__cart-btn');
-                  if (cartBtnEl) {
-                    cartBtnEl.classList.add('navbar__cart-btn--bounce');
-                    setTimeout(() => cartBtnEl.classList.remove('navbar__cart-btn--bounce'), 600);
-                  }
-                  setTimeout(() => {
-                    window.dispatchEvent(new CustomEvent('shubra:open-cart'));
-                  }, 400);
-                }}
-                title="Add current bespoke piece to bag"
-                data-cursor-text="ADD"
-              >
-                <span>🛒 Add Bespoke Piece To Cart</span>
-              </button>
+                <button
+                  type="button"
+                  className="custom-designer__stage-action-btn"
+                  onClick={handleDownloadPreview}
+                  title="Download preview image"
+                  data-cursor-text="PNG"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                  </svg>
+                  <span>Download</span>
+                </button>
 
-              <button
-                type="button"
-                className="custom-designer__stage-action-btn"
-                onClick={handleDownloadPreview}
-                title="Download Hi-Res Image"
-                data-cursor-text="PNG"
-              >
-                <span>📥 Export PNG</span>
-              </button>
-
-              <button
-                type="button"
-                className="custom-designer__stage-action-btn"
-                onClick={handleClearCanvas}
-                title="Clear current view"
-              >
-                <span>🗑️ Reset View</span>
-              </button>
+                <button
+                  type="button"
+                  className="custom-designer__stage-action-btn custom-designer__stage-action-btn--reset"
+                  onClick={handleClearCanvas}
+                  title="Reset canvas"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                  </svg>
+                  <span>Reset</span>
+                </button>
+              </div>
 
               <div className="custom-designer__price-pill">
-                <span className="label">BASE PRICE:</span>
-                <strong>AED {selectedGarment.basePrice}</strong>
+                <span className="custom-designer__price-pill-currency">AED</span>
+                <span className="custom-designer__price-pill-val">{selectedGarment.basePrice}</span>
               </div>
             </div>
           </div>
 
           {/* Right Column: Step-Specific Controls Panel */}
           <div className="custom-designer__controls-col">
+            {/* Minimal Segmented Step Tabs (Right Side, No Numbering) */}
+            <div className="custom-designer__tabs" role="tablist" aria-label="Customizer Steps">
+              {STEPS.map((s) => (
+                <button
+                  key={s.num}
+                  type="button"
+                  role="tab"
+                  aria-selected={currentStep === s.num}
+                  className={`custom-designer__tab ${
+                    currentStep === s.num ? 'custom-designer__tab--active' : ''
+                  }`}
+                  onClick={() => setCurrentStep(s.num)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
             <div className="custom-designer__panel">
               {/* ── STEP 1: Garment & Color Selection ───────── */}
               {currentStep === 1 && (
                 <div className="custom-designer__step-pane">
                   <div className="custom-designer__pane-header">
-                    <h3 className="custom-designer__pane-title">Choose Silhouette & Color</h3>
+                    <h3 className="custom-designer__pane-title">Select colour</h3>
                     <p className="custom-designer__pane-desc">
-                      Select your desired garment type, followed by the primary textile hue.
+                      Select your desired garment type, followed by the fabric shade.
                     </p>
                   </div>
 
@@ -250,8 +242,6 @@ const CustomDesigner = () => {
                     selectedGarment={selectedGarment}
                     onSelectGarment={setSelectedGarment}
                   />
-
-                  <div className="custom-designer__pane-divider" />
 
                   <ColorSwatches
                     selectedColor={selectedColor}
@@ -265,7 +255,7 @@ const CustomDesigner = () => {
                       size="md"
                       cursorText="NEXT"
                     >
-                      Continue To Artwork & Monograms →
+                      Next: Personalize →
                     </MagneticButton>
                   </div>
                 </div>
@@ -275,9 +265,9 @@ const CustomDesigner = () => {
               {currentStep === 2 && (
                 <div className="custom-designer__step-pane">
                   <div className="custom-designer__pane-header">
-                    <h3 className="custom-designer__pane-title">Add Monograms & Artwork</h3>
+                    <h3 className="custom-designer__pane-title">Personalize</h3>
                     <p className="custom-designer__pane-desc">
-                      Personalize with custom typography or upload corporate logos. Drag, resize, and rotate elements directly on the canvas.
+                      Add custom initials, embroidery or upload your logo. Drag, resize and position on the canvas.
                     </p>
                   </div>
 
@@ -302,13 +292,13 @@ const CustomDesigner = () => {
                       size="md"
                       cursorText="NEXT"
                     >
-                      Proceed To Sizing & Specs →
+                      Next: Size & Order →
                     </MagneticButton>
                   </div>
                 </div>
               )}
 
-              {/* ── STEP 3: Sizing, Specs & Review ──────────── */}
+              {/* ── STEP 3: Sizing & WhatsApp Order ─────────── */}
               {currentStep === 3 && (
                 <div className="custom-designer__step-pane">
                   <OrderForm
@@ -316,54 +306,8 @@ const CustomDesigner = () => {
                     color={selectedColor}
                     onDownloadPreview={handleDownloadPreview}
                     currentStep={currentStep}
+                    onPrevStep={goToPrevStep}
                   />
-
-                  <div className="custom-designer__pane-nav custom-designer__pane-nav--split">
-                    <button
-                      type="button"
-                      className="custom-designer__back-btn"
-                      onClick={goToPrevStep}
-                    >
-                      ← Back to Artwork
-                    </button>
-                    <MagneticButton
-                      onClick={goToNextStep}
-                      variant="primary"
-                      size="md"
-                      cursorText="FINAL"
-                    >
-                      Finalize Order Summary →
-                    </MagneticButton>
-                  </div>
-                </div>
-              )}
-
-              {/* ── STEP 4: Review & WhatsApp Submission ────── */}
-              {currentStep === 4 && (
-                <div className="custom-designer__step-pane">
-                  <div className="custom-designer__pane-header">
-                    <h3 className="custom-designer__pane-title">Direct WhatsApp Submission</h3>
-                    <p className="custom-designer__pane-desc">
-                      Your design blueprint is compiled. Submit directly to our Dubai atelier via WhatsApp to schedule delivery or your VIP bespoke fitting.
-                    </p>
-                  </div>
-
-                  <OrderForm
-                    garment={selectedGarment}
-                    color={selectedColor}
-                    onDownloadPreview={handleDownloadPreview}
-                    currentStep={currentStep}
-                  />
-
-                  <div className="custom-designer__pane-nav">
-                    <button
-                      type="button"
-                      className="custom-designer__back-btn"
-                      onClick={goToPrevStep}
-                    >
-                      ← Adjust Sizing & Specs
-                    </button>
-                  </div>
                 </div>
               )}
             </div>

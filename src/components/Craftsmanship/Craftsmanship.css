@@ -48,45 +48,31 @@
   padding-bottom: 2rem;
 }
 
-/* Deep Architectural Shadow Behind Image */
+/* Gradient Shadow Behind Image Only */
 .about__image-backshadow {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
-  transform: translate(-50%, -46%);
-  width: 82%;
-  height: 80%;
-  border-radius: 28px;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 82%;
+  border-radius: 50%;
   background: radial-gradient(
     ellipse at center,
-    rgba(43, 33, 26, 0.45) 0%,
-    rgba(43, 33, 26, 0.28) 40%,
-    rgba(43, 33, 26, 0.08) 65%,
-    rgba(247, 242, 236, 0) 80%
+    rgba(43, 33, 26, 0.42) 0%,
+    rgba(70, 52, 38, 0.28) 35%,
+    rgba(166, 124, 46, 0.14) 55%,
+    rgba(43, 33, 26, 0.05) 70%,
+    transparent 82%
   );
-  filter: blur(36px);
+  filter: blur(28px);
   pointer-events: none;
   z-index: 0;
 }
 
 /* Ambient Backlight Glow */
 .about__image-glow {
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(320px, 48vw, 560px);
-  height: clamp(320px, 48vw, 560px);
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(217, 188, 122, 0.26) 0%,
-    rgba(166, 124, 46, 0.12) 42%,
-    rgba(247, 242, 236, 0) 72%
-  );
-  filter: blur(52px);
-  pointer-events: none;
-  z-index: 0;
+  display: none;
 }
 
 .about__building-img {
@@ -95,16 +81,13 @@
   width: 100%;
   max-height: clamp(480px, 64vh, 640px);
   object-fit: contain;
-  /* Clean backdrop shadow behind building without dark front obstruction */
-  filter: drop-shadow(0 14px 24px rgba(43, 33, 26, 0.15));
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.6s ease;
-  will-change: transform, filter;
+  filter: none;
+  will-change: transform;
 }
 
 .about__image-stage:hover .about__building-img {
-  transform: translateY(-6px) scale(1.025);
-  filter: drop-shadow(0 20px 32px rgba(43, 33, 26, 0.2));
+  transform: translateY(-4px) scale(1.015);
+  filter: none;
 }
 
 /* Floor Contact Shadow removed */

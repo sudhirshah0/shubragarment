@@ -1,61 +1,88 @@
 /* ═══════════════════════════════════════════════════════════════
-   testimonials.js — Client reviews & VIP endorsements
+   testimonials.js — Client reviews & sample endorsements
+   Structured as { quote, name, role, company, photo }
    ═══════════════════════════════════════════════════════════════ */
 
-export const testimonialsData = [
+export const clientLogosList = [
+  { name: 'Jumeirah', src: '/images/clients/jumeirah.svg' },
+  { name: 'Emirates', src: '/images/clients/emirates.svg' },
+  { name: 'Rotana', src: '/images/clients/rotana.svg' },
+  { name: 'Emaar', src: '/images/clients/emaar.svg' },
+  { name: 'Sofitel', src: '/images/clients/sofitel.svg' },
+  { name: 'Hilton', src: '/images/clients/hilton.svg' },
+];
+
+export const sampleReviews = [
   {
     id: 1,
-    name: 'H.E. Rashid Al Nuaimi',
-    role: 'Protocol & Diplomatic Delegate',
-    location: 'Dubai & Abu Dhabi',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80',
-    rating: 5,
-    quote:
-      'The bespoke three-piece suits crafted for our diplomatic summits were of peerless caliber. The drape of the Super 150s wool through long protocol engagements reflects true Savile Row mastery right here in Dubai.',
-    garment: 'Bespoke 3-Piece Tuxedo & Double-Breasted Suit',
+    quote: 'Sample review: The precision tailoring and immaculate fabric hand-feel for our executive team exceeded every benchmark in Dubai.',
+    name: 'Khalid Al Hashimi',
+    role: 'Managing Director',
+    company: 'DIFC Private Wealth Advisory',
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80',
   },
   {
     id: 2,
+    quote: 'Sample review: Seamless coordination across 800+ hospitality staff uniforms. Every single piece fit accurately on delivery day.',
     name: 'Victoria Sterling',
     role: 'VP Guest Experience',
-    location: 'Ultra-Luxury Resorts Group, UAE',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
-    rating: 5,
-    quote:
-      'Outfitting our 1,200 front-of-house staff across four hotel properties was an immense undertaking. Shubra Garments delivered ahead of schedule with a 99.6% first-fitting approval rate. The stain-resistant Italian cloth looks immaculate day after day.',
-    garment: 'Corporate Hospitality Uniforms Fleet (1,250 Units)',
+    company: 'Jumeirah Luxury Resorts',
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=160&q=80',
   },
   {
     id: 3,
-    name: 'Khalid Bin Fahad',
-    role: 'Managing Partner',
-    location: 'DIFC Private Wealth Advisory',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
-    rating: 5,
-    quote:
-      'I have had suits made in London and Milan; Shubra’s floating horsehair canvas and armhole comfort surpass them all. The mobile atelier service to our DIFC office saves hours of valuable executive time.',
-    garment: 'Super 160s Vitale Barberis Canonico Boardroom Suit',
+    quote: 'Sample review: High-twist wool engineered specifically for air-conditioned meetings and UAE climate. Exceptional comfort.',
+    name: 'Tariq Mansoor',
+    role: 'Head of Operations',
+    company: 'Emaar Properties Group',
+    photo: '', // tests initials avatar fallback
   },
   {
     id: 4,
-    name: 'Capt. Marcus Vance',
-    role: 'Chief Flight Operations',
-    location: 'Royal Gulf Aviation VIP Fleet',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80',
-    rating: 5,
-    quote:
-      'Aviation uniforms require absolute wrinkle resistance without compromising prestigious aesthetics. Our cabin crew land in London or Tokyo looking as impeccably pressed as when departing Dubai.',
-    garment: 'Aviation Flight Attendant & Pilot Uniforms (450 Units)',
+    quote: 'Sample review: Our corporate flight crew attires remain crisp and wrinkle-free throughout 14-hour transcontinental flights.',
+    name: 'Marcus Vance',
+    role: 'Chief Flight Director',
+    company: 'Royal Gulf VIP Aviation',
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=160&q=80',
   },
   {
     id: 5,
-    name: 'Dr. Farooq Al Hashimi',
-    role: 'Medical Director & Founder',
-    location: 'Emirates Surgical Guild, Dubai',
-    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80',
-    rating: 5,
-    quote:
-      'The attention to detail is astonishing. From the hand-stitched Milanese buttonholes to the personalized monogram inside the jacket lining, Shubra represents the pinnacle of tailoring in the Gulf.',
-    garment: 'Bespoke Cashmere Overcoat & Pleated Gurkha Trousers',
+    quote: 'Sample review: Rapid 10-day turnaround without compromising custom embroidery seals or button detailing. True atelier mastery.',
+    name: 'Elena Rostova',
+    role: 'Procurement Director',
+    company: 'Rotana Hospitality Suite',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80',
+  },
+  {
+    id: 6,
+    quote: 'Sample review: On-site master measuring saved our management team hours of valuable time. Outstanding craftsmanship.',
+    name: 'Zayed Al Qasimi',
+    role: 'Protocol Officer',
+    company: 'Sharjah Diplomatic Guild',
+    photo: '', // tests initials avatar fallback
+  },
+  {
+    id: 7,
+    quote: 'Sample review: The tailored suits have become an essential signature of our front-of-house luxury brand identity.',
+    name: 'Sophie Laurent',
+    role: 'Brand Experience Lead',
+    company: 'Sofitel Dubai Downtown',
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
+  },
+  {
+    id: 8,
+    quote: 'Sample review: Reliable replenishments for new team onboardings. Stored pattern files make reordering effortless.',
+    name: 'Farooq Al Nuaimi',
+    role: 'VP Corporate Services',
+    company: 'Emirates Investment Authority',
+    photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=160&q=80',
+  },
+  {
+    id: 9,
+    quote: 'Sample review: Superb craftsmanship, elegant silhouettes, and courteous concierge service from consultation to final fitting.',
+    name: 'Amina Al Shamsi',
+    role: 'General Manager',
+    company: 'Hilton Capital Towers',
+    photo: '', // tests initials avatar fallback
   },
 ];

@@ -19,6 +19,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: auto; /* Lenis handles smooth scroll */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -29,6 +31,13 @@ body {
   color: var(--espresso);
   background-color: var(--cream);
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+img, svg, picture, video, canvas {
+  max-width: 100%;
+  height: auto;
 }
 
 /* ── Focus states (accessibility) ─────────────────────────────── */
@@ -152,7 +161,12 @@ ul, ol {
 /* ── Scroll-locked body (when loader / modal is active) ───────── */
 body.scroll-locked {
   overflow: hidden !important;
-  touch-action: none;
+}
+
+body.scroll-locked .collections-modal,
+body.scroll-locked .checkout-modal,
+body.scroll-locked .navbar-cart {
+  touch-action: pan-y !important;
 }
 
 /* ── Reduced motion ───────────────────────────────────────────── */

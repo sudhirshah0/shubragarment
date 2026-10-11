@@ -97,50 +97,60 @@ const TextControls = ({
 
   return (
     <div className="text-controls">
-      {/* ── Section A: Monogram / Text Addition ──────────────── */}
+      {/* ── Section A: Upload Logo at Top & Text Monogram ── */}
       <div className="text-controls__group">
-        <label className="text-controls__label label" htmlFor="designer-text-input">
-          ADD MONOGRAM OR TEXT
+        <label className="text-controls__label">
+          Personalize Artwork
         </label>
-        <form onSubmit={handleAddText} className="text-controls__input-row">
-          <input
-            id="designer-text-input"
-            type="text"
-            className="text-controls__input"
-            placeholder="e.g. SHUBRA or Your Initials"
-            value={textInput}
-            onChange={(e) => setTextInput(e.target.value)}
-            maxLength={32}
-          />
-          <button
-            type="submit"
-            className="text-controls__add-btn"
-            data-cursor-text="ADD"
-          >
-            + Add Text
-          </button>
-        </form>
-
-        {/* Quick Monogram Chips */}
-        <div className="text-controls__presets">
-          <span className="label">QUICK IDEAS:</span>
-          {MONOGRAM_PRESETS.map((preset) => (
+        <div className="text-controls__creation-box">
+          {/* 1. Upload Logo on the Top */}
+          <div className="text-controls__upload-row">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/png, image/jpeg, image/svg+xml, image/webp"
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+            />
             <button
-              key={preset}
               type="button"
-              className="text-controls__preset-chip"
-              onClick={() => onAddText(preset, { fontFamily: selectedFont, fontSize, fill: textColor })}
+              className="text-controls__upload-btn"
+              onClick={() => fileInputRef.current?.click()}
+              data-cursor-text="UPLOAD"
             >
-              {preset}
+              <svg className="text-controls__upload-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+              </svg>
+              <span className="text-controls__upload-title">Upload Logo or Emblem (PNG, SVG)</span>
             </button>
-          ))}
+          </div>
+
+          {/* 2. Text / Monogram Input */}
+          <form onSubmit={handleAddText} className="text-controls__input-row">
+            <input
+              id="designer-text-input"
+              type="text"
+              className="text-controls__input"
+              placeholder="Or add custom name / initials..."
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+              maxLength={32}
+            />
+            <button
+              type="submit"
+              className="text-controls__add-btn"
+              data-cursor-text="ADD"
+            >
+              Add Text
+            </button>
+          </form>
         </div>
       </div>
 
-      {/* ── Section B: Font Typography Selection ─────────────── */}
+      {/* ── Section B: Typography & Style ────────────────────── */}
       <div className="text-controls__group">
-        <label className="text-controls__label label" htmlFor="designer-font-select">
-          FONT SELECTION
+        <label className="text-controls__label">
+          Typography
         </label>
         <div className="text-controls__font-grid">
           {FONTS_LIST.map((font) => (
@@ -159,11 +169,12 @@ const TextControls = ({
         </div>
       </div>
 
-      {/* ── Section C: Text Size & Style Controls ────────────── */}
-      <div className="text-controls__group">
-        <div className="text-controls__row-between">
-          <label className="text-controls__label label" htmlFor="font-size-slider">
-            TEXT SIZE ({fontSize}px)
+      {/* ── Section C: Formatting & Thread Color ─────────────── */}
+      <div className="text-controls__row-split">
+        {/* Formatting Buttons */}
+        <div className="text-controls__subgroup">
+          <label className="text-controls__label">
+            Style
           </label>
           <div className="text-controls__styles">
             <button
@@ -171,6 +182,7 @@ const TextControls = ({
               className={`text-controls__style-btn ${isBold ? 'text-controls__style-btn--active' : ''}`}
               onClick={toggleBold}
               title="Bold"
+              aria-label="Bold text"
             >
               <strong>B</strong>
             </button>
@@ -179,74 +191,44 @@ const TextControls = ({
               className={`text-controls__style-btn ${isItalic ? 'text-controls__style-btn--active' : ''}`}
               onClick={toggleItalic}
               title="Italic"
+              aria-label="Italic text"
             >
               <em>I</em>
             </button>
           </div>
         </div>
 
-        <input
-          id="font-size-slider"
-          type="range"
-          min="14"
-          max="64"
-          value={fontSize}
-          onChange={(e) => handleSizeChange(Number(e.target.value))}
-          className="text-controls__slider"
-        />
-      </div>
-
-      {/* ── Section D: Thread / Print Color Swatches ─────────── */}
-      <div className="text-controls__group">
-        <span className="text-controls__label label">EMBROIDERY & PRINT COLOR</span>
-        <div className="text-controls__color-swatches">
-          {TEXT_COLORS.map((c) => (
-            <button
-              key={c.name}
-              type="button"
-              className={`text-controls__color-dot ${
-                textColor === c.hex ? 'text-controls__color-dot--active' : ''
-              }`}
-              style={{ backgroundColor: c.hex }}
-              title={c.name}
-              onClick={() => handleColorChange(c.hex)}
-            />
-          ))}
+        {/* Thread Color Dots */}
+        <div className="text-controls__subgroup">
+          <label className="text-controls__label">
+            Thread Color
+          </label>
+          <div className="text-controls__color-swatches">
+            {TEXT_COLORS.map((c) => (
+              <button
+                key={c.name}
+                type="button"
+                className={`text-controls__color-dot ${
+                  textColor === c.hex ? 'text-controls__color-dot--active' : ''
+                }`}
+                style={{ backgroundColor: c.hex }}
+                title={c.name}
+                aria-label={c.name}
+                onClick={() => handleColorChange(c.hex)}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* ── Section E: Image / Logo Upload ──────────────────── */}
-      <div className="text-controls__group text-controls__group--upload">
-        <span className="text-controls__label label">COMPANY LOGO / ARTWORK</span>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/png, image/jpeg, image/svg+xml, image/webp"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-        <button
-          type="button"
-          className="text-controls__upload-btn"
-          onClick={() => fileInputRef.current?.click()}
-          data-cursor-text="UPLOAD"
-        >
-          <span className="text-controls__upload-icon">📁</span>
-          <div className="text-controls__upload-meta">
-            <strong>Upload Custom Logo or Emblem</strong>
-            <span>PNG, JPG or SVG • Transparent backgrounds recommended</span>
-          </div>
-        </button>
-      </div>
-
-      {/* ── Section F: Clear View ────────────────────────────── */}
+      {/* ── Section E: Canvas Quick Reset ────────────────────── */}
       <div className="text-controls__footer">
         <button
           type="button"
           className="text-controls__clear-btn"
           onClick={onClearCanvas}
         >
-          Clear Custom Artwork
+          Clear Canvas Artwork
         </button>
       </div>
     </div>

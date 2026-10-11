@@ -36,29 +36,28 @@
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(217, 188, 122, 0.32) 0%,
-    rgba(166, 124, 46, 0.16) 35%,
+    rgba(217, 188, 122, 0.38) 0%,
+    rgba(166, 124, 46, 0.18) 35%,
     rgba(247, 242, 236, 0) 70%
   );
-  filter: blur(16px);
   pointer-events: none;
   z-index: 0;
+  transform: translateZ(0);
   will-change: transform;
   transition: width 0.4s ease, height 0.4s ease, margin 0.4s ease, opacity 0.3s ease;
 }
 
 .cursor--hovered .cursor__gradient-glow {
-  width: 220px;
-  height: 220px;
-  margin-top: -110px;
-  margin-left: -110px;
+  width: 200px;
+  height: 200px;
+  margin-top: -100px;
+  margin-left: -100px;
   background: radial-gradient(
     circle,
-    rgba(217, 188, 122, 0.45) 0%,
-    rgba(166, 124, 46, 0.22) 40%,
+    rgba(217, 188, 122, 0.5) 0%,
+    rgba(166, 124, 46, 0.24) 40%,
     rgba(247, 242, 236, 0) 75%
   );
-  filter: blur(20px);
 }
 
 /* ── Central Precision Gold Gradient Core ────────────────────── */

@@ -10,7 +10,7 @@ const ColorSwatches = ({ selectedColor, onSelectColor }) => {
       <div className="color-swatches__header">
         <span className="label">PRIMARY FABRIC SHADE</span>
         <span className="color-swatches__active-name">
-          {selectedColor.name} <span className="color-swatches__hex">({selectedColor.hex})</span>
+          {selectedColor.name}
         </span>
       </div>
 
