@@ -560,11 +560,12 @@
 
 @media (max-width: 600px) {
   .custom-designer__pane-nav {
-    justify-content: center !important;
+    justify-content: stretch !important;
+    width: 100%;
   }
   .custom-designer__pane-nav .magnetic-btn {
     width: 100%;
-    max-width: 290px;
+    max-width: 100%;
     justify-content: center;
   }
 }
@@ -575,32 +576,42 @@
 
 @media (max-width: 600px) {
   .custom-designer__pane-nav--split {
-    justify-content: center !important;
+    display: grid !important;
+    grid-template-columns: auto 1fr !important;
+    gap: 0.65rem !important;
+    width: 100%;
+    align-items: center !important;
   }
   .custom-designer__pane-nav--split .magnetic-btn {
-    width: 100%;
-    max-width: 290px;
-    justify-content: center;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
   }
   .custom-designer__back-btn {
-    display: none !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap;
   }
 }
 
 .custom-designer__back-btn {
   font-size: 0.8125rem;
   color: var(--taupe);
-  padding: 0.65rem 1rem;
+  padding: 0.65rem 1.15rem;
   border: 1px solid var(--sand);
   border-radius: var(--radius-full);
-  background: transparent;
+  background: var(--linen);
   cursor: pointer;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
+  transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .custom-designer__back-btn:hover {
   color: var(--espresso);
   border-color: var(--espresso);
+  background-color: var(--cream);
 }
 
 /* ── Subcomponent: GarmentTabs ────────────────────────────────── */
@@ -1447,31 +1458,39 @@
     gap: 1.5rem;
     width: 100%;
     max-width: 100%;
-    padding-inline: 0.75rem;
+    padding-inline: 1rem;
+    box-sizing: border-box;
   }
 
   .custom-designer__header {
     gap: 0.5rem;
+    text-align: center;
+    align-items: center;
   }
 
   .custom-designer__title-row {
     gap: 0.4rem;
     width: 100%;
+    text-align: center;
+    align-items: center;
   }
 
   .custom-designer__title {
-    font-size: 1.35rem;
+    font-size: 1.45rem;
     line-height: 1.2;
+    text-align: center;
   }
 
   .custom-designer__subtitle {
-    font-size: 0.78rem;
-    line-height: 1.45;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    text-align: center;
   }
 
   .custom-designer__workspace {
     gap: 1.5rem;
     width: 100%;
+    margin-inline: auto;
   }
 
   .custom-designer__stage-col,
@@ -1479,11 +1498,13 @@
     max-width: 100%;
     width: 100%;
     margin-inline: auto;
+    box-sizing: border-box;
   }
 
   .canvas-stage {
-    border-radius: 12px;
+    border-radius: 14px;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .canvas-stage__toolbar {
@@ -1493,20 +1514,21 @@
 
   .canvas-stage__view-toggle {
     width: 100%;
-    max-width: 240px;
+    max-width: 260px;
     display: flex;
   }
 
   .canvas-stage__view-btn {
     flex: 1;
     text-align: center;
-    padding: 0.35rem 0.65rem;
-    font-size: 0.65rem;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.68rem;
   }
 
   .canvas-stage__viewport {
     min-height: 280px;
     padding: 0.35rem;
+    box-sizing: border-box;
   }
 
   .custom-designer__tabs {
@@ -1514,16 +1536,28 @@
     padding: 3px;
     gap: 3px;
     width: 100%;
+    display: flex;
+    justify-content: stretch;
+    box-sizing: border-box;
   }
 
   .custom-designer__tab {
-    padding: 0.55rem 0.35rem;
-    font-size: 0.72rem;
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: 0.6rem 0.35rem;
+    font-size: 0.75rem;
+  }
+
+  .custom-designer__panel {
+    padding: 1.15rem 0.95rem;
+    border-radius: 14px;
+    box-sizing: border-box;
   }
 
   .text-controls__row-split {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0.75rem;
     padding: 0.75rem 0.85rem;
   }
@@ -1540,16 +1574,20 @@
 
 @media (max-width: 360px) {
   .custom-designer__container {
-    padding-inline: 0.5rem !important;
+    padding-inline: 0.65rem !important;
     gap: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .custom-designer__title {
-    font-size: 1.18rem;
+    font-size: 1.28rem;
+    text-align: center;
   }
 
   .custom-designer__subtitle {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
+    text-align: center;
   }
 
   /* Segmented step tabs */
@@ -1567,51 +1605,63 @@
 
   /* Controls Panel */
   .custom-designer__panel {
-    padding: 0.75rem 0.6rem !important;
-    border-radius: 10px;
+    padding: 0.85rem 0.65rem !important;
+    border-radius: 12px;
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .custom-designer__pane-title {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
+    text-align: center;
   }
 
   .custom-designer__pane-desc {
-    font-size: 0.72rem;
-    line-height: 1.4;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    text-align: center;
   }
 
   .custom-designer__step-pane {
     gap: 0.95rem;
+    width: 100%;
   }
 
   /* Canvas Stage on 360px */
   .canvas-stage__toolbar {
     padding: 0.5rem 0.5rem;
+    justify-content: center;
   }
 
   .canvas-stage__view-toggle {
-    max-width: 210px;
+    max-width: 220px;
+    width: 100%;
   }
 
   .canvas-stage__view-btn {
-    padding: 0.3rem 0.4rem;
-    font-size: 0.6rem;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.65rem;
     letter-spacing: 0.05em;
   }
 
   .canvas-stage__viewport {
-    min-height: 240px;
+    min-height: 250px;
     padding: 0.25rem;
   }
 
   /* Stage Actions row (Add to Bag / Download / Reset) */
   .custom-designer__stage-actions {
-    padding: 0.45rem 0.5rem !important;
-    gap: 0.4rem !important;
+    padding: 0.5rem 0.55rem !important;
+    gap: 0.45rem !important;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .custom-designer__stage-left {
-    gap: 0.3rem !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.35rem !important;
+    width: 100%;
   }
 
   .custom-designer__stage-action-btn {
