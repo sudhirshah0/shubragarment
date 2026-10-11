@@ -219,13 +219,13 @@ html, body {
 
 @media (max-width: 768px) {
   :root {
-    --section-padding: clamp(3rem, 6vh, 4.5rem);
+    --section-padding: clamp(3.25rem, 6.5vh, 4.75rem);
     --container-px: 1.25rem;
-    --fs-display: clamp(2rem, 7vw, 2.75rem);
-    --fs-h1: clamp(1.65rem, 5.5vw, 2.25rem);
-    --fs-h2: clamp(1.35rem, 4.5vw, 1.85rem);
-    --fs-h3: clamp(1.1rem, 3.5vw, 1.35rem);
-    --fs-body: 0.9375rem;
+    --fs-display: clamp(2.35rem, 8.5vw, 3.25rem);
+    --fs-h1: clamp(2rem, 6.5vw, 2.65rem);
+    --fs-h2: clamp(1.65rem, 5.5vw, 2.15rem);
+    --fs-h3: clamp(1.25rem, 4vw, 1.55rem);
+    --fs-body: 0.95rem;
   }
 
   /* Prevent button and link tap highlights on mobile */
@@ -240,62 +240,63 @@ html, body {
 
 @media (max-width: 480px) {
   :root {
-    --section-padding: clamp(2.5rem, 5vh, 3.75rem);
-    --container-px: 1rem;
-    --fs-display: clamp(1.85rem, 8vw, 2.35rem);
-    --fs-h1: clamp(1.5rem, 6.5vw, 1.95rem);
-    --fs-h2: clamp(1.25rem, 5vw, 1.6rem);
-    --fs-body: 0.875rem;
+    --section-padding: clamp(2.75rem, 5.5vh, 4rem);
+    --container-px: 1.15rem;
+    --fs-display: clamp(2.15rem, 9.5vw, 2.75rem);
+    --fs-h1: clamp(1.85rem, 7.8vw, 2.35rem);
+    --fs-h2: clamp(1.5rem, 6vw, 1.95rem);
+    --fs-h3: clamp(1.2rem, 4.5vw, 1.45rem);
+    --fs-body: 0.9rem;
   }
 
   .section {
     padding-block: var(--section-padding);
   }
 
-  /* Ensure buttons and inputs fit small screens comfortably */
-  button, input, select, textarea {
-    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+  /* Ensure inputs fit small screens comfortably without iOS Safari auto-zoom */
+  input, select, textarea {
+    font-size: 16px;
   }
 }
 
 /* Extra small screens (iPhone SE, Galaxy Z Fold 360px width, etc.) */
 @media (max-width: 380px) {
   :root {
-    --container-px: 0.85rem;
-    --section-padding: clamp(1.75rem, 4vh, 2.75rem);
-    --fs-display: 1.55rem;
-    --fs-h1: 1.25rem;
-    --fs-h2: 1.1rem;
-    --fs-h3: 0.95rem;
-    --fs-body: 0.8rem;
-    --fs-small: 0.72rem;
+    --container-px: 0.95rem;
+    --section-padding: clamp(2rem, 4.5vh, 3rem);
+    --fs-display: 1.85rem;
+    --fs-h1: 1.65rem;
+    --fs-h2: 1.4rem;
+    --fs-h3: 1.15rem;
+    --fs-body: 0.85rem;
+    --fs-small: 0.75rem;
   }
 
   p {
-    line-height: 1.5;
+    line-height: 1.55;
   }
 }
 
 /* Narrow devices like Galaxy Z Fold cover screen (360px x 880px / 344px) */
 @media (max-width: 360px) {
   :root {
-    --container-px: 0.65rem;
-    --section-padding: 1.75rem;
-    --fs-display: 1.4rem;
-    --fs-h1: 1.15rem;
-    --fs-h2: 1rem;
-    --fs-h3: 0.875rem;
-    --fs-body: 0.775rem;
-    --fs-small: 0.6875rem;
+    --container-px: 0.75rem;
+    --section-padding: 2rem;
+    --fs-display: 1.7rem;
+    --fs-h1: 1.5rem;
+    --fs-h2: 1.3rem;
+    --fs-h3: 1.05rem;
+    --fs-body: 0.825rem;
+    --fs-small: 0.72rem;
   }
 
   .container {
-    padding-inline: 0.65rem !important;
+    padding-inline: 0.75rem !important;
   }
 
   .label {
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
   }
 }
 

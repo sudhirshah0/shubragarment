@@ -403,14 +403,14 @@
   }
 
   .hero__title {
-    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
-    line-height: 1.15;
+    font-size: clamp(2.15rem, 9.5vw, 2.85rem);
+    line-height: 1.14;
     margin-bottom: 0.85rem;
     text-align: center;
   }
 
   .hero__description {
-    font-size: 0.875rem;
+    font-size: 0.925rem;
     line-height: 1.6;
     margin-bottom: 1.25rem;
     text-align: center;
@@ -431,7 +431,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
     margin-inline: auto;
     gap: 0.75rem;
   }
@@ -459,14 +459,14 @@
   }
 
   .hero__title {
-    font-size: 1.65rem;
+    font-size: 1.95rem;
     text-align: center;
     line-height: 1.15;
   }
 
   .hero__description {
-    font-size: 0.8125rem;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    line-height: 1.55;
     margin-bottom: 1rem;
   }
 }
@@ -487,11 +487,11 @@
   }
 
   .hero__title {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
 
   .hero__actions {
-    max-width: 270px;
+    max-width: 290px;
     gap: 0.6rem;
   }
 }
