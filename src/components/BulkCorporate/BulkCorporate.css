@@ -418,3 +418,28 @@
   color: #1b5e20;
   font-size: 0.8125rem;
 }
+
+/* ── Mobile Screen Refinements ────────────────────────────────── */
+@media (max-width: 639px) {
+  .bulk-corporate__benefit-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .bulk-corporate__tier-card {
+    padding: 2.25rem 1.35rem 1.75rem;
+  }
+
+  .bulk-corporate__tier-badge {
+    right: 1rem;
+    font-size: 0.5625rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .bulk-corporate__tiers-section {
+    gap: 1.75rem;
+  }
+
+  .bulk-corporate__container {
+    gap: 2.5rem;
+  }
+}

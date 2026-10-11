@@ -112,16 +112,26 @@ const Testimonials = () => {
 
         {/* ── 3 Scrolling Columns of Review Cards ───────────── */}
         <div className="appreciation__columns-stage">
-          {/* Column 1 (Normal Speed) */}
+          {/* Column 1 (All reviews on mobile, Col 1 on tablet/desktop) */}
           <div className="appreciation__column appreciation__column--1">
-            <div className="appreciation__column-track">
-              {/* Primary list */}
+            <div className="appreciation__column-track appreciation__column-track--desktop">
+              {/* Primary list for desktop */}
               {col1.map((rev) => (
                 <ReviewCard key={`c1-a-${rev.id}`} review={rev} />
               ))}
               {/* Duplicated list for seamless infinite loop */}
               {col1.map((rev) => (
                 <ReviewCard key={`c1-b-${rev.id}`} review={rev} />
+              ))}
+            </div>
+
+            <div className="appreciation__column-track appreciation__column-track--mobile">
+              {/* Complete list of all reviews on small screens */}
+              {sampleReviews.map((rev) => (
+                <ReviewCard key={`c-mob-a-${rev.id}`} review={rev} />
+              ))}
+              {sampleReviews.map((rev) => (
+                <ReviewCard key={`c-mob-b-${rev.id}`} review={rev} />
               ))}
             </div>
           </div>

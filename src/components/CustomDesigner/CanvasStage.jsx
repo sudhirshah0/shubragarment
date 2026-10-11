@@ -357,7 +357,8 @@ const CanvasStage = forwardRef(
       const handleResize = () => {
         const viewport = canvasEl.closest('.canvas-stage__viewport');
         if (!viewport || !fabricCanvasRef.current) return;
-        const availableW = Math.min(STAGE_WIDTH, viewport.clientWidth - 16);
+        const rect = viewport.getBoundingClientRect();
+        const availableW = Math.max(260, Math.min(STAGE_WIDTH, rect.width - 16));
         const scale = availableW / STAGE_WIDTH;
         fabricCanvasRef.current.setDimensions({
           width: availableW,
@@ -365,6 +366,11 @@ const CanvasStage = forwardRef(
         });
         fabricCanvasRef.current.setZoom(scale);
         fabricCanvasRef.current.requestRenderAll();
+
+        const guideEl = viewport.querySelector('.canvas-stage__printable-guide');
+        if (guideEl) {
+          guideEl.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        }
       };
 
       const handleSelection = () => {

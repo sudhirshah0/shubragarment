@@ -117,31 +117,6 @@ export const GARMENTS = [
       },
     },
   },
-  {
-    id: 'coat',
-    name: 'Coat',
-    basePrice: 1850,
-    category: 'Signature Outerwear',
-    image: '/images/collections/blue coat.png',
-    fabrics: ['100% Mongolian Cashmere & Virgin Wool (480 GSM)', 'Super 160s Cashmere & Wool', 'Double-Faced Camel Hair'],
-    printableArea: { top: 200, left: 175, width: 150, height: 230 },
-    views: {
-      front: {
-        body: 'M125 80 L185 80 L250 240 L315 80 L375 80 L455 155 L415 240 L375 205 L380 540 L120 540 L125 205 L85 240 L45 155 Z',
-        lapels: 'M185 80 L205 160 L245 180 L210 270 L250 270 L290 270 L255 180 L295 160 L315 80 Z',
-        pockets: [
-          'M145 390 L215 390 L215 410 L145 410 Z',
-          'M285 390 L355 390 L355 410 L285 410 Z',
-        ],
-        buttons: [290, 360, 430],
-      },
-      back: {
-        body: 'M125 80 L195 86 C220 94 280 94 305 86 L375 80 L455 155 L415 240 L375 205 L380 540 L120 540 L125 205 L85 240 L45 155 Z',
-        collar: 'M195 86 C220 98 280 98 305 86 L305 76 C280 84 220 84 195 76 Z',
-        centerVent: 'M250 90 L250 540',
-      },
-    },
-  },
 ];
 
 export const COLOR_SWATCHES = [
@@ -149,12 +124,8 @@ export const COLOR_SWATCHES = [
   { id: 'camel', name: 'Camel Tan', hex: '#C19A6B', textColor: '#2B211A' },
   { id: 'green', name: 'Forest Green', hex: '#2F4F3E', textColor: '#F7F2EC' },
   { id: 'red', name: 'Crimson Red', hex: '#8B1E2B', textColor: '#F7F2EC' },
-  { id: 'grey', name: 'Charcoal Grey', hex: '#4A4E54', textColor: '#F7F2EC' },
-  { id: 'white', name: 'Crisp White', hex: '#FFFFFF', textColor: '#2B211A' },
-  { id: 'lightblue', name: 'Sky Blue', hex: '#7BA4D0', textColor: '#2B211A' },
   { id: 'black', name: 'Midnight Onyx', hex: '#1A1817', textColor: '#F7F2EC' },
-  { id: 'bronze', name: 'Dubai Bronze', hex: '#A67C2E', textColor: '#F7F2EC' },
-  { id: 'ivory', name: 'Pearl Ivory', hex: '#F7F2EC', textColor: '#2B211A' },
+  { id: 'white', name: 'Crisp White', hex: '#FFFFFF', textColor: '#2B211A' },
 ];
 
 export const FONTS_LIST = [

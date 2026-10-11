@@ -319,3 +319,28 @@
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Mobile Screen Refinements ────────────────────────────────── */
+@media (max-width: 639px) {
+  .contact {
+    padding-block: 3.5rem;
+  }
+
+  .contact__container {
+    gap: 2rem;
+  }
+
+  .contact__card-wrapper {
+    padding: 1.5rem 1.15rem;
+    border-radius: var(--radius-md, 12px);
+  }
+
+  .contact__channels {
+    gap: 0.65rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .contact__channel-chip {
+    padding: 0.75rem 0.85rem;
+  }
+}

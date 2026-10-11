@@ -18,7 +18,6 @@ import MagneticButton from '../MagneticButton/MagneticButton';
 import './Collections.css';
 
 const Collections = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedGarment, setSelectedGarment] = useState(null);
   const [modalColorIndex, setModalColorIndex] = useState(0);
   const [modalSize, setModalSize] = useState('M');
@@ -28,60 +27,17 @@ const Collections = () => {
   const [flyingItem, setFlyingItem] = useState(null);
   const modalImgRef = useRef(null);
 
-  // Swipe / Drag tracking
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStartX = useRef(0);
-  const dragDeltaX = useRef(0);
-
-  const total = collectionsData.length; // 5
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  // Touch and Mouse drag gesture listeners
-  const handleTouchStart = (e) => {
-    setIsDragging(true);
-    dragStartX.current = e.touches ? e.touches[0].clientX : e.clientX;
-    dragDeltaX.current = 0;
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    const currentX = e.touches ? e.touches[0].clientX : e.clientX;
-    dragDeltaX.current = currentX - dragStartX.current;
-  };
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
-    const threshold = 45;
-    if (dragDeltaX.current < -threshold) {
-      nextSlide();
-    } else if (dragDeltaX.current > threshold) {
-      prevSlide();
-    }
-    dragDeltaX.current = 0;
-  };
-
-  // Keyboard navigation
+  // Keyboard escape to close modal
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (selectedGarment) {
-        if (e.key === 'Escape') setSelectedGarment(null);
-        return;
+      if (selectedGarment && e.key === 'Escape') {
+        setSelectedGarment(null);
       }
-      if (e.key === 'ArrowRight') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextSlide, prevSlide, selectedGarment]);
+  }, [selectedGarment]);
 
   // Lock background page scroll and pause Lenis virtual scroll while modal is open
   useEffect(() => {
@@ -104,18 +60,6 @@ const Collections = () => {
     };
   }, [selectedGarment]);
 
-  // Open modal with item default
-  const handleCardClick = (index) => {
-    if (index === currentIndex) {
-      const item = collectionsData[currentIndex];
-      setSelectedGarment(item);
-      setModalColorIndex(0);
-      setModalSize('M');
-      setModalQty(1);
-    } else {
-      setCurrentIndex(index);
-    }
-  };
 
   const closeModal = () => {
     setSelectedGarment(null);
@@ -202,10 +146,54 @@ const Collections = () => {
     }, 1100);
   };
 
-  const currentItem = collectionsData[currentIndex];
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const categories = [
+    { key: 'all', label: 'All' },
+    { key: 'blazers', label: 'Blazers' },
+    { key: 'outerwear', label: 'Outerwear' },
+    { key: 'uniforms', label: 'Uniforms' },
+    { key: 'workwear', label: 'Workwear' },
+  ];
+
+  const filteredItems = activeCategory === 'all'
+    ? collectionsData
+    : collectionsData.filter((item) => {
+        if (activeCategory === 'blazers') return item.category === 'blazers';
+        if (activeCategory === 'outerwear') return item.category === 'leather' || item.category === 'headwear' || item.category === 'casual';
+        if (activeCategory === 'uniforms') return item.category === 'aviation' || item.category === 'trousers';
+        if (activeCategory === 'workwear') return item.category === 'workwear';
+        return item.category === activeCategory;
+      });
+
+  const [showAll, setShowAll] = useState(false);
+  const collectionsSectionRef = useRef(null);
+
+  // Show only 2 rows (8 items in 4-column layout) by default
+  const INITIAL_LIMIT = 8;
+  const displayedItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL_LIMIT);
+  const hasMore = filteredItems.length > INITIAL_LIMIT;
+
+  const handleToggleShowAll = () => {
+    setShowAll((prev) => !prev);
+    // Refresh ScrollTrigger so layout height change updates all lower section triggers immediately
+    setTimeout(() => {
+      if (typeof window !== 'undefined' && window.ScrollTrigger) {
+        window.ScrollTrigger.refresh();
+      }
+    }, 100);
+  };
+
+  const openItemModal = (item, colorIndex = 0) => {
+    setSelectedGarment(item);
+    setModalColorIndex(colorIndex);
+    setModalSize('M');
+    setModalQty(1);
+  };
 
   return (
     <section
+      ref={collectionsSectionRef}
       className="collections section"
       id="collections"
       aria-label="Curated Garment Collections"
@@ -214,115 +202,134 @@ const Collections = () => {
         {/* ── Section Header ─────────────────────────────────── */}
         <div className="collections__header">
           <div className="collections__title-wrap">
-            <h2 className="collections__title">Our curated collections</h2>
+            <h2 className="collections__title">Our Curated Collections</h2>
             <p className="collections__subtitle">
-              Swipe smoothly through our signature bespoke apparel.
+              Explore our master-tailored garments by category, crafted with fine Italian wools, Egyptian Giza cottons, and pure Mongolian cashmere.
             </p>
           </div>
+
+          {/* ── Category Filter Pills ──────────────────────────── */}
+          <div className="collections__category-bar" role="tablist" aria-label="Collections Categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                type="button"
+                role="tab"
+                aria-selected={activeCategory === cat.key}
+                className={`collections__category-tab ${
+                  activeCategory === cat.key ? 'collections__category-tab--active' : ''
+                }`}
+                onClick={() => {
+                  setActiveCategory(cat.key);
+                  setShowAll(false);
+                }}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* ── Infinite 3D Swiper Stage ────────────────────────── */}
-        <div
-          className="collections__swiper"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onMouseDown={handleTouchStart}
-          onMouseMove={handleTouchMove}
-          onMouseUp={handleTouchEnd}
-          onMouseLeave={handleTouchEnd}
-          data-cursor-text="SWIPE"
-        >
-          {/* Controls: Prev & Next Arrow Buttons */}
-          <button
-            type="button"
-            className="collections__arrow collections__arrow--prev"
-            onClick={prevSlide}
-            aria-label="Previous Category"
-            data-cursor-text="PREV"
-          >
-            ←
-          </button>
+        {/* ── Clean Box Product Grid (2 rows initial) ──────────── */}
+        <div className="collections__grid">
+          {displayedItems.map((item) => (
+            <div key={item.id} className="collection-box">
+              {/* Product Media Box */}
+              <div
+                className="collection-box__media"
+                onClick={() => openItemModal(item, 0)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') openItemModal(item, 0);
+                }}
+                aria-label={`View ${item.title}`}
+              >
+                <div className="collection-box__glow" aria-hidden="true" />
+                <img
+                  src={item.colors[0].image}
+                  alt={item.title}
+                  className="collection-box__img"
+                  loading="lazy"
+                />
+              </div>
 
-          <button
-            type="button"
-            className="collections__arrow collections__arrow--next"
-            onClick={nextSlide}
-            aria-label="Next Category"
-            data-cursor-text="NEXT"
-          >
-            →
-          </button>
-
-          {/* Cards Track: Render 5 Cards in relative order (-2, -1, 0, 1, 2) */}
-          <div className="collections__track">
-            {collectionsData.map((item, index) => {
-              // Calculate relative offset from center (-2 to +2)
-              let offset = (index - currentIndex) % total;
-              if (offset > total / 2) offset -= total;
-              if (offset < -total / 2) offset += total;
-
-              const isCenter = offset === 0;
-
-              return (
-                <div
-                  key={item.id}
-                  className={`collections__card ${
-                    isCenter ? 'collections__card--center' : ''
-                  } collections__card--offset-${offset}`}
-                  onClick={() => handleCardClick(index)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleCardClick(index);
-                  }}
-                  aria-label={`${item.title} — ${isCenter ? 'Click for colors and details' : 'Click to bring to center'}`}
-                  style={{
-                    '--offset': offset,
-                  }}
-                >
-                  {/* Backdrop lighting pedestal for the center item */}
-                  {isCenter && <div className="collections__card-glow" aria-hidden="true" />}
-
-                  {/* Cutout Cloth Graphic Frame */}
-                  <div className="collections__card-media">
-                    <img
-                      src={item.colors[0].image}
-                      alt={item.title}
-                      className="collections__card-img"
-                      loading="eager"
-                      decoding="async"
-                    />
-                    {/* Shadow underneath garment */}
-                    <div className="collections__card-shadow" aria-hidden="true" />
-                  </div>
-
-                  {/* Card Meta Content */}
-                  <div className="collections__card-info">
-                    <span className="collections__card-tag label">{item.shortTitle}</span>
-                    <h3 className="collections__card-name">{item.title}</h3>
-                    <p className="collections__card-price">{item.price}</p>
-                  </div>
+              {/* Product Card Details */}
+              <div className="collection-box__info">
+                <div className="collection-box__title-row">
+                  <h3 className="collection-box__title" onClick={() => openItemModal(item, 0)}>
+                    {item.title}
+                  </h3>
                 </div>
-              );
-            })}
-          </div>
+                <p className="collection-box__tagline">{item.tagline}</p>
 
-          {/* Bottom Action: Add To Cart Button for active center garment */}
-          <div className="collections__bottom-actions">
+                {/* Color Swatch Dots & Price Row */}
+                <div className="collection-box__swatches-row">
+                  <div className="collection-box__swatches">
+                    {item.colors.map((c, cIdx) => (
+                      <button
+                        key={c.name}
+                        type="button"
+                        className="collection-box__swatch-dot"
+                        style={{ backgroundColor: c.hex }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openItemModal(item, cIdx);
+                        }}
+                        title={`${c.name} — Click to view`}
+                        aria-label={`View ${item.title} in ${c.name}`}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Price placed right on all screens */}
+                  <span className="collection-box__price">{item.price}</span>
+                </div>
+
+                {/* Quick Add to Cart Button */}
+                <div className="collection-box__actions">
+                  <button
+                    type="button"
+                    className="collection-box__btn"
+                    onClick={() => openItemModal(item, 0)}
+                  >
+                    <span>Add to Cart</span>
+                    <span className="collection-box__btn-arrow">→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ── View More Button (when more than 2 rows exist) ──── */}
+        {hasMore && (
+          <div className="collections__view-more-wrap">
             <button
               type="button"
-              className="collections__stage-cart-btn"
-              onClick={() => handleCardClick(currentIndex)}
-              aria-label={`Configure and add ${collectionsData[currentIndex].title} to cart`}
+              className="collections__view-more-btn"
+              onClick={handleToggleShowAll}
             >
-              <span className="collections__stage-cart-icon">🛒</span>
-              <span>Add To Cart</span>
-              <span className="collections__stage-cart-sep">•</span>
-              <span className="collections__stage-cart-price">{collectionsData[currentIndex].price}</span>
+              <span>{showAll ? 'Show Less' : `View More (${filteredItems.length - INITIAL_LIMIT} more)`}</span>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{
+                  transform: showAll ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s ease',
+                }}
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
             </button>
           </div>
-        </div>
+        )}
       </div>
 
       {/* ═════════════════════════════════════════════════════════════
@@ -384,39 +391,43 @@ const Collections = () => {
 
                 <p className="collections-modal__desc">{selectedGarment.description}</p>
 
-                {/* 1. Color Swatch Selector */}
+                {/* 1. Color Swatch Selector with Price next to it */}
                 <div className="collections-modal__swatch-group">
                   <div className="collections-modal__group-label">
-                    <span className="label">1. CHOOSE COLOR ({selectedGarment.colors.length} SHADES)</span>
+                    <div className="collections-modal__color-info">
+                      <span className="label">COLOR:</span>
+                      <span className="collections-modal__active-color-name">
+                        {selectedGarment.colors[modalColorIndex].name}
+                      </span>
+                    </div>
+                    <span className="collections-modal__price-tag">
+                      AED {(selectedGarment.basePriceNum * modalQty).toLocaleString()}
+                    </span>
                   </div>
                   <div className="collections-modal__swatches">
                     {selectedGarment.colors.map((color, cIdx) => (
                       <button
                         key={color.name}
                         type="button"
-                        className={`collections-modal__swatch ${
-                          modalColorIndex === cIdx ? 'collections-modal__swatch--active' : ''
+                        className={`collections-modal__swatch-circle ${
+                          modalColorIndex === cIdx ? 'collections-modal__swatch-circle--active' : ''
                         }`}
+                        style={{ backgroundColor: color.hex }}
                         onClick={() => setModalColorIndex(cIdx)}
                         title={color.name}
-                      >
-                        <span
-                          className="collections-modal__swatch-dot"
-                          style={{ backgroundColor: color.hex }}
-                        />
-                        <span className="collections-modal__swatch-name">{color.name}</span>
-                      </button>
+                        aria-label={`Select ${color.name}`}
+                      />
                     ))}
                   </div>
                 </div>
 
-                {/* 2. Size Selector */}
+                {/* 2. Size Selector (Clean single row) */}
                 <div className="collections-modal__size-group">
                   <div className="collections-modal__group-label">
-                    <span className="label">2. CHOOSE SIZE</span>
+                    <span className="label">SIZE</span>
                   </div>
                   <div className="collections-modal__sizes">
-                    {['S', 'M', 'L', 'XL', 'XXL', 'Bespoke'].map((sz) => (
+                    {['S', 'M', 'L', 'XL', 'XXL'].map((sz) => (
                       <button
                         key={sz}
                         type="button"
@@ -431,20 +442,11 @@ const Collections = () => {
                   </div>
                 </div>
 
-                {/* 3. Specs List */}
-                <div className="collections-modal__specs">
-                  <div className="collections-modal__spec-item">
-                    <span className="label">FABRIC:</span>
-                    <span>{selectedGarment.fabric}</span>
-                  </div>
-                  <div className="collections-modal__spec-item">
-                    <span className="label">FIT:</span>
-                    <span>{selectedGarment.fit}</span>
-                  </div>
-                  <div className="collections-modal__spec-item">
-                    <span className="label">CARE:</span>
-                    <span>{selectedGarment.care}</span>
-                  </div>
+                {/* 3. Minimal Single-Line Spec */}
+                <div className="collections-modal__quick-spec">
+                  <span className="collections-modal__spec-pill">
+                    {selectedGarment.fabric ? selectedGarment.fabric.split('(')[0].trim() : 'Premium Fabric'}
+                  </span>
                 </div>
 
                 {/* 4. Quantity and Add-To-Cart Action */}
@@ -474,16 +476,7 @@ const Collections = () => {
                     }`}
                     onClick={handleAddToCart}
                   >
-                    {addedToast ? (
-                      <span>✓ Added to Cart!</span>
-                    ) : (
-                      <>
-                        <span>Add To Cart</span>
-                        <span className="collections-modal__cart-sub">
-                          AED {(selectedGarment.basePriceNum * modalQty).toLocaleString()}
-                        </span>
-                      </>
-                    )}
+                    {addedToast ? '✓ Added to Cart!' : 'Add to Cart'}
                   </button>
                 </div>
               </div>

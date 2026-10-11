@@ -55,9 +55,24 @@
   gap: clamp(2rem, 5vw, 4.5rem);
 }
 
+@media (max-width: 1023px) {
+  .hero__content {
+    order: 1;
+  }
+  .hero__visual {
+    order: 2;
+  }
+}
+
 @media (min-width: 1024px) {
   .hero__grid {
     grid-template-columns: 1.1fr 0.9fr;
+  }
+  .hero__content {
+    order: 1;
+  }
+  .hero__visual {
+    order: 2;
   }
 }
 
@@ -344,11 +359,29 @@
     padding-bottom: 5rem;
   }
 
+  .hero__content {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hero__title {
+    text-align: center;
+  }
+
+  .hero__description {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
+    align-items: center;
+  }
+
   .hero__stage {
     height: clamp(400px, 58vh, 520px);
   }
-
-
 
   .hero__slider-arrow {
     opacity: 0.9;
@@ -358,24 +391,74 @@
 }
 
 @media (max-width: 640px) {
+  .hero {
+    padding-top: 5.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .hero__content {
+    align-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+
   .hero__title {
-    font-size: clamp(2.1rem, 9.5vw, 2.85rem);
-    line-height: 1.14;
+    font-size: clamp(1.85rem, 8.5vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+    text-align: center;
+  }
+
+  .hero__description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    text-align: center;
+    margin-inline: auto;
   }
 
   .hero__stage {
-    height: clamp(360px, 52vh, 440px);
+    height: clamp(320px, 48vh, 420px);
+  }
+
+  .hero__pedestal-glow {
+    width: 260px;
+    height: 300px;
   }
 
   .hero__actions {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    max-width: 320px;
+    margin-inline: auto;
+    gap: 0.75rem;
   }
 
   .hero__actions .magnetic-btn {
     width: 100%;
+    justify-content: center;
   }
 
+  .hero__slider-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+}
 
+@media (max-width: 380px) {
+  .hero {
+    padding-top: 4.75rem;
+  }
+
+  .hero__stage {
+    height: 300px;
+  }
+
+  .hero__title {
+    font-size: 1.7rem;
+    text-align: center;
+  }
 }

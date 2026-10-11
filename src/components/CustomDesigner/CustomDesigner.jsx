@@ -170,7 +170,8 @@ const CustomDesigner = () => {
                     <line x1="3" y1="6" x2="21" y2="6"/>
                     <path d="M16 10a4 4 0 0 1-8 0"/>
                   </svg>
-                  <span>Add to Bag</span>
+                  <span className="custom-designer__btn-text--desktop">Add to Bag</span>
+                  <span className="custom-designer__btn-text--mobile">Add</span>
                 </button>
 
                 <button
@@ -284,7 +285,7 @@ const CustomDesigner = () => {
                       className="custom-designer__back-btn"
                       onClick={goToPrevStep}
                     >
-                      ← Back
+                      Back
                     </button>
                     <MagneticButton
                       onClick={goToNextStep}

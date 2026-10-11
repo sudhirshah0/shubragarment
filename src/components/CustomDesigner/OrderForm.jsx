@@ -296,7 +296,7 @@ const OrderForm = ({
                 className="order-form__back-btn"
                 onClick={onPrevStep}
               >
-                ← Back
+                Back
               </button>
             )}
 

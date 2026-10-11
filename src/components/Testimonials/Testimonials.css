@@ -142,9 +142,21 @@
 
 /* On mobile, hide columns 2 and 3 so 1 full-width column scrolls */
 @media (max-width: 679px) {
+  .appreciation__columns-stage {
+    height: 480px;
+  }
   .appreciation__column--2,
   .appreciation__column--3 {
     display: none;
+  }
+  .appreciation__card {
+    padding: 1.25rem 1.15rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .appreciation__columns-stage {
+    height: 420px;
   }
 }
 
@@ -165,9 +177,27 @@
   backface-visibility: hidden;
 }
 
+.appreciation__column-track--desktop {
+  display: flex;
+}
+
+.appreciation__column-track--mobile {
+  display: none;
+}
+
+@media (max-width: 679px) {
+  .appreciation__column-track--desktop {
+    display: none;
+  }
+  .appreciation__column-track--mobile {
+    display: flex;
+    animation: appreciation-scroll-vertical 42s linear infinite;
+  }
+}
+
 /* ── Pure CSS Infinite Vertical Loop (Bottom to Top) ────────── */
 /* Column 1: duration ~28s */
-.appreciation__column--1 .appreciation__column-track {
+.appreciation__column--1 .appreciation__column-track--desktop {
   animation: appreciation-scroll-vertical 28s linear infinite;
 }
 

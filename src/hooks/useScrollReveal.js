@@ -42,9 +42,8 @@ export default function useScrollReveal() {
             ease: 'power3.out',
             scrollTrigger: {
               trigger: el,
-              start: 'top 88%',
-              end: 'bottom 10%',
-              toggleActions: 'play reverse play reverse',
+              start: 'top 92%',
+              once: true,
             },
           }
         );
@@ -63,9 +62,8 @@ export default function useScrollReveal() {
             ease: 'power3.out',
             scrollTrigger: {
               trigger: el,
-              start: 'top 85%',
-              end: 'bottom 12%',
-              toggleActions: 'play reverse play reverse',
+              start: 'top 90%',
+              once: true,
             },
           }
         );
@@ -83,9 +81,8 @@ export default function useScrollReveal() {
             ease: 'power3.out',
             scrollTrigger: {
               trigger: el,
-              start: 'top 85%',
-              end: 'bottom 12%',
-              toggleActions: 'play reverse play reverse',
+              start: 'top 90%',
+              once: true,
             },
           }
         );
@@ -93,7 +90,7 @@ export default function useScrollReveal() {
 
       // 3. Card Grids & Panels — Staggered entrance from bottom
       const grids = [
-        { selector: '.collections__grid .collection-card', parent: '.collections__grid' },
+        { selector: '.collections__grid .collection-box', parent: '.collections__grid' },
         { selector: '.bulk-corporate__benefits-grid .bulk-corporate__benefit-card', parent: '.bulk-corporate__benefits-grid' },
         { selector: '.bulk-corporate__tiers-grid .bulk-corporate__tier-card', parent: '.bulk-corporate__tiers-grid' },
         { selector: '.custom-designer__workspace', parent: '.custom-designer__workspace' },
@@ -117,8 +114,7 @@ export default function useScrollReveal() {
               scrollTrigger: {
                 trigger: parentEl,
                 start: 'top 85%',
-                end: 'bottom 10%',
-                toggleActions: 'play reverse play reverse',
+                once: true,
               },
             }
           );

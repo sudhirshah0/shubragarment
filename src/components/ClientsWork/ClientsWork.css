@@ -464,3 +464,25 @@
   color: rgba(239, 231, 220, 0.75);
   font-size: 1.05rem;
 }
+
+/* ── Mobile Screen Refinements ────────────────────────────────── */
+@media (max-width: 639px) {
+  .clients-work__container {
+    gap: 2.5rem;
+  }
+
+  .clients-work__case-info {
+    padding: 1.25rem 1.15rem;
+  }
+
+  .clients-work__bottom-banner {
+    padding: 2rem 1.25rem;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .clients-work__banner-content {
+    align-items: center;
+  }
+}

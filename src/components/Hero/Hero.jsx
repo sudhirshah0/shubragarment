@@ -14,15 +14,18 @@ import { gsap } from 'gsap';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import './Hero.css';
 
-// The transparent model figures from /models/ directory
+// Curated transparent model figures from /models/ directory
 const MODEL_SLIDES = [
-  { src: '/models/model1.png', alt: 'Shubra Garments Model 1' },
-  { src: '/models/model2.png', alt: 'Shubra Garments Model 2' },
-  { src: '/models/model3.png', alt: 'Shubra Garments Model 3' },
-  { src: '/models/model4.png', alt: 'Shubra Garments Model 4' },
-  { src: '/models/model5.png', alt: 'Shubra Garments Model 5' },
-  { src: '/models/model6.png', alt: 'Shubra Garments Model 6' },
-  { src: '/models/model7.png', alt: 'Shubra Garments Model 7' },
+  { src: '/models/model-airline-f1.png', alt: 'Shubra Garments Tailored Airline Uniform' },
+  { src: '/models/model-airline-m1.png', alt: 'Shubra Garments Captain Pilot Uniform' },
+  { src: '/models/model-suit-burgundy.png', alt: 'Shubra Garments Burgundy Executive Suit' },
+  { src: '/models/model-exec-f.png', alt: 'Shubra Garments Executive Silk Shirt & Trousers' },
+  { src: '/models/model-airline-m2.png', alt: 'Shubra Garments Airline Aviation Blazer' },
+  { src: '/models/model1.png', alt: 'Shubra Garments Casual Knit & Linen' },
+  { src: '/models/model2.png', alt: 'Shubra Garments Tailored Formal Suit' },
+  { src: '/models/model3.png', alt: 'Shubra Garments Linen Safari Overshirt' },
+  { src: '/models/model4.png', alt: 'Shubra Garments Double-Breasted Trench' },
+  { src: '/models/model7.png', alt: 'Shubra Garments Cashmere Overcoat' },
 ];
 
 

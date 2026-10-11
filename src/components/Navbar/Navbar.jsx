@@ -34,6 +34,18 @@ const Navbar = () => {
   // Checkout modal & order placed states
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+
+  // Authentication state (Login / Sign Up)
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'signup'
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authForm, setAuthForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [authToast, setAuthToast] = useState('');
+
   const [checkoutData, setCheckoutData] = useState({
     fullName: '',
     phone: '',
@@ -74,9 +86,9 @@ const Navbar = () => {
     };
   }, []);
 
-  // Lock background scroll and pause Lenis while cart or checkout modal is open
+  // Lock background scroll and pause Lenis while cart, checkout, or auth modal is open
   useEffect(() => {
-    const isAnyModalOpen = isCartOpen || isCheckoutOpen;
+    const isAnyModalOpen = isCartOpen || isCheckoutOpen || isAuthOpen;
     if (isAnyModalOpen) {
       if (window.lenis) {
         window.lenis.stop();
@@ -94,19 +106,56 @@ const Navbar = () => {
         window.lenis.start();
       }
     };
-  }, [isCartOpen, isCheckoutOpen]);
+  }, [isCartOpen, isCheckoutOpen, isAuthOpen]);
 
   // Press ESC to close any modal
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        if (isCheckoutOpen) closeCheckout();
+        if (isAuthOpen) closeAuthModal();
+        else if (isCheckoutOpen) closeCheckout();
         else if (isCartOpen) closeCart();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isCartOpen, isCheckoutOpen]);
+  }, [isCartOpen, isCheckoutOpen, isAuthOpen]);
+
+  const openAuthModal = (mode = 'login') => {
+    setAuthMode(mode);
+    setIsAuthOpen(true);
+    setAuthToast('');
+  };
+
+  const closeAuthModal = () => {
+    setIsAuthOpen(false);
+    setAuthToast('');
+  };
+
+  const handleAuthSubmit = (e) => {
+    e.preventDefault();
+    if (authMode === 'login') {
+      setCurrentUser({
+        name: authForm.email.split('@')[0] || 'Valued Client',
+        email: authForm.email,
+      });
+      setAuthToast('Signed in successfully!');
+    } else {
+      setCurrentUser({
+        name: authForm.name || 'Valued Client',
+        email: authForm.email,
+      });
+      setAuthToast('Account created successfully!');
+    }
+    setTimeout(() => {
+      setIsAuthOpen(false);
+      setAuthToast('');
+    }, 900);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+  };
 
   // Dismiss cart popup when clicking anywhere in blank space outside the cart panel or navbar cart toggle
   useEffect(() => {
@@ -341,15 +390,75 @@ const Navbar = () => {
 
         {/* ── Desktop Right Actions & CTA ─────────────────────── */}
         <div className="navbar__actions">
+          {/* Login / Sign Up Button Before Cart */}
+          {currentUser ? (
+            <div className="navbar__user-pill" title={`Signed in as ${currentUser.name} (Click ✕ to sign out)`}>
+              <div className="navbar__auth-circle">
+                <span className="navbar__user-initials">
+                  {currentUser.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+              <button
+                type="button"
+                className="navbar__logout-badge"
+                onClick={handleLogout}
+                title="Sign out"
+                aria-label="Sign out"
+              >
+                ✕
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="navbar__auth-btn"
+              onClick={() => openAuthModal('login')}
+              aria-label="Sign In or Register"
+              title="Sign In / Register"
+            >
+              <div className="navbar__auth-circle">
+                <svg
+                  className="navbar__auth-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+            </button>
+          )}
+
           <button
             type="button"
             className="navbar__cart-btn"
             onClick={openCart}
             aria-label={`Shopping Cart with ${cartCount} items`}
           >
-            <span className="navbar__cart-icon">🛒</span>
-            <span className="navbar__cart-label">CART</span>
-            <span className="navbar__cart-count">{cartCount}</span>
+            <div className="navbar__cart-circle">
+              <svg
+                className="navbar__cart-bag-icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+            </div>
+            <span className="navbar__cart-badge">{cartCount}</span>
           </button>
 
           {/* ── Mobile Hamburger Toggle ───────────────────────── */}
@@ -404,32 +513,6 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-
-          <div className="navbar__mobile-footer">
-            <button
-              type="button"
-              className="navbar__mobile-cart-btn"
-              onClick={() => {
-                setIsMobileOpen(false);
-                openCart();
-              }}
-              aria-label={`Open Cart (${cartCount} items)`}
-            >
-              <span className="navbar__cart-icon">🛒</span>
-              <span>SHOPPING CART</span>
-              <span className="navbar__cart-count">{cartCount}</span>
-            </button>
-
-            <MagneticButton
-              href="#custom-designer"
-              variant="primary"
-              size="md"
-              onClick={handleLinkClick}
-              className="navbar__mobile-cta"
-            >
-              Launch Custom Designer
-            </MagneticButton>
-          </div>
         </div>
       </div>
 
@@ -728,6 +811,141 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
+            </div>
+          </div>,
+          document.body
+        )}
+
+      {/* ── Luxury Client Portal Authentication Modal ──────────── */}
+      {isAuthOpen &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="auth-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Client Sign In or Register"
+            data-lenis-prevent
+            onClick={(e) => {
+              if (e.target.classList.contains('auth-modal')) closeAuthModal();
+            }}
+          >
+            <div className="auth-modal__overlay" onClick={closeAuthModal} />
+            <div className="auth-modal__dialog" role="document">
+              <button
+                type="button"
+                className="auth-modal__close-btn"
+                onClick={closeAuthModal}
+                aria-label="Close Authentication Dialog"
+              >
+                ✕
+              </button>
+
+              <div className="auth-modal__header">
+                <h3 className="auth-modal__title">
+                  {authMode === 'login' ? 'Welcome Back' : 'Create an Account'}
+                </h3>
+                <p className="auth-modal__subtitle">
+                  {authMode === 'login'
+                    ? 'Sign in to access your bespoke tailoring orders & saved measurements.'
+                    : 'Register for priority atelier fittings, private lookbooks & concierge.'}
+                </p>
+              </div>
+
+              {/* Toggle Switch between Sign In & Sign Up */}
+              <div className="auth-modal__tabs" role="tablist">
+                <button
+                  type="button"
+                  className={`auth-modal__tab ${authMode === 'login' ? 'auth-modal__tab--active' : ''}`}
+                  onClick={() => setAuthMode('login')}
+                  role="tab"
+                  aria-selected={authMode === 'login'}
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  className={`auth-modal__tab ${authMode === 'signup' ? 'auth-modal__tab--active' : ''}`}
+                  onClick={() => setAuthMode('signup')}
+                  role="tab"
+                  aria-selected={authMode === 'signup'}
+                >
+                  Create Account
+                </button>
+              </div>
+
+              {authToast && (
+                <div className="auth-modal__toast" role="alert">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>{authToast}</span>
+                </div>
+              )}
+
+              <form className="auth-modal__form" onSubmit={handleAuthSubmit}>
+                {authMode === 'signup' && (
+                  <div className="auth-modal__field">
+                    <label htmlFor="auth-name" className="auth-modal__label">Full Name</label>
+                    <input
+                      id="auth-name"
+                      type="text"
+                      className="auth-modal__input"
+                      placeholder="e.g. Tariq Al Mansoori"
+                      value={authForm.name}
+                      onChange={(e) => setAuthForm({ ...authForm, name: e.target.value })}
+                      required={authMode === 'signup'}
+                    />
+                  </div>
+                )}
+
+                <div className="auth-modal__field">
+                  <label htmlFor="auth-email" className="auth-modal__label">Email Address</label>
+                  <input
+                    id="auth-email"
+                    type="email"
+                    className="auth-modal__input"
+                    placeholder="tariq@luxury-atelier.ae"
+                    value={authForm.email}
+                    onChange={(e) => setAuthForm({ ...authForm, email: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="auth-modal__field">
+                  <div className="auth-modal__label-row">
+                    <label htmlFor="auth-password" className="auth-modal__label">Password</label>
+                    {authMode === 'login' && (
+                      <button
+                        type="button"
+                        className="auth-modal__forgot-btn"
+                        onClick={() => alert('Password reset link will be sent to your email.')}
+                      >
+                        Forgot?
+                      </button>
+                    )}
+                  </div>
+                  <input
+                    id="auth-password"
+                    type="password"
+                    className="auth-modal__input"
+                    placeholder="••••••••••••"
+                    value={authForm.password}
+                    onChange={(e) => setAuthForm({ ...authForm, password: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <button type="submit" className="auth-modal__submit-btn">
+                  <span>{authMode === 'login' ? 'Sign In' : 'Create Account'}</span>
+                </button>
+              </form>
+
+              <div className="auth-modal__footer">
+                <p className="auth-modal__disclaimer">
+                  By continuing, you agree to Shubra Garments&apos; Bespoke Terms of Concierge & Privacy Policy.
+                </p>
+              </div>
             </div>
           </div>,
           document.body
