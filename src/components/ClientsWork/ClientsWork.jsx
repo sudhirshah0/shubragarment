@@ -10,8 +10,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { clientLogos, clientStatsData } from '../../data/clients';
-import MagneticButton from '../MagneticButton/MagneticButton';
+import { clientStatsData } from '../../data/clients';
 import './ClientsWork.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -103,61 +102,6 @@ const ClientsWork = () => {
               <p className="clients-work__stat-sub">{stat.subtext}</p>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* ── Infinite Logo Marquee Track (Full Width) ─────────── */}
-      <div className="clients-work__marquee-section">
-        <div className="clients-work__marquee-label-row container">
-          <span className="label">INSTITUTIONAL CLIENTELE & STRATEGIC BRANDS</span>
-        </div>
-
-        <div
-          className="clients-work__marquee"
-          data-cursor-text="PARTNERS"
-          aria-label="Client logos marquee"
-        >
-          {/* Dual tracks for seamless infinite looping */}
-          <div className="clients-work__track">
-            {clientLogos.map((client, idx) => (
-              <div key={`${client.name}-1-${idx}`} className="clients-work__logo-item">
-                <span className="clients-work__logo-crest">❖</span>
-                <span className="clients-work__logo-name">{client.name}</span>
-                <span className="clients-work__logo-sector label">{client.sector}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="clients-work__track" aria-hidden="true">
-            {clientLogos.map((client, idx) => (
-              <div key={`${client.name}-2-${idx}`} className="clients-work__logo-item">
-                <span className="clients-work__logo-crest">❖</span>
-                <span className="clients-work__logo-name">{client.name}</span>
-                <span className="clients-work__logo-sector label">{client.sector}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="clients-work__container container">
-
-
-        {/* ── Bottom Section Inquire CTA ─────────────────────── */}
-        <div className="clients-work__bottom-banner">
-          <div className="clients-work__banner-content">
-            <span className="label">COMMISSION CORPORATE UNIFORMS</span>
-            <h3 className="clients-work__banner-title">Outfit Your Enterprise With Sartorial Precision</h3>
-            <p className="tagline">Custom sampling, mobile fabric consultations, and dedicated UAE corporate account managers.</p>
-          </div>
-          <MagneticButton
-            href="#corporate"
-            variant="primary"
-            size="lg"
-            cursorText="INQUIRE"
-          >
-            Request Corporate Dossier
-          </MagneticButton>
         </div>
       </div>
     </section>

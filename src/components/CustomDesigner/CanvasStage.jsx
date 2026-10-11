@@ -35,6 +35,7 @@ const CanvasStage = forwardRef(
       back: [],
     });
 
+    const viewportRef = useRef(null);
     const [hasSelection, setHasSelection] = useState(false);
 
     // ── Helper: Draw Garment Silhouette ──────────────────────────
@@ -355,10 +356,11 @@ const CanvasStage = forwardRef(
       canvas.selectionLineWidth = 1.5;
 
       const handleResize = () => {
-        const viewport = canvasEl.closest('.canvas-stage__viewport');
+        const viewport = viewportRef.current || canvasEl.closest('.canvas-stage__viewport');
         if (!viewport || !fabricCanvasRef.current) return;
         const rect = viewport.getBoundingClientRect();
-        const availableW = Math.max(260, Math.min(STAGE_WIDTH, rect.width - 16));
+        // Support narrow phones down to 320px-360px (Galaxy Z Fold, iPhone SE)
+        const availableW = Math.max(180, Math.min(STAGE_WIDTH, rect.width - 8));
         const scale = availableW / STAGE_WIDTH;
         fabricCanvasRef.current.setDimensions({
           width: availableW,
@@ -385,8 +387,18 @@ const CanvasStage = forwardRef(
       canvas.on('selection:updated', handleSelection);
       canvas.on('selection:cleared', handleSelection);
 
+      // Use both window resize and ResizeObserver on viewport
       window.addEventListener('resize', handleResize);
+      let resizeObserver = null;
+      const viewportEl = viewportRef.current || canvasEl.closest('.canvas-stage__viewport');
+      if (typeof ResizeObserver !== 'undefined' && viewportEl) {
+        resizeObserver = new ResizeObserver(() => {
+          handleResize();
+        });
+        resizeObserver.observe(viewportEl);
+      }
       setTimeout(handleResize, 50);
+      setTimeout(handleResize, 300);
 
       // Keyboard delete shortcut
       const handleKeyDown = (e) => {
@@ -410,6 +422,7 @@ const CanvasStage = forwardRef(
       // Cleanup & proper disposal on unmount
       return () => {
         window.removeEventListener('resize', handleResize);
+        if (resizeObserver) resizeObserver.disconnect();
         window.removeEventListener('keydown', handleKeyDown);
         canvas.off('selection:created', handleSelection);
         canvas.off('selection:updated', handleSelection);
@@ -626,7 +639,7 @@ const CanvasStage = forwardRef(
         </div>
 
         {/* ── Canvas Viewport Container ───────────────────────── */}
-        <div className="canvas-stage__viewport">
+        <div ref={viewportRef} className="canvas-stage__viewport">
           <canvas ref={canvasElRef} className="canvas-stage__canvas" />
 
           {/* Printable Area Subtle Guide Frame */}

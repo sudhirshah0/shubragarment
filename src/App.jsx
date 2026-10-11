@@ -27,6 +27,7 @@ import Testimonials    from './components/Testimonials/Testimonials';
 import BulkCorporate   from './components/BulkCorporate/BulkCorporate';
 import Contact         from './components/Contact/Contact';
 import Footer          from './components/Footer/Footer';
+import FloatingWhatsApp from './components/FloatingWhatsApp/FloatingWhatsApp';
 
 const App = () => {
   /* ── Loader state ────────────────────────────────────────────── */
@@ -73,6 +74,9 @@ const App = () => {
       </main>
 
       <Footer />
+
+      {/* Floating round WhatsApp concierge action in bottom corner */}
+      <FloatingWhatsApp />
     </>
   );
 };

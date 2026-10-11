@@ -181,6 +181,41 @@
   }
 }
 
+@media (max-width: 380px) {
+  .collection-box {
+    padding: 1rem 0.85rem;
+  }
+  .collection-box__media {
+    height: 220px;
+  }
+  .collection-box__title {
+    font-size: 1.05rem;
+  }
+  .collection-box__tagline {
+    font-size: 0.75rem;
+  }
+  .collection-box__price {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .collections__category-bar {
+    gap: 0.35rem;
+    padding: 3px;
+  }
+  .collections__category-tab {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.7rem;
+  }
+  .collection-box {
+    padding: 0.85rem 0.75rem;
+  }
+  .collection-box__media {
+    height: 190px;
+  }
+}
+
 /* ── Product Box Card ────────────────────────────────────────── */
 .collection-box {
   background-color: #ffffff;

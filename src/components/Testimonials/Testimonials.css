@@ -51,180 +51,203 @@
   margin: 0 auto;
 }
 
-/* Client logos row under heading */
-.appreciation__logos-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1rem, 3vw, 2.75rem);
-  margin-top: 1.25rem;
-  padding-block: 0.5rem;
-}
-
-.appreciation__logo-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.75;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.appreciation__logo-item:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-.appreciation__logo-img {
-  height: 32px;
-  width: auto;
-  max-width: 120px;
-  object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: filter 0.3s ease, opacity 0.3s ease;
-}
-
-.appreciation__logo-item:hover .appreciation__logo-img {
-  filter: grayscale(0%);
-  opacity: 1;
-}
-
-/* ── 3 Scrolling Columns Stage ───────────────────────────────── */
-.appreciation__columns-stage {
+/* Automatic Swiping Company Marquee (Left to Right) */
+.appreciation__marquee-container {
   position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 1.5rem;
+  padding-block: 0.75rem;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.appreciation__marquee-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  white-space: nowrap;
+  width: max-content;
+  /* Swiping from left to right */
+  animation: appreciation-swipe-ltr 42s linear infinite;
+  will-change: transform;
+}
+
+.appreciation__marquee-container:hover .appreciation__marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes appreciation-swipe-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appreciation__marquee-track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
+.appreciation__company-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(221, 208, 190, 0.7);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(43, 33, 26, 0.04);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: default;
+  flex-shrink: 0;
+}
+
+.appreciation__company-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--bronze);
+  box-shadow: 0 8px 20px rgba(43, 33, 26, 0.08);
+}
+
+.appreciation__company-icon {
+  color: var(--bronze);
+  font-size: 0.85rem;
+  line-height: 1;
+}
+
+.appreciation__company-name {
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--espresso);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.appreciation__company-sector {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  color: var(--taupe);
+  letter-spacing: 0.06em;
+  padding-left: 0.65rem;
+  border-left: 1px solid var(--sand);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .appreciation__marquee-container {
+    margin-top: 1rem;
+    padding-block: 0.5rem;
+  }
+  .appreciation__company-pill {
+    padding: 0.5rem 0.95rem;
+    gap: 0.55rem;
+  }
+  .appreciation__company-name {
+    font-size: 0.75rem;
+  }
+  .appreciation__company-sector {
+    font-size: 0.6rem;
+    padding-left: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .appreciation__company-pill {
+    padding: 0.45rem 0.75rem;
+    gap: 0.45rem;
+  }
+  .appreciation__company-name {
+    font-size: 0.7rem;
+  }
+  .appreciation__company-sector {
+    display: none;
+  }
+}
+
+/* ── Automatic Rotater: 1-2 Featured Appreciation Comments ─────── */
+.appreciation__rotater-wrapper {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  margin-top: 0.5rem;
+}
+
+.appreciation__rotater-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  height: 620px;
-  max-height: 80vh;
-  overflow: hidden;
-  /* Soft fade mask at top and bottom edges */
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 12%,
-    rgba(0, 0, 0, 1) 88%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 1) 12%,
-    rgba(0, 0, 0, 1) 88%,
-    transparent 100%
-  );
+  width: 100%;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-/* Tablet: 2 columns */
-@media (min-width: 680px) {
-  .appreciation__columns-stage {
+@media (min-width: 768px) {
+  .appreciation__rotater-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Hide 3rd column on tablet */
-  .appreciation__column--3 {
-    display: none;
-  }
-}
-
-/* Desktop: 3 columns */
-@media (min-width: 1024px) {
-  .appreciation__columns-stage {
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.75rem;
   }
-
-  .appreciation__column--3 {
-    display: flex;
-  }
 }
 
-/* On mobile, hide columns 2 and 3 so 1 full-width column scrolls */
-@media (max-width: 679px) {
-  .appreciation__columns-stage {
-    height: 480px;
-  }
-  .appreciation__column--2,
-  .appreciation__column--3 {
-    display: none;
-  }
-  .appreciation__card {
-    padding: 1.25rem 1.15rem;
-  }
+.appreciation__rotater--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@media (max-width: 380px) {
-  .appreciation__columns-stage {
-    height: 420px;
-  }
+.appreciation__rotater--fading {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
-.appreciation__column {
+/* Pagination indicator dots */
+.appreciation__rotater-dots {
   display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-block: 0.25rem;
 }
 
-.appreciation__column-track {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  will-change: transform;
-  transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
+.appreciation__dot-btn {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full, 9999px);
+  background-color: rgba(200, 185, 168, 0.55);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              transform 0.2s ease;
 }
 
-.appreciation__column-track--desktop {
-  display: flex;
+.appreciation__dot-btn:hover {
+  background-color: var(--taupe);
+  transform: scale(1.2);
 }
 
-.appreciation__column-track--mobile {
-  display: none;
+.appreciation__dot-btn--active {
+  width: 26px;
+  background-color: var(--bronze);
 }
 
-@media (max-width: 679px) {
-  .appreciation__column-track--desktop {
-    display: none;
+@media (max-width: 639px) {
+  .appreciation {
+    padding-block: clamp(3rem, 6vh, 4.5rem);
   }
-  .appreciation__column-track--mobile {
-    display: flex;
-    animation: appreciation-scroll-vertical 42s linear infinite;
+  .appreciation__container {
+    gap: 1.75rem;
   }
-}
-
-/* ── Pure CSS Infinite Vertical Loop (Bottom to Top) ────────── */
-/* Column 1: duration ~28s */
-.appreciation__column--1 .appreciation__column-track--desktop {
-  animation: appreciation-scroll-vertical 28s linear infinite;
-}
-
-/* Column 2: slower duration ~35s, starts offset lower */
-.appreciation__column--2 .appreciation__column-track {
-  animation: appreciation-scroll-vertical 35s linear infinite;
-  animation-delay: -9s; /* starts lower so cards do not line up */
-}
-
-/* Column 3: duration ~31s, slightly offset */
-.appreciation__column--3 .appreciation__column-track {
-  animation: appreciation-scroll-vertical 31s linear infinite;
-  animation-delay: -4s;
-}
-
-@keyframes appreciation-scroll-vertical {
-  from {
-    transform: translateY(0);
+  .appreciation__rotater-wrapper {
+    gap: 1.25rem;
   }
-  to {
-    transform: translateY(-50%);
-  }
-}
-
-/* Slow down / pause on hover */
-.appreciation__columns-stage:hover .appreciation__column-track {
-  animation-play-state: paused;
 }
 
 /* ── Review Cards ────────────────────────────────────────────── */

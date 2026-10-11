@@ -1,59 +1,63 @@
 /* ═══════════════════════════════════════════════════════════════
-   Contact — Atelier Concierge & Private Appointments
-   - Centered luxury heading and concise paragraph
-   - Minimalist, high-end design with direct VIP WhatsApp concierge
-   - Streamlined appointment request form with zero clutter
+   Contact — Atelier Concierge & Enquiries
+   - Centered luxury heading and clear enquiry purpose
+   - Direct VIP WhatsApp concierge and quick connect channels
+   - Streamlined enquiry form with message field and enquiry topics
    ═══════════════════════════════════════════════════════════════ */
 
 import { useState } from 'react';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import './Contact.css';
 
-const CONSULT_TYPES = [
-  'Private Atelier Fitting (Dubai)',
-  'Mobile VIP Tailor (UAE Home / Office)',
-  'Corporate Uniform Consultation',
+const ENQUIRY_TYPES = [
+  'General Enquiry',
+  'Bespoke Tailoring & Private Fitting',
+  'Bulk & Corporate Uniforms',
+  'Fabric Sourcing & Premium Linens',
+  'Atelier Visit (Jumeirah, Dubai)',
 ];
 
 const Contact = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [consultType, setConsultType] = useState(CONSULT_TYPES[0]);
-  const [notes, setNotes] = useState('');
-  const [isBooked, setIsBooked] = useState(false);
+  const [email, setEmail] = useState('');
+  const [enquiryType, setEnquiryType] = useState(ENQUIRY_TYPES[0]);
+  const [message, setMessage] = useState('');
+  const [isSent, setIsSent] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const lines = [
-      '🏛️ *SHUBRA GARMENTS — ATELIER APPOINTMENT*',
+      '🏛️ *SHUBRA GARMENTS — CLIENT ENQUIRY*',
       '══════════════════════════════',
       `• *Client Name:* ${name}`,
       `• *WhatsApp / Phone:* ${phone}`,
-      `• *Consultation Type:* ${consultType}`,
-      notes ? `• *Notes:* ${notes}` : '',
+      email ? `• *Email:* ${email}` : '',
+      `• *Topic:* ${enquiryType}`,
+      message ? `• *Enquiry Details:* ${message}` : '',
       '══════════════════════════════',
-      '⚜️ _Requested via Shubra Website Concierge_',
+      '⚜️ _Sent via Shubra Garments Website_',
     ].filter(Boolean);
 
     const waUrl = `https://wa.me/971500000000?text=${encodeURIComponent(lines.join('\n'))}`;
-    setIsBooked(true);
+    setIsSent(true);
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <section className="contact section" id="contact" aria-label="Contact and Atelier Booking">
+    <section className="contact section" id="contact" aria-label="Contact and Atelier Enquiries">
       <div className="contact__glow-orb" aria-hidden="true" />
       <div className="contact__container container">
         {/* ── Centered Header ─────────────────────────────────── */}
         <div className="contact__header contact__header--centered">
           <div className="contact__badge">
             <span className="contact__badge-dot" />
-            <span className="label">PRIVATE ATELIER & CONCIERGE</span>
+            <span className="label">CLIENT CONCIERGE</span>
           </div>
-          <h2 className="contact__title">Schedule Your Private Fitting</h2>
+          <h2 className="contact__title">Make an Enquiry</h2>
           <p className="contact__subtitle">
-            Experience bespoke sartorial craftsmanship at our Dubai atelier or reserve our mobile master tailor anywhere across the UAE.
+            Have a question about our bespoke tailoring, corporate orders, or bespoke fabric selection? Reach our concierge team directly.
           </p>
         </div>
 
@@ -99,17 +103,17 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Minimalist Booking Form */}
+          {/* Minimalist Enquiry Form */}
           <div className="contact__form-panel">
             <form onSubmit={handleSubmit} className="contact__form">
               <div className="contact__input-grid">
                 <div className="contact__field">
-                  <label className="label" htmlFor="client-name">YOUR NAME</label>
+                  <label className="label" htmlFor="client-name">YOUR NAME *</label>
                   <input
                     id="client-name"
                     type="text"
                     required
-                    placeholder="e.g. Mansoor Al Qasimi"
+                    placeholder="e.g. Tariq Al Mansoori"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="contact__input"
@@ -117,7 +121,7 @@ const Contact = () => {
                 </div>
 
                 <div className="contact__field">
-                  <label className="label" htmlFor="client-phone">PHONE / WHATSAPP</label>
+                  <label className="label" htmlFor="client-phone">PHONE / WHATSAPP *</label>
                   <input
                     id="client-phone"
                     type="tel"
@@ -130,15 +134,27 @@ const Contact = () => {
                 </div>
 
                 <div className="contact__field">
-                  <label className="label" htmlFor="consult-type">CONSULTATION FORMAT</label>
+                  <label className="label" htmlFor="client-email">EMAIL ADDRESS (OPTIONAL)</label>
+                  <input
+                    id="client-email"
+                    type="email"
+                    placeholder="name@example.ae"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="contact__input"
+                  />
+                </div>
+
+                <div className="contact__field">
+                  <label className="label" htmlFor="enquiry-type">TOPIC OF ENQUIRY</label>
                   <div className="contact__select-wrapper">
                     <select
-                      id="consult-type"
-                      value={consultType}
-                      onChange={(e) => setConsultType(e.target.value)}
+                      id="enquiry-type"
+                      value={enquiryType}
+                      onChange={(e) => setEnquiryType(e.target.value)}
                       className="contact__select"
                     >
-                      {CONSULT_TYPES.map((t) => (
+                      {ENQUIRY_TYPES.map((t) => (
                         <option key={t} value={t}>
                           {t}
                         </option>
@@ -152,15 +168,16 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="contact__field">
-                  <label className="label" htmlFor="client-notes">DATE OR REQUEST (OPTIONAL)</label>
-                  <input
-                    id="client-notes"
-                    type="text"
-                    placeholder="e.g. Tomorrow 4 PM, wedding suiting"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    className="contact__input"
+                <div className="contact__field contact__field--full">
+                  <label className="label" htmlFor="client-message">YOUR ENQUIRY MESSAGE *</label>
+                  <textarea
+                    id="client-message"
+                    required
+                    rows={4}
+                    placeholder="Tell us what you are looking for (e.g. bespoke suit requirements, corporate uniform order size, wedding date, fabric enquiry)..."
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="contact__textarea"
                   />
                 </div>
               </div>
@@ -170,16 +187,16 @@ const Contact = () => {
                   type="submit"
                   variant="primary"
                   size="lg"
-                  cursorText="BOOK"
+                  cursorText="SEND"
                   className="contact__submit-btn"
                 >
-                  Reserve Appointment via WhatsApp
+                  Send Enquiry via WhatsApp
                 </MagneticButton>
               </div>
 
-              {isBooked && (
+              {isSent && (
                 <div className="contact__success-box">
-                  <span>✓ Request sent. Our concierge will confirm your suite reservation shortly.</span>
+                  <span>✓ Your enquiry has been sent. Our client concierge will respond within minutes!</span>
                 </div>
               )}
             </form>
@@ -191,3 +208,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

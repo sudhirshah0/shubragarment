@@ -18,9 +18,12 @@ const Cursor = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Only enable on desktop with fine pointer
+  const isFinePointer = typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
   useEffect(() => {
-    // Only enable on desktop with fine pointer
-    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (!isFinePointer) return;
 
     const cursorEl = cursorRef.current;
@@ -74,6 +77,8 @@ const Cursor = () => {
       document.removeEventListener('mouseover', handleMouseOver);
     };
   }, []);
+
+  if (!isFinePointer) return null;
 
   return (
     <div

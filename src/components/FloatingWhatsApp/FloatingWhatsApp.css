@@ -1,0 +1,152 @@
+/* ═══════════════════════════════════════════════════════════════
+   FloatingWhatsApp — Styles
+   - Small round button anchored to bottom right
+   - WhatsApp brand color #25D366 with luxury glow and gentle ripple
+   - Accessible tooltip on hover / focus
+   - Responsive scaling for mobile & narrow viewports
+   ═══════════════════════════════════════════════════════════════ */
+
+.floating-wa {
+  position: fixed;
+  bottom: clamp(1.25rem, 3.5vw, 2rem);
+  right: clamp(1.25rem, 3.5vw, 2rem);
+  z-index: 999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #25d366;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.42), 0 2px 6px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s ease,
+              background-color 0.2s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.floating-wa:hover {
+  transform: scale(1.1) translateY(-2px);
+  background-color: #1ebc59;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.55), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-wa:active {
+  transform: scale(0.95);
+}
+
+.floating-wa__icon {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.25s ease;
+  display: block;
+}
+
+.floating-wa:hover .floating-wa__icon {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+/* Subtle continuous pulse wave */
+.floating-wa__pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background-color: #25d366;
+  opacity: 0.45;
+  animation: floating-wa-pulse 2.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes floating-wa-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+/* Desktop Hover Tooltip */
+.floating-wa__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: rgba(43, 33, 26, 0.94);
+  color: #f7f2ec;
+  font-family: var(--font-body, 'Poppins', sans-serif);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid rgba(217, 188, 122, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.floating-wa__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid rgba(43, 33, 26, 0.94);
+}
+
+.floating-wa:hover .floating-wa__tooltip,
+.floating-wa:focus-visible .floating-wa__tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile & Small screens */
+@media (max-width: 600px) {
+  .floating-wa {
+    bottom: 1.15rem;
+    right: 1.15rem;
+    width: 46px;
+    height: 46px;
+  }
+  .floating-wa__icon {
+    width: 28px;
+    height: 28px;
+  }
+  .floating-wa__tooltip {
+    display: none; /* Keep clean on touch screens */
+  }
+}
+
+@media (max-width: 360px) {
+  .floating-wa {
+    bottom: 0.85rem;
+    right: 0.85rem;
+    width: 42px;
+    height: 42px;
+  }
+  .floating-wa__icon {
+    width: 25px;
+    height: 25px;
+  }
+}

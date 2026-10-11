@@ -443,3 +443,33 @@
     gap: 2.5rem;
   }
 }
+
+@media (max-width: 360px) {
+  .bulk-corporate__benefit-card {
+    padding: 1.25rem 1rem;
+    gap: 0.65rem;
+  }
+  .bulk-corporate__benefit-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.25rem;
+  }
+  .bulk-corporate__benefit-title {
+    font-size: 0.95rem;
+  }
+  .bulk-corporate__benefit-desc {
+    font-size: 0.8125rem;
+  }
+  .bulk-corporate__tier-card {
+    padding: 1.75rem 1rem 1.25rem;
+  }
+  .bulk-corporate__tier-name {
+    font-size: 1.1rem;
+  }
+  .bulk-corporate__tier-discount {
+    font-size: 1.05rem;
+  }
+  .bulk-corporate__form-wrap {
+    padding: 1.25rem 0.85rem;
+  }
+}

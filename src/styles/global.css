@@ -258,12 +258,83 @@ html, body {
   }
 }
 
-/* Extra small screens (iPhone SE, Galaxy Fold 320px–375px) */
+/* Extra small screens (iPhone SE, Galaxy Z Fold 360px width, etc.) */
 @media (max-width: 380px) {
   :root {
-    --container-px: 0.75rem;
-    --fs-display: 1.75rem;
-    --fs-h1: 1.4rem;
+    --container-px: 0.85rem;
+    --section-padding: clamp(1.75rem, 4vh, 2.75rem);
+    --fs-display: 1.55rem;
+    --fs-h1: 1.25rem;
+    --fs-h2: 1.1rem;
+    --fs-h3: 0.95rem;
+    --fs-body: 0.8rem;
+    --fs-small: 0.72rem;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+}
+
+/* Narrow devices like Galaxy Z Fold cover screen (360px x 880px / 344px) */
+@media (max-width: 360px) {
+  :root {
+    --container-px: 0.65rem;
+    --section-padding: 1.75rem;
+    --fs-display: 1.4rem;
+    --fs-h1: 1.15rem;
+    --fs-h2: 1rem;
+    --fs-h3: 0.875rem;
+    --fs-body: 0.775rem;
+    --fs-small: 0.6875rem;
+  }
+
+  .container {
+    padding-inline: 0.65rem !important;
+  }
+
+  .label {
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ── Modern Rendering & Scrolling Performance Optimizations ── */
+/* Promote key animated elements to separate compositor layers */
+.hero__slider-track,
+.appreciation__column-track,
+.clients-work__track {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Enable content-visibility on offscreen sections so browsers skip rendering offscreen DOM trees */
+@supports (content-visibility: auto) {
+  .bulk-corporate,
+  .clients-work,
+  .appreciation,
+  .contact {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 700px;
+  }
+}
+
+/* Soften heavy GPU-intensive blurs on mobile screens to avoid FPS drops */
+@media (max-width: 768px) {
+  .hero__bg-glow,
+  .hero__pedestal-glow,
+  .about__image-glow,
+  .contact__glow-orb {
+    filter: blur(16px) !important;
+  }
+
+  .collections-modal__backdrop,
+  .checkout-modal__backdrop,
+  .navbar-auth__backdrop {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
   }
 }
 

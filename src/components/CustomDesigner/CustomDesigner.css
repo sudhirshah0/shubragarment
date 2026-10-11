@@ -77,12 +77,12 @@
 
 .custom-designer__tab {
   flex: 1;
-  min-width: max-content;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.7rem 0.85rem;
+  padding: 0.7rem 0.65rem;
   font-family: var(--font-body);
   font-size: 0.8125rem;
   font-weight: 500;
@@ -110,8 +110,15 @@
 
 @media (max-width: 480px) {
   .custom-designer__tab {
-    padding: 0.55rem 0.65rem;
-    font-size: 0.725rem;
+    padding: 0.55rem 0.45rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .custom-designer__tab {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.6875rem;
   }
 }
 
@@ -119,27 +126,36 @@
 .custom-designer__workspace {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: clamp(1.75rem, 3.5vw, 3rem);
   align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
 }
 
 @media (min-width: 1024px) {
   .custom-designer__workspace {
     grid-template-columns: 1.05fr 1fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
   }
 }
 
 .custom-designer__stage-col {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
   position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin-inline: auto;
 }
 
 @media (min-width: 1024px) {
   .custom-designer__stage-col {
     position: sticky;
     top: 90px;
+    max-width: 100%;
+    margin-inline: 0;
   }
 }
 
@@ -209,21 +225,27 @@
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at 50% 50%, #ffffff 0%, #ede6dc 100%);
-  min-height: clamp(340px, 50vh, 520px);
+  min-height: clamp(300px, 46vh, 520px);
   overflow: hidden;
   touch-action: pan-y;
+  padding: 0.5rem;
 }
 
 .canvas-stage__canvas {
   max-width: 100%;
   height: auto;
+  display: block;
+  margin-inline: auto;
 }
 
 /* Fabric canvas wrapper responsiveness */
 .canvas-container {
-  margin-inline: auto;
+  margin-inline: auto !important;
   box-shadow: 0 8px 32px rgba(43, 33, 26, 0.04);
   touch-action: pan-y;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Subtle Printable Area Guide */
@@ -440,8 +462,9 @@
   .custom-designer__stage-action-btn {
     width: 100%;
     justify-content: center;
-    padding: 0.5rem 0.35rem;
-    font-size: 0.75rem;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.72rem;
+    white-space: nowrap;
   }
   .custom-designer__price-pill {
     width: 100%;
@@ -450,22 +473,51 @@
   }
 }
 
+@media (max-width: 360px) {
+  .custom-designer__stage-action-btn {
+    font-size: 0.68rem;
+    padding: 0.45rem 0.15rem;
+    gap: 0.25rem;
+  }
+  .custom-designer__stage-action-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
 /* ── Right Column: Step Controls Panel ────────────────────────── */
 .custom-designer__controls-col {
   width: 100%;
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .custom-designer__controls-col {
+    max-width: 100%;
+    margin-inline: 0;
+  }
 }
 
 .custom-designer__panel {
   background-color: var(--cream);
   border: 1px solid rgba(221, 208, 190, 0.8);
   border-radius: var(--radius-md);
-  padding: clamp(1.15rem, 3vw, 2.25rem);
+  padding: clamp(1.25rem, 3.5vw, 2.25rem);
   box-shadow: var(--shadow-sm);
+  width: 100%;
 }
 
 @media (max-width: 480px) {
   .custom-designer__panel {
-    padding: 1rem 0.85rem;
+    padding: 1.15rem 0.95rem;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .custom-designer__panel {
+    padding: 0.95rem 0.75rem;
   }
 }
 
@@ -473,6 +525,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  width: 100%;
 }
 
 .custom-designer__pane-header {
@@ -555,24 +608,27 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.65rem;
+  width: 100%;
 }
 
-@media (max-width: 380px) {
+@media (min-width: 480px) and (max-width: 767px) {
   .garment-tabs {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.45rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
   }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .garment-tabs {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
   }
 }
 
 @media (min-width: 1024px) {
   .garment-tabs {
     grid-template-columns: repeat(4, 1fr);
+    gap: 0.65rem;
   }
 }
 
@@ -581,6 +637,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   padding: 0.75rem 0.5rem;
   background-color: var(--linen);
@@ -594,17 +651,27 @@
 
 @media (max-width: 480px) {
   .garment-tab {
-    padding: 0.6rem 0.35rem;
+    padding: 0.55rem 0.35rem;
   }
   .garment-tab__preview-img-wrap {
-    width: 46px !important;
-    height: 46px !important;
+    width: 48px !important;
+    height: 48px !important;
   }
   .garment-tab__name {
     font-size: 0.8125rem !important;
   }
   .garment-tab__price {
     font-size: 0.6875rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .garment-tab {
+    padding: 0.45rem 0.25rem;
+  }
+  .garment-tab__preview-img-wrap {
+    width: 42px !important;
+    height: 42px !important;
   }
 }
 
@@ -1258,6 +1325,7 @@
   gap: 0.75rem;
   margin-top: 0.75rem;
   padding-top: 0.5rem;
+  width: 100%;
 }
 
 .order-form__back-btn {
@@ -1284,6 +1352,30 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .order-form__actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.65rem !important;
+  }
+  .order-form__back-btn {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 0.65rem 1rem !important;
+  }
+  .order-form__right-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+  .order-form__download-btn,
+  .order-form__wa-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.75rem 1rem !important;
+  }
 }
 
 .order-form__download-btn {
@@ -1337,4 +1429,344 @@
   color: #1b5e20;
   font-size: 0.8125rem;
   margin-top: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Mobile Sizing & Centering Enhancements (<= 480px and <= 360px)
+   Specifically handles Samsung Galaxy Z Fold (360px width) & iPhone SE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .custom-designer {
+    padding-top: 1.5rem;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .custom-designer__container {
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    padding-inline: 0.75rem;
+  }
+
+  .custom-designer__header {
+    gap: 0.5rem;
+  }
+
+  .custom-designer__title-row {
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  .custom-designer__title {
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .custom-designer__subtitle {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .custom-designer__workspace {
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  .custom-designer__stage-col,
+  .custom-designer__controls-col {
+    max-width: 100%;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .canvas-stage {
+    border-radius: 12px;
+    width: 100%;
+  }
+
+  .canvas-stage__toolbar {
+    padding: 0.65rem 0.85rem;
+    justify-content: center;
+  }
+
+  .canvas-stage__view-toggle {
+    width: 100%;
+    max-width: 240px;
+    display: flex;
+  }
+
+  .canvas-stage__view-btn {
+    flex: 1;
+    text-align: center;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.65rem;
+  }
+
+  .canvas-stage__viewport {
+    min-height: 280px;
+    padding: 0.35rem;
+  }
+
+  .custom-designer__tabs {
+    margin-bottom: 0.85rem;
+    padding: 3px;
+    gap: 3px;
+    width: 100%;
+  }
+
+  .custom-designer__tab {
+    padding: 0.55rem 0.35rem;
+    font-size: 0.72rem;
+  }
+
+  .text-controls__row-split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .text-controls__subgroup {
+    width: 100%;
+  }
+
+  .text-controls__color-swatches {
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .custom-designer__container {
+    padding-inline: 0.5rem !important;
+    gap: 1.25rem;
+  }
+
+  .custom-designer__title {
+    font-size: 1.18rem;
+  }
+
+  .custom-designer__subtitle {
+    font-size: 0.72rem;
+  }
+
+  /* Segmented step tabs */
+  .custom-designer__tabs {
+    margin-bottom: 0.65rem;
+    padding: 2px;
+    gap: 2px;
+  }
+
+  .custom-designer__tab {
+    padding: 0.45rem 0.2rem;
+    font-size: 0.65rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* Controls Panel */
+  .custom-designer__panel {
+    padding: 0.75rem 0.6rem !important;
+    border-radius: 10px;
+  }
+
+  .custom-designer__pane-title {
+    font-size: 1.15rem;
+  }
+
+  .custom-designer__pane-desc {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  .custom-designer__step-pane {
+    gap: 0.95rem;
+  }
+
+  /* Canvas Stage on 360px */
+  .canvas-stage__toolbar {
+    padding: 0.5rem 0.5rem;
+  }
+
+  .canvas-stage__view-toggle {
+    max-width: 210px;
+  }
+
+  .canvas-stage__view-btn {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  .canvas-stage__viewport {
+    min-height: 240px;
+    padding: 0.25rem;
+  }
+
+  /* Stage Actions row (Add to Bag / Download / Reset) */
+  .custom-designer__stage-actions {
+    padding: 0.45rem 0.5rem !important;
+    gap: 0.4rem !important;
+  }
+
+  .custom-designer__stage-left {
+    gap: 0.3rem !important;
+  }
+
+  .custom-designer__stage-action-btn {
+    padding: 0.42rem 0.15rem !important;
+    font-size: 0.65rem !important;
+    gap: 0.2rem !important;
+  }
+
+  .custom-designer__stage-action-btn svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .custom-designer__price-pill {
+    padding: 0.35rem 0.5rem !important;
+  }
+
+  .custom-designer__price-pill-val {
+    font-size: 0.95rem !important;
+  }
+
+  /* Garment tabs 2x2 grid */
+  .garment-tabs {
+    gap: 0.4rem;
+  }
+
+  .garment-tab {
+    padding: 0.4rem 0.2rem !important;
+  }
+
+  .garment-tab__preview-img-wrap {
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 0.3rem;
+  }
+
+  .garment-tab__name {
+    font-size: 0.75rem !important;
+  }
+
+  .garment-tab__price {
+    font-size: 0.65rem !important;
+  }
+
+  /* Color Swatches: 6 circles fit smoothly */
+  .color-swatches {
+    gap: 0.35rem !important;
+  }
+
+  .color-swatch {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  /* Text Controls */
+  .text-controls {
+    gap: 0.85rem;
+  }
+
+  .text-controls__upload-btn {
+    padding: 0.55rem 0.65rem;
+  }
+
+  .text-controls__upload-title {
+    font-size: 0.68rem;
+  }
+
+  .text-controls__upload-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .text-controls__input {
+    font-size: 0.75rem;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .text-controls__add-btn {
+    font-size: 0.65rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  .text-controls__font-pill {
+    font-size: 0.72rem;
+    padding: 0.45rem 0.5rem;
+  }
+
+  .text-controls__style-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+
+  .text-controls__color-dot {
+    width: 19px;
+    height: 19px;
+  }
+
+  /* Order Form */
+  .order-form {
+    gap: 0.85rem;
+  }
+
+  .order-form__sizes-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.25rem !important;
+  }
+
+  .order-form__size-btn {
+    padding: 0.4rem 0.15rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .order-form__fit-pills {
+    gap: 0.25rem !important;
+  }
+
+  .order-form__fit-pill {
+    padding: 0.45rem 0.25rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .order-form__select,
+  .order-form__input {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.65rem !important;
+  }
+
+  .order-form__price-card {
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  .order-form__total-price {
+    font-size: 1.25rem !important;
+  }
+
+  .order-form__stepper-btn {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .order-form__download-btn,
+  .order-form__wa-btn {
+    font-size: 0.7rem !important;
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  .order-form__actions {
+    gap: 0.45rem !important;
+  }
+
+  .custom-designer__pane-nav .magnetic-btn,
+  .custom-designer__pane-nav--split .magnetic-btn {
+    max-width: 100% !important;
+    font-size: 0.75rem !important;
+    padding: 0.65rem 1rem !important;
+  }
 }

@@ -10,8 +10,8 @@
    - Normal grid when prefers-reduced-motion is enabled
    ═══════════════════════════════════════════════════════════════ */
 
-import { useMemo } from 'react';
-import { sampleReviews, clientLogosList } from '../../data/testimonials';
+import { useState, useEffect } from 'react';
+import { sampleReviews, uaeCompaniesList } from '../../data/testimonials';
 import './Testimonials.css';
 
 // Helper to extract initials when there's no photo
@@ -66,98 +66,102 @@ const ReviewCard = ({ review }) => {
 };
 
 const Testimonials = () => {
-  // Distribute 9 reviews across 3 columns:
-  // Col 1: reviews 0, 3, 6
-  // Col 2: reviews 1, 4, 7
-  // Col 3: reviews 2, 5, 8
-  const { col1, col2, col3 } = useMemo(() => {
-    const c1 = [];
-    const c2 = [];
-    const c3 = [];
-    sampleReviews.forEach((item, index) => {
-      if (index % 3 === 0) c1.push(item);
-      else if (index % 3 === 1) c2.push(item);
-      else c3.push(item);
-    });
-    return { col1: c1, col2: c2, col3: c3 };
-  }, []);
+  // Pool of reviews
+  const [shuffledList] = useState(() => {
+    return [...sampleReviews].sort(() => Math.random() - 0.5);
+  });
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [fade, setFade] = useState(true);
+
+  // Auto-rotate every 4.5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 2) % shuffledList.length);
+        setFade(true);
+      }, 350); // smooth crossfade duration
+    }, 4500);
+
+    return () => clearInterval(timer);
+  }, [shuffledList.length]);
+
+  const activeReview1 = shuffledList[currentIndex];
+  const activeReview2 = shuffledList[(currentIndex + 1) % shuffledList.length];
+
+  const totalPairs = Math.ceil(shuffledList.length / 2);
+  const currentPairIdx = Math.floor(currentIndex / 2);
+
+  const goToPair = (pairIdx) => {
+    setFade(false);
+    setTimeout(() => {
+      setCurrentIndex((pairIdx * 2) % shuffledList.length);
+      setFade(true);
+    }, 350);
+  };
 
   return (
     <section
       className="appreciation section"
       id="appreciation"
-      aria-label="Trusted by teams across the UAE"
+      aria-label="Trusted by companies across the UAE"
     >
       <div className="appreciation__container container">
-        {/* ── Section Heading & Client Logos Row ─────────────── */}
+        {/* ── Section Heading & Continuously Swiping Company Marquee ── */}
         <div className="appreciation__header">
-          <h2 className="appreciation__title">Trusted by teams across the UAE.</h2>
+          <h2 className="appreciation__title">Trusted by companies across the UAE.</h2>
           <p className="appreciation__subtitle tagline">
             Tailored apparel, bespoke uniforms, and corporate suiting crafted with uncompromising precision.
           </p>
 
-          <div className="appreciation__logos-row" aria-label="Clients">
-            {clientLogosList.map((client) => (
-              <div key={client.name} className="appreciation__logo-item">
-                <img
-                  src={client.src}
-                  alt={`${client.name} logo`}
-                  className="appreciation__logo-img"
-                  loading="lazy"
-                />
-              </div>
-            ))}
+          {/* Automatic Swiping Company Marquee (Left to Right) */}
+          <div className="appreciation__marquee-container" aria-label="Partner Companies">
+            <div className="appreciation__marquee-track">
+              {/* Primary list */}
+              {uaeCompaniesList.map((company, idx) => (
+                <div key={`comp-a-${idx}`} className="appreciation__company-pill">
+                  <span className="appreciation__company-icon" aria-hidden="true">⚜</span>
+                  <span className="appreciation__company-name">{company.name}</span>
+                  <span className="appreciation__company-sector">{company.sector}</span>
+                </div>
+              ))}
+              {/* Duplicated list for seamless infinite loop */}
+              {uaeCompaniesList.map((company, idx) => (
+                <div key={`comp-b-${idx}`} className="appreciation__company-pill">
+                  <span className="appreciation__company-icon" aria-hidden="true">⚜</span>
+                  <span className="appreciation__company-name">{company.name}</span>
+                  <span className="appreciation__company-sector">{company.sector}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* ── 3 Scrolling Columns of Review Cards ───────────── */}
-        <div className="appreciation__columns-stage">
-          {/* Column 1 (All reviews on mobile, Col 1 on tablet/desktop) */}
-          <div className="appreciation__column appreciation__column--1">
-            <div className="appreciation__column-track appreciation__column-track--desktop">
-              {/* Primary list for desktop */}
-              {col1.map((rev) => (
-                <ReviewCard key={`c1-a-${rev.id}`} review={rev} />
-              ))}
-              {/* Duplicated list for seamless infinite loop */}
-              {col1.map((rev) => (
-                <ReviewCard key={`c1-b-${rev.id}`} review={rev} />
-              ))}
-            </div>
-
-            <div className="appreciation__column-track appreciation__column-track--mobile">
-              {/* Complete list of all reviews on small screens */}
-              {sampleReviews.map((rev) => (
-                <ReviewCard key={`c-mob-a-${rev.id}`} review={rev} />
-              ))}
-              {sampleReviews.map((rev) => (
-                <ReviewCard key={`c-mob-b-${rev.id}`} review={rev} />
-              ))}
-            </div>
+        {/* ── Automatic Rotater: 1-2 Featured Appreciation Comments ── */}
+        <div className="appreciation__rotater-wrapper">
+          <div
+            className={`appreciation__rotater-grid ${
+              fade ? 'appreciation__rotater--visible' : 'appreciation__rotater--fading'
+            }`}
+          >
+            {activeReview1 && <ReviewCard review={activeReview1} />}
+            {activeReview2 && <ReviewCard review={activeReview2} />}
           </div>
 
-          {/* Column 2 (Different Speed, Offset start) */}
-          <div className="appreciation__column appreciation__column--2">
-            <div className="appreciation__column-track">
-              {col2.map((rev) => (
-                <ReviewCard key={`c2-a-${rev.id}`} review={rev} />
-              ))}
-              {col2.map((rev) => (
-                <ReviewCard key={`c2-b-${rev.id}`} review={rev} />
-              ))}
-            </div>
-          </div>
-
-          {/* Column 3 (Different Speed) */}
-          <div className="appreciation__column appreciation__column--3">
-            <div className="appreciation__column-track">
-              {col3.map((rev) => (
-                <ReviewCard key={`c3-a-${rev.id}`} review={rev} />
-              ))}
-              {col3.map((rev) => (
-                <ReviewCard key={`c3-b-${rev.id}`} review={rev} />
-              ))}
-            </div>
+          {/* Pagination Dots indicator */}
+          <div className="appreciation__rotater-dots" aria-label="Testimonial Navigation">
+            {Array.from({ length: totalPairs }).map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={`appreciation__dot-btn ${
+                  currentPairIdx === idx ? 'appreciation__dot-btn--active' : ''
+                }`}
+                onClick={() => goToPair(idx)}
+                aria-label={`Show testimonial group ${idx + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -166,3 +170,4 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
+

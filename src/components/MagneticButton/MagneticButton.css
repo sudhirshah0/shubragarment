@@ -175,3 +175,34 @@
   cursor: not-allowed;
   pointer-events: none;
 }
+
+/* ── Mobile responsive button padding and font size ─────────── */
+@media (max-width: 480px) {
+  .magnetic-btn--lg {
+    font-size: 0.75rem;
+    padding: 0.85rem 1.6rem;
+  }
+  .magnetic-btn--md {
+    font-size: 0.72rem;
+    padding: 0.75rem 1.4rem;
+  }
+  .magnetic-btn--sm {
+    font-size: 0.65rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .magnetic-btn--lg {
+    font-size: 0.7rem;
+    padding: 0.75rem 1.25rem;
+  }
+  .magnetic-btn--md {
+    font-size: 0.68rem;
+    padding: 0.65rem 1.15rem;
+  }
+  .magnetic-btn--sm {
+    font-size: 0.62rem;
+    padding: 0.5rem 0.85rem;
+  }
+}

@@ -16,12 +16,12 @@ import MagneticButton from '../MagneticButton/MagneticButton';
 import './Navbar.css';
 
 const NAV_LINKS = [
-  { label: 'ABOUT', href: '#about' },
-  { label: 'COLLECTION', href: '#collections' },
-  { label: 'CUSTOM DESIGN', href: '#custom-designer' },
-  { label: 'CORPORATE / B2B', href: '#corporate' },
-  { label: 'LOOKBOOK', href: '#lookbook' },
-  { label: 'CONTACT', href: '#contact' },
+  { label: 'About', href: '#about' },
+  { label: 'Collection', href: '#collections' },
+  { label: 'Custom Design', href: '#custom-designer' },
+  { label: 'Corporate / B2B', href: '#corporate' },
+  { label: 'Lookbook', href: '#lookbook' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 const Navbar = () => {

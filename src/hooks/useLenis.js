@@ -30,13 +30,28 @@ const useLenis = () => {
 
     if (prefersReduced) return;
 
-    /* Create Lenis instance with crisp responsiveness */
+    /* Detect coarse pointer / mobile devices:
+       On touch devices (smartphones/tablets), native scrolling runs on the
+       compositor thread at 120Hz. Forcing virtual smooth scrolling on mobile
+       causes input lag and sluggish drag response. */
+    const isTouchOrSmallScreen =
+      window.matchMedia('(pointer: coarse)').matches ||
+      window.matchMedia('(max-width: 1024px)').matches;
+
+    if (isTouchOrSmallScreen) {
+      // Connect ScrollTrigger directly to native scroll updates
+      const onNativeScroll = () => ScrollTrigger.update();
+      window.addEventListener('scroll', onNativeScroll, { passive: true });
+      return () => window.removeEventListener('scroll', onNativeScroll);
+    }
+
+    /* Desktop: Create Lenis instance with crisp responsiveness */
     const lenis = new Lenis({
-      lerp: 0.1, // Snappy 60-120fps direct response without floaty lag
+      lerp: 0.12, // Direct and snappy desktop mouse wheel response
       wheelMultiplier: 1.0,
       touchMultiplier: 1.0,
       smoothWheel: true,
-      syncTouch: false, // Let mobile touch devices use responsive native touch physics
+      syncTouch: false,
       infinite: false,
     });
 
@@ -52,7 +67,7 @@ const useLenis = () => {
     };
     gsap.ticker.add(onTick);
 
-    /* Allow GSAP lag smoothing to absorb any frame drops smoothly */
+    /* Lag smoothing to absorb frame spikes without stutter */
     gsap.ticker.lagSmoothing(500, 33);
 
     /* Cleanup */

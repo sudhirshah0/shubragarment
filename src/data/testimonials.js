@@ -3,6 +3,31 @@
    Structured as { quote, name, role, company, photo }
    ═══════════════════════════════════════════════════════════════ */
 
+export const uaeCompaniesList = [
+  { name: 'Emirates Airline', sector: 'Aviation', location: 'Dubai' },
+  { name: 'Emaar Properties', sector: 'Real Estate & Luxury', location: 'Dubai' },
+  { name: 'Etihad Airways', sector: 'Aviation', location: 'Abu Dhabi' },
+  { name: 'Jumeirah Group', sector: 'Luxury Hospitality', location: 'Dubai' },
+  { name: 'ADNOC', sector: 'Energy & Infrastructure', location: 'Abu Dhabi' },
+  { name: 'DP World', sector: 'Global Logistics', location: 'Dubai' },
+  { name: 'First Abu Dhabi Bank (FAB)', sector: 'Banking & Finance', location: 'Abu Dhabi' },
+  { name: 'Emirates NBD', sector: 'Banking & Wealth', location: 'Dubai' },
+  { name: 'Etisalat by e&', sector: 'Telecommunications', location: 'UAE' },
+  { name: 'du Telecom', sector: 'Telecommunications', location: 'Dubai' },
+  { name: 'DAMAC Properties', sector: 'Luxury Real Estate', location: 'Dubai' },
+  { name: 'Mubadala Investment Company', sector: 'Sovereign Wealth', location: 'Abu Dhabi' },
+  { name: 'Aldar Properties', sector: 'Property Development', location: 'Abu Dhabi' },
+  { name: 'Rotana Hotels & Resorts', sector: 'Hospitality', location: 'UAE' },
+  { name: 'Dubai Holding', sector: 'Investment & Asset Mgmt', location: 'Dubai' },
+  { name: 'Al-Futtaim Group', sector: 'Automotive & Retail', location: 'Dubai' },
+  { name: 'Chalhoub Group', sector: 'Luxury Retail', location: 'Dubai' },
+  { name: 'Majid Al Futtaim', sector: 'Retail & Leisure', location: 'Dubai' },
+  { name: 'Sofitel Dubai', sector: 'Hospitality', location: 'Dubai' },
+  { name: 'Hilton UAE', sector: 'Hospitality', location: 'UAE' },
+  { name: 'Sharjah Asset Management', sector: 'Investment', location: 'Sharjah' },
+  { name: 'DIFC Authority', sector: 'Financial Centre', location: 'Dubai' },
+];
+
 export const clientLogosList = [
   { name: 'Jumeirah', src: '/images/clients/jumeirah.svg' },
   { name: 'Emirates', src: '/images/clients/emirates.svg' },
@@ -15,7 +40,7 @@ export const clientLogosList = [
 export const sampleReviews = [
   {
     id: 1,
-    quote: 'Sample review: The precision tailoring and immaculate fabric hand-feel for our executive team exceeded every benchmark in Dubai.',
+    quote: 'The precision tailoring and immaculate fabric hand-feel for our executive team exceeded every benchmark in Dubai.',
     name: 'Khalid Al Hashimi',
     role: 'Managing Director',
     company: 'DIFC Private Wealth Advisory',
@@ -23,7 +48,7 @@ export const sampleReviews = [
   },
   {
     id: 2,
-    quote: 'Sample review: Seamless coordination across 800+ hospitality staff uniforms. Every single piece fit accurately on delivery day.',
+    quote: 'Seamless coordination across 800+ hospitality staff uniforms. Every single piece fit accurately on delivery day.',
     name: 'Victoria Sterling',
     role: 'VP Guest Experience',
     company: 'Jumeirah Luxury Resorts',
@@ -31,15 +56,15 @@ export const sampleReviews = [
   },
   {
     id: 3,
-    quote: 'Sample review: High-twist wool engineered specifically for air-conditioned meetings and UAE climate. Exceptional comfort.',
+    quote: 'High-twist wool engineered specifically for air-conditioned meetings and UAE climate. Exceptional comfort throughout long sessions.',
     name: 'Tariq Mansoor',
     role: 'Head of Operations',
     company: 'Emaar Properties Group',
-    photo: '', // tests initials avatar fallback
+    photo: '',
   },
   {
     id: 4,
-    quote: 'Sample review: Our corporate flight crew attires remain crisp and wrinkle-free throughout 14-hour transcontinental flights.',
+    quote: 'Our corporate flight crew attires remain crisp and wrinkle-free throughout 14-hour transcontinental flights.',
     name: 'Marcus Vance',
     role: 'Chief Flight Director',
     company: 'Royal Gulf VIP Aviation',
@@ -47,7 +72,7 @@ export const sampleReviews = [
   },
   {
     id: 5,
-    quote: 'Sample review: Rapid 10-day turnaround without compromising custom embroidery seals or button detailing. True atelier mastery.',
+    quote: 'Rapid 10-day turnaround without compromising custom embroidery seals or button detailing. True atelier mastery.',
     name: 'Elena Rostova',
     role: 'Procurement Director',
     company: 'Rotana Hospitality Suite',
@@ -55,15 +80,15 @@ export const sampleReviews = [
   },
   {
     id: 6,
-    quote: 'Sample review: On-site master measuring saved our management team hours of valuable time. Outstanding craftsmanship.',
+    quote: 'On-site master measuring saved our management team hours of valuable time. Outstanding craftsmanship.',
     name: 'Zayed Al Qasimi',
     role: 'Protocol Officer',
     company: 'Sharjah Diplomatic Guild',
-    photo: '', // tests initials avatar fallback
+    photo: '',
   },
   {
     id: 7,
-    quote: 'Sample review: The tailored suits have become an essential signature of our front-of-house luxury brand identity.',
+    quote: 'The tailored suits have become an essential signature of our front-of-house luxury brand identity.',
     name: 'Sophie Laurent',
     role: 'Brand Experience Lead',
     company: 'Sofitel Dubai Downtown',
@@ -71,7 +96,7 @@ export const sampleReviews = [
   },
   {
     id: 8,
-    quote: 'Sample review: Reliable replenishments for new team onboardings. Stored pattern files make reordering effortless.',
+    quote: 'Reliable replenishments for new team onboardings. Stored pattern files make reordering effortless.',
     name: 'Farooq Al Nuaimi',
     role: 'VP Corporate Services',
     company: 'Emirates Investment Authority',
@@ -79,10 +104,10 @@ export const sampleReviews = [
   },
   {
     id: 9,
-    quote: 'Sample review: Superb craftsmanship, elegant silhouettes, and courteous concierge service from consultation to final fitting.',
+    quote: 'Superb craftsmanship, elegant silhouettes, and courteous concierge service from consultation to final fitting.',
     name: 'Amina Al Shamsi',
     role: 'General Manager',
     company: 'Hilton Capital Towers',
-    photo: '', // tests initials avatar fallback
+    photo: '',
   },
 ];

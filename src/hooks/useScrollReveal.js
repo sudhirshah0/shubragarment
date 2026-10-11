@@ -123,8 +123,10 @@ export default function useScrollReveal() {
 
       // Refresh ScrollTrigger to ensure accurate trigger points
       ScrollTrigger.refresh();
-    }, 400);
+    }, 250);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 }
