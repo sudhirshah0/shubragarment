@@ -304,21 +304,20 @@ html, body {
 /* Promote key animated elements to separate compositor layers */
 .hero__slider-track,
 .appreciation__column-track,
-.clients-work__track {
+.clients-work__track,
+.collection-box,
+.custom-designer__workspace,
+.navbar {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-/* Enable content-visibility on offscreen sections so browsers skip rendering offscreen DOM trees */
-@supports (content-visibility: auto) {
-  .bulk-corporate,
-  .clients-work,
-  .appreciation,
-  .contact {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 700px;
+/* Optimize rendering cost during active scrolling */
+@media (min-width: 1025px) {
+  .section {
+    contain: layout style;
   }
 }
 

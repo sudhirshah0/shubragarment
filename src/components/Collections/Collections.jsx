@@ -200,7 +200,32 @@ const Collections = () => {
   const hasMore = filteredItems.length > INITIAL_LIMIT;
 
   const handleToggleShowAll = () => {
-    setShowAll((prev) => !prev);
+    if (showAll) {
+      // User is collapsing back to 2 rows (Show Less).
+      setShowAll(false);
+
+      // Smoothly bring the user directly to the Custom Designer section right below Collections
+      setTimeout(() => {
+        const designerEl = document.getElementById('custom-designer');
+        if (designerEl) {
+          if (window.lenis) {
+            window.lenis.scrollTo(designerEl, {
+              offset: -75,
+              duration: 0.9,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+          } else {
+            const topPos = designerEl.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: topPos - 75,
+              behavior: 'smooth',
+            });
+          }
+        }
+      }, 50);
+    } else {
+      setShowAll(true);
+    }
   };
 
   const openItemModal = (item, colorIndex = 0) => {

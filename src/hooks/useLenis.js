@@ -45,10 +45,10 @@ const useLenis = () => {
       return () => window.removeEventListener('scroll', onNativeScroll);
     }
 
-    /* Desktop: Create Lenis instance with crisp responsiveness */
+    /* Desktop: Create Lenis instance with silky zero-lag responsiveness */
     const lenis = new Lenis({
-      lerp: 0.12, // Direct and snappy desktop mouse wheel response
-      wheelMultiplier: 1.0,
+      lerp: 0.16, // Snappier, immediate response to wheel with zero input lag
+      wheelMultiplier: 1.1,
       touchMultiplier: 1.0,
       smoothWheel: true,
       syncTouch: false,

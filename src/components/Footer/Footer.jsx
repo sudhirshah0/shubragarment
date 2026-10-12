@@ -1,10 +1,10 @@
-/* ═══════════════════════════════════════════════════════════════
-   Footer — Luxury Atelier Directory, Newsletter & Brand Heritage
-   ═══════════════════════════════════════════════════════════════ */
-
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import './Footer.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FOOTER_COLLECTIONS = [
   { label: 'Bespoke Overcoats', href: '#collections' },
@@ -31,6 +31,69 @@ const FOOTER_LEGAL = [
 const Footer = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isReduced) return;
+
+    const ctx = gsap.context(() => {
+      // 1. Newsletter Strip Reveal
+      gsap.fromTo(
+        '.footer__newsletter-strip',
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.footer__newsletter-strip',
+            start: 'top 90%',
+            once: true,
+          },
+        }
+      );
+
+      // 2. Directory Columns Staggered Reveal
+      gsap.fromTo(
+        '.footer__grid .footer__col',
+        { opacity: 0, y: 45, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.85,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.footer__grid',
+            start: 'top 88%',
+            once: true,
+          },
+        }
+      );
+
+      // 3. Footer Bottom Bar
+      gsap.fromTo(
+        '.footer__bottom',
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.footer__bottom',
+            start: 'top 95%',
+            once: true,
+          },
+        }
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -45,7 +108,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="footer" role="contentinfo">
+    <footer ref={footerRef} className="footer" role="contentinfo">
       {/* ── Top Newsletter Registry Strip ─────────────────────── */}
       <div className="footer__newsletter-strip">
         <div className="footer__newsletter-inner container">
