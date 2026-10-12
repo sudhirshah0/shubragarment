@@ -1592,6 +1592,52 @@
     padding: 1.15rem 0.95rem;
     border-radius: 14px;
     box-sizing: border-box;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .custom-designer__step-pane {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ── Step 2 Personalize Mobile Formatting ───────────────── */
+  .text-controls {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .text-controls__creation-box {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .text-controls__input-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.45rem;
+    box-sizing: border-box;
+  }
+
+  .text-controls__input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+  }
+
+  .text-controls__add-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    padding: 0.65rem 1rem;
+  }
+
+  .text-controls__font-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    gap: 0.4rem;
   }
 
   .text-controls__row-split {
@@ -1599,15 +1645,74 @@
     align-items: stretch;
     gap: 0.75rem;
     padding: 0.75rem 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .text-controls__subgroup {
     width: 100%;
+    box-sizing: border-box;
   }
 
   .text-controls__color-swatches {
     flex-wrap: wrap;
     gap: 0.45rem;
+    width: 100%;
+  }
+
+  /* ── Step 3 OrderForm Mobile Formatting ─────────────────── */
+  .order-form {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .order-form__contact-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+    box-sizing: border-box;
+  }
+
+  .order-form__field {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .order-form__input,
+  .order-form__select,
+  .order-form__textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+  }
+
+  .order-form__actions {
+    display: flex;
+    flex-direction: column !important;
+    width: 100%;
+    gap: 0.65rem !important;
+    align-items: stretch !important;
+  }
+
+  .order-form__back-btn {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  .order-form__right-actions {
+    display: flex;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+
+  .order-form__download-btn,
+  .order-form__wa-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
 }
 
