@@ -1151,6 +1151,178 @@
   transform: translateY(-1px);
 }
 
+.order-form__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.order-form__size-chart-btn {
+  background: transparent;
+  border: none;
+  color: var(--bronze);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.order-form__size-chart-btn:hover {
+  color: var(--espresso);
+  background-color: rgba(166, 124, 46, 0.1);
+}
+
+/* Size Chart Table Container matching screenshot aesthetic */
+.order-form__size-chart-wrap {
+  margin-top: 0.65rem;
+  background-color: #FAF6F0;
+  border: 1px solid rgba(221, 208, 190, 0.95);
+  border-radius: var(--radius-sm, 8px);
+  padding: 0.65rem;
+  box-shadow: 0 4px 16px rgba(43, 33, 26, 0.06);
+  animation: sizeChartFade 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 100%;
+}
+
+@keyframes sizeChartFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.order-form__size-chart-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 6px;
+  border: 1.5px solid #4a423d;
+  background: #ffffff;
+}
+
+.order-form__size-chart-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.order-form__size-chart-scroll::-webkit-scrollbar-thumb {
+  background: rgba(74, 66, 61, 0.35);
+  border-radius: 4px;
+}
+
+.order-form__size-chart-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  text-align: center;
+  background: #ffffff;
+}
+
+.order-form__size-chart-table thead tr {
+  background-color: #4a423d; /* Dark header bar matching reference image */
+  color: #ffffff;
+}
+
+.order-form__size-chart-table th {
+  padding: 0.55rem 0.45rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
+}
+
+.order-form__size-chart-table th:last-child {
+  border-right: none;
+}
+
+.order-form__th-metric {
+  text-align: left;
+  padding-left: 0.65rem !important;
+  font-weight: 800 !important;
+  position: sticky;
+  left: 0;
+  background-color: #4a423d;
+  z-index: 2;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.2);
+}
+
+.order-form__size-chart-table tbody tr {
+  border-bottom: 1px solid #dcd3c7;
+}
+
+.order-form__size-chart-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.order-form__size-chart-table td {
+  padding: 0.45rem 0.4rem;
+  color: #2b211a;
+  font-weight: 600;
+  font-size: 0.78rem;
+  border-right: 1px solid #dcd3c7;
+  border-bottom: 1px solid #dcd3c7;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.order-form__size-chart-table td:last-child {
+  border-right: none;
+}
+
+.order-form__td-label {
+  text-align: left;
+  padding-left: 0.65rem !important;
+  font-weight: 700 !important;
+  color: #3b3028 !important;
+  background-color: #faf6f0;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 1px 0 0 #dcd3c7;
+}
+
+/* Highlight actively chosen size column */
+.order-form__td--selected {
+  background-color: rgba(166, 124, 46, 0.18) !important;
+  color: var(--espresso) !important;
+  font-weight: 800 !important;
+}
+
+.order-form__size-chart-footnote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.45rem 0 0;
+  font-size: 0.65rem;
+  color: var(--taupe);
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .order-form__size-chart-wrap {
+    padding: 0.45rem;
+  }
+  .order-form__size-chart-table th,
+  .order-form__size-chart-table td {
+    padding: 0.4rem 0.35rem;
+    font-size: 0.72rem;
+  }
+  .order-form__th-metric,
+  .order-form__td-label {
+    padding-left: 0.5rem !important;
+    font-size: 0.72rem;
+  }
+}
+
 /* Bespoke measurements */
 .order-form__bespoke-inputs {
   display: flex;

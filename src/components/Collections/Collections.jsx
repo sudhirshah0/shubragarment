@@ -31,6 +31,7 @@ const Collections = () => {
   const [cartCount, setCartCount] = useState(0);
   const [flyingItem, setFlyingItem] = useState(null);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [showModalSizeChart, setShowModalSizeChart] = useState(false);
   const modalImgRef = useRef(null);
 
   // Keyboard escape to close modal
@@ -70,6 +71,7 @@ const Collections = () => {
   const closeModal = () => {
     setSelectedGarment(null);
     setIsZoomed(false);
+    setShowModalSizeChart(false);
   };
 
   const handleAddToCart = () => {
@@ -237,6 +239,7 @@ const Collections = () => {
     setModalSize('M');
     setModalQty(1);
     setIsZoomed(false);
+    setShowModalSizeChart(false);
   };
 
   return (
@@ -487,13 +490,26 @@ const Collections = () => {
                   </div>
                 </div>
 
-                {/* 2. Size Selector (Clean single row) */}
+                {/* 2. Size Selector (Clean single row + Size Chart Guide) */}
                 <div className="collections-modal__size-group">
                   <div className="collections-modal__group-label">
                     <span className="label">SIZE</span>
+                    <button
+                      type="button"
+                      className="collections-modal__size-chart-link"
+                      onClick={() => setShowModalSizeChart((prev) => !prev)}
+                      aria-label="View size chart guide"
+                    >
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                      </svg>
+                      <span>{showModalSizeChart ? 'Hide Chart' : 'Size Chart (Inches)'}</span>
+                    </button>
                   </div>
                   <div className="collections-modal__sizes">
-                    {['S', 'M', 'L', 'XL', 'XXL'].map((sz) => (
+                    {['S', 'M', 'L', 'XL', '2XL', '3XL'].map((sz) => (
                       <button
                         key={sz}
                         type="button"
@@ -506,6 +522,77 @@ const Collections = () => {
                       </button>
                     ))}
                   </div>
+
+                  {/* ── Interactive Size Chart Guide matching specifications ── */}
+                  {showModalSizeChart && (
+                    <div className="collections-modal__size-chart-wrap" role="region" aria-label="Product Size Chart">
+                      <div className="collections-modal__size-chart-scroll">
+                        <table className="collections-modal__size-chart-table">
+                          <thead>
+                            <tr>
+                              <th className="collections-modal__th-metric">In Inches</th>
+                              <th>S</th>
+                              <th>M</th>
+                              <th>L</th>
+                              <th>XL</th>
+                              <th>2XL</th>
+                              <th>3XL</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="collections-modal__td-label">Length</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>26</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>27</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>28</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>29</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>30</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>31</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Chest</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>38</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>40</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>42</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>44</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>46</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>48</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Shoulder</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>16</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>17</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>18</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>19</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>20</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>21</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Sleeve Open</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>3.5</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>4</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>4</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>4.5</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>4.5</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>5</td>
+                            </tr>
+                            <tr>
+                              <td className="collections-modal__td-label">Sleeve Length</td>
+                              <td className={modalSize === 'S' ? 'collections-modal__td--selected' : ''}>24</td>
+                              <td className={modalSize === 'M' ? 'collections-modal__td--selected' : ''}>25</td>
+                              <td className={modalSize === 'L' ? 'collections-modal__td--selected' : ''}>26</td>
+                              <td className={modalSize === 'XL' ? 'collections-modal__td--selected' : ''}>27</td>
+                              <td className={modalSize === '2XL' ? 'collections-modal__td--selected' : ''}>28</td>
+                              <td className={modalSize === '3XL' ? 'collections-modal__td--selected' : ''}>28.5</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className="collections-modal__size-chart-footnote">
+                        • Standard specifications in inches.
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* 3. Minimal Single-Line Spec */}

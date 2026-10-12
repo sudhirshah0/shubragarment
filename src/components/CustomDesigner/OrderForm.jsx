@@ -25,6 +25,7 @@ const OrderForm = ({
 }) => {
   // Sizing & Specs State
   const [selectedSize, setSelectedSize] = useState('M');
+  const [showSizeChart, setShowSizeChart] = useState(false);
   const [fitProfile, setFitProfile] = useState('tailored');
   const [fabricGrade, setFabricGrade] = useState(garment.fabrics[0]);
   const [quantity, setQuantity] = useState(1);
@@ -104,7 +105,23 @@ const OrderForm = ({
       {/* ── Section 1: Sizing Selection ───────────────────────── */}
       <div className="order-form__section">
         <div className="order-form__group">
-          <label className="order-form__label">Select Size</label>
+          <div className="order-form__group-header">
+            <label className="order-form__label">Select Size</label>
+            <button
+              type="button"
+              className="order-form__size-chart-btn"
+              onClick={() => setShowSizeChart((prev) => !prev)}
+              aria-label="View size chart guide"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <line x1="3" y1="9" x2="21" y2="9" />
+                <line x1="9" y1="21" x2="9" y2="9" />
+              </svg>
+              <span>{showSizeChart ? 'Hide Size Chart' : 'Size Chart (Inches)'}</span>
+            </button>
+          </div>
+
           <div className="order-form__sizes-grid">
             {SIZES_LIST.map((sz) => (
               <button
@@ -119,6 +136,77 @@ const OrderForm = ({
               </button>
             ))}
           </div>
+
+          {/* ── Interactive Size Chart Table matching specifications ── */}
+          {showSizeChart && (
+            <div className="order-form__size-chart-wrap" role="region" aria-label="Garment Size Chart">
+              <div className="order-form__size-chart-scroll">
+                <table className="order-form__size-chart-table">
+                  <thead>
+                    <tr>
+                      <th className="order-form__th-metric">In Inches</th>
+                      <th>S</th>
+                      <th>M</th>
+                      <th>L</th>
+                      <th>XL</th>
+                      <th>2XL</th>
+                      <th>3XL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className={selectedSize === 'S' || selectedSize === 'M' || selectedSize === 'L' || selectedSize === 'XL' || selectedSize === '2XL' || selectedSize === '3XL' ? '' : ''}>
+                      <td className="order-form__td-label">Length</td>
+                      <td className={selectedSize === 'S' ? 'order-form__td--selected' : ''}>26</td>
+                      <td className={selectedSize === 'M' ? 'order-form__td--selected' : ''}>27</td>
+                      <td className={selectedSize === 'L' ? 'order-form__td--selected' : ''}>28</td>
+                      <td className={selectedSize === 'XL' ? 'order-form__td--selected' : ''}>29</td>
+                      <td className={selectedSize === '2XL' ? 'order-form__td--selected' : ''}>30</td>
+                      <td className={selectedSize === '3XL' ? 'order-form__td--selected' : ''}>31</td>
+                    </tr>
+                    <tr>
+                      <td className="order-form__td-label">Chest</td>
+                      <td className={selectedSize === 'S' ? 'order-form__td--selected' : ''}>38</td>
+                      <td className={selectedSize === 'M' ? 'order-form__td--selected' : ''}>40</td>
+                      <td className={selectedSize === 'L' ? 'order-form__td--selected' : ''}>42</td>
+                      <td className={selectedSize === 'XL' ? 'order-form__td--selected' : ''}>44</td>
+                      <td className={selectedSize === '2XL' ? 'order-form__td--selected' : ''}>46</td>
+                      <td className={selectedSize === '3XL' ? 'order-form__td--selected' : ''}>48</td>
+                    </tr>
+                    <tr>
+                      <td className="order-form__td-label">Shoulder</td>
+                      <td className={selectedSize === 'S' ? 'order-form__td--selected' : ''}>16</td>
+                      <td className={selectedSize === 'M' ? 'order-form__td--selected' : ''}>17</td>
+                      <td className={selectedSize === 'L' ? 'order-form__td--selected' : ''}>18</td>
+                      <td className={selectedSize === 'XL' ? 'order-form__td--selected' : ''}>19</td>
+                      <td className={selectedSize === '2XL' ? 'order-form__td--selected' : ''}>20</td>
+                      <td className={selectedSize === '3XL' ? 'order-form__td--selected' : ''}>21</td>
+                    </tr>
+                    <tr>
+                      <td className="order-form__td-label">Sleeve Open</td>
+                      <td className={selectedSize === 'S' ? 'order-form__td--selected' : ''}>3.5</td>
+                      <td className={selectedSize === 'M' ? 'order-form__td--selected' : ''}>4</td>
+                      <td className={selectedSize === 'L' ? 'order-form__td--selected' : ''}>4</td>
+                      <td className={selectedSize === 'XL' ? 'order-form__td--selected' : ''}>4.5</td>
+                      <td className={selectedSize === '2XL' ? 'order-form__td--selected' : ''}>4.5</td>
+                      <td className={selectedSize === '3XL' ? 'order-form__td--selected' : ''}>5</td>
+                    </tr>
+                    <tr>
+                      <td className="order-form__td-label">Sleeve Length</td>
+                      <td className={selectedSize === 'S' ? 'order-form__td--selected' : ''}>24</td>
+                      <td className={selectedSize === 'M' ? 'order-form__td--selected' : ''}>25</td>
+                      <td className={selectedSize === 'L' ? 'order-form__td--selected' : ''}>26</td>
+                      <td className={selectedSize === 'XL' ? 'order-form__td--selected' : ''}>27</td>
+                      <td className={selectedSize === '2XL' ? 'order-form__td--selected' : ''}>28</td>
+                      <td className={selectedSize === '3XL' ? 'order-form__td--selected' : ''}>28.5</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p className="order-form__size-chart-footnote">
+                • Standard measurements in inches. For bespoke pattern cutting, choose &quot;Bespoke&quot;.
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Custom Measurements Input when Bespoke chosen */}
