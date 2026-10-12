@@ -1112,7 +1112,7 @@
 }
 
 .order-form__size-btn {
-  padding: 0.5rem 0.25rem;
+  padding: 0.55rem 0.35rem;
   border-radius: var(--radius-sm);
   background-color: var(--linen);
   border: 1px solid var(--sand);
@@ -1123,18 +1123,31 @@
   text-align: center;
   cursor: pointer;
   transition: all var(--transition-fast);
+  user-select: none;
 }
 
 .order-form__size-btn:hover {
   border-color: var(--bronze);
-  background-color: var(--cream);
+  background-color: #ffffff;
+  color: var(--bronze);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(166, 124, 46, 0.15);
 }
 
 .order-form__size-btn--active {
-  background-color: var(--espresso);
-  color: var(--cream);
-  border-color: var(--espresso);
+  background-color: var(--espresso) !important;
+  color: var(--cream) !important;
+  border-color: var(--espresso) !important;
   font-weight: 600;
+  box-shadow: 0 4px 14px rgba(43, 33, 26, 0.22);
+  transform: translateY(-1px);
+}
+
+.order-form__size-btn--active:hover {
+  background-color: var(--espresso) !important;
+  color: var(--cream) !important;
+  border-color: var(--espresso) !important;
+  transform: translateY(-1px);
 }
 
 /* Bespoke measurements */
@@ -1172,18 +1185,31 @@
   text-align: center;
   cursor: pointer;
   transition: all var(--transition-fast);
+  user-select: none;
 }
 
 .order-form__fit-pill:hover {
   border-color: var(--bronze);
-  background-color: var(--cream);
+  background-color: #ffffff;
+  color: var(--bronze);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(166, 124, 46, 0.15);
 }
 
 .order-form__fit-pill--active {
-  border-color: var(--bronze);
-  background-color: var(--cream);
-  box-shadow: 0 0 0 1px var(--bronze);
+  border-color: var(--bronze) !important;
+  background-color: var(--cream) !important;
+  color: var(--espresso) !important;
+  box-shadow: 0 0 0 1px var(--bronze), 0 4px 12px rgba(166, 124, 46, 0.12);
   font-weight: 600;
+  transform: translateY(-1px);
+}
+
+.order-form__fit-pill--active:hover {
+  background-color: var(--cream) !important;
+  border-color: var(--bronze) !important;
+  color: var(--espresso) !important;
+  transform: translateY(-1px);
 }
 
 /* Compact Select */

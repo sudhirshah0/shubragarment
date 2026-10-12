@@ -334,7 +334,39 @@ const Navbar = () => {
     };
   }, [isMobileOpen]);
 
-  const handleLinkClick = () => {
+  const handleNavClick = (e, href) => {
+    if (href && href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const targetEl = document.getElementById(targetId);
+
+      if (targetEl) {
+        // Use Lenis smooth scroll if available, else smooth native window scrollTo
+        if (window.lenis) {
+          window.lenis.scrollTo(targetEl, {
+            offset: -80,
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        } else {
+          const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: elementPosition - 80,
+            behavior: 'smooth',
+          });
+        }
+
+        // Trigger dynamic highlight animation on target section
+        targetEl.classList.remove('section--highlight-active');
+        void targetEl.offsetWidth; // force reflow
+        targetEl.classList.add('section--highlight-active');
+
+        setTimeout(() => {
+          targetEl.classList.remove('section--highlight-active');
+        }, 1300);
+      }
+    }
+
     setIsMobileOpen(false);
   };
 
@@ -379,6 +411,7 @@ const Navbar = () => {
                 <a
                   href={item.href}
                   className="navbar__link"
+                  onClick={(e) => handleNavClick(e, item.href)}
                 >
                   <span className="navbar__link-label">{item.label}</span>
                   <span className="navbar__link-line" aria-hidden="true" />
@@ -506,7 +539,7 @@ const Navbar = () => {
                 <a
                   href={item.href}
                   className="navbar__mobile-link"
-                  onClick={handleLinkClick}
+                  onClick={(e) => handleNavClick(e, item.href)}
                 >
                   <span className="navbar__mobile-text">{item.label}</span>
                 </a>

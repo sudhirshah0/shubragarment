@@ -13,9 +13,13 @@
    ═══════════════════════════════════════════════════════════════ */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { collectionsData } from '../../data/collections';
 import MagneticButton from '../MagneticButton/MagneticButton';
 import './Collections.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Collections = () => {
   const [selectedGarment, setSelectedGarment] = useState(null);
@@ -169,6 +173,27 @@ const Collections = () => {
   const [showAll, setShowAll] = useState(false);
   const collectionsSectionRef = useRef(null);
 
+  // Refresh ScrollTrigger and smooth scroll calculations whenever category filters or expand states change
+  // This prevents blank space or trigger position mismatch in sections below (like Custom Designer)
+  useEffect(() => {
+    const refreshScroll = () => {
+      ScrollTrigger.refresh();
+      if (typeof window !== 'undefined' && window.lenis) {
+        window.lenis.resize();
+      }
+    };
+
+    // Immediate tick + RAF + short timeout to allow DOM and images to recalculate heights
+    refreshScroll();
+    const rafId = requestAnimationFrame(refreshScroll);
+    const timer = setTimeout(refreshScroll, 120);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+    };
+  }, [activeCategory, showAll]);
+
   // Show only 2 rows (8 items in 4-column layout) by default
   const INITIAL_LIMIT = 8;
   const displayedItems = showAll ? filteredItems : filteredItems.slice(0, INITIAL_LIMIT);
@@ -176,12 +201,6 @@ const Collections = () => {
 
   const handleToggleShowAll = () => {
     setShowAll((prev) => !prev);
-    // Refresh ScrollTrigger so layout height change updates all lower section triggers immediately
-    setTimeout(() => {
-      if (typeof window !== 'undefined' && window.ScrollTrigger) {
-        window.ScrollTrigger.refresh();
-      }
-    }, 100);
   };
 
   const openItemModal = (item, colorIndex = 0) => {

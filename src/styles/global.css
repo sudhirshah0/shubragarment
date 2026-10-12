@@ -339,4 +339,58 @@ html, body {
   }
 }
 
+/* ── Interactive Section Target Animation ─────────────────────── */
+/* Triggered when navigating through navbar section links or internal jumps */
+@keyframes sectionTargetPulse {
+  0% {
+    transform: scale(0.985);
+    box-shadow: 0 0 0 0 rgba(166, 124, 46, 0.45);
+  }
+  35% {
+    transform: scale(1.008);
+    box-shadow: 0 0 45px 8px rgba(166, 124, 46, 0.28);
+  }
+  70% {
+    transform: scale(1.002);
+    box-shadow: 0 0 25px 4px rgba(166, 124, 46, 0.15);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(166, 124, 46, 0);
+  }
+}
+
+@keyframes sectionHeaderShine {
+  0% {
+    opacity: 0.6;
+    transform: translateY(18px) scale(0.97);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.section--highlight-active {
+  animation: sectionTargetPulse 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  position: relative;
+  z-index: 5;
+}
+
+.section--highlight-active > .container > div:first-child,
+.section--highlight-active .collections__header,
+.section--highlight-active .custom-designer__header,
+.section--highlight-active .bulk-corporate__header,
+.section--highlight-active .clients-work__header,
+.section--highlight-active .contact__header,
+.section--highlight-active .about__label,
+.section--highlight-active .about__heading {
+  animation: sectionHeaderShine 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+
 
