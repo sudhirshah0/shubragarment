@@ -359,12 +359,13 @@ const CanvasStage = forwardRef(
         const viewport = viewportRef.current || canvasEl.closest('.canvas-stage__viewport');
         if (!viewport || !fabricCanvasRef.current) return;
         const rect = viewport.getBoundingClientRect();
-        // Support narrow phones down to 320px-360px (Galaxy Z Fold, iPhone SE)
-        const availableW = Math.max(180, Math.min(STAGE_WIDTH, rect.width - 8));
+        // Support narrow phones down to 320px-360px (Galaxy Z Fold, iPhone SE) without any horizontal overflow
+        const viewportW = rect.width > 0 ? rect.width : (window.innerWidth ? Math.min(window.innerWidth - 32, 500) : 320);
+        const availableW = Math.max(160, Math.min(STAGE_WIDTH, viewportW - 12));
         const scale = availableW / STAGE_WIDTH;
         fabricCanvasRef.current.setDimensions({
           width: availableW,
-          height: STAGE_HEIGHT * scale,
+          height: Math.round(STAGE_HEIGHT * scale),
         });
         fabricCanvasRef.current.setZoom(scale);
         fabricCanvasRef.current.requestRenderAll();
@@ -389,6 +390,7 @@ const CanvasStage = forwardRef(
 
       // Use both window resize and ResizeObserver on viewport
       window.addEventListener('resize', handleResize);
+      window.addEventListener('orientationchange', handleResize);
       let resizeObserver = null;
       const viewportEl = viewportRef.current || canvasEl.closest('.canvas-stage__viewport');
       if (typeof ResizeObserver !== 'undefined' && viewportEl) {
@@ -397,8 +399,10 @@ const CanvasStage = forwardRef(
         });
         resizeObserver.observe(viewportEl);
       }
-      setTimeout(handleResize, 50);
-      setTimeout(handleResize, 300);
+      handleResize();
+      setTimeout(handleResize, 100);
+      setTimeout(handleResize, 350);
+      setTimeout(handleResize, 700);
 
       // Keyboard delete shortcut
       const handleKeyDown = (e) => {
