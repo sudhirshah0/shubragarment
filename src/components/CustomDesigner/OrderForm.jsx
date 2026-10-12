@@ -2,7 +2,7 @@
    OrderForm — Sizing, Quantity, Customer Info & WhatsApp Submission
    ═══════════════════════════════════════════════════════════════ */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SIZES_LIST, FIT_PROFILES } from './garmentTemplates';
 import MagneticButton from '../MagneticButton/MagneticButton';
 
@@ -28,6 +28,13 @@ const OrderForm = ({
   const [fitProfile, setFitProfile] = useState('tailored');
   const [fabricGrade, setFabricGrade] = useState(garment.fabrics[0]);
   const [quantity, setQuantity] = useState(1);
+
+  // Sync fabricGrade when selected garment changes
+  useEffect(() => {
+    if (garment && garment.fabrics && garment.fabrics.length > 0) {
+      setFabricGrade(garment.fabrics[0]);
+    }
+  }, [garment]);
 
   // Custom Bespoke Measurements
   const [customChest, setCustomChest] = useState('');

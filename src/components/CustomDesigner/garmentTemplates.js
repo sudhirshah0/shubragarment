@@ -11,7 +11,7 @@ export const GARMENTS = [
     basePrice: 280,
     category: 'Everyday Luxury',
     image: '/images/collections/blue tshirt.png',
-    fabrics: ['100% Mercerized Organic Supima Cotton (280 GSM)', 'Organic Egyptian Cotton', 'Silk-Cotton Knit'],
+    fabrics: ['Organic Egyptian Cotton', '100% Mercerized Organic Supima Cotton (280 GSM)', 'Silk-Cotton Knit'],
     printableArea: { top: 180, left: 160, width: 180, height: 240 },
     views: {
       front: {
