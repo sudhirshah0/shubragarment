@@ -16,7 +16,6 @@ import useScrollReveal from './hooks/useScrollReveal';
 
 /* ── Components ──────────────────────────────────────────────────── */
 import Loader          from './components/Loader/Loader';
-import Cursor          from './components/Cursor/Cursor';
 import Navbar          from './components/Navbar/Navbar';
 import Hero            from './components/Hero/Hero';
 import Collections     from './components/Collections/Collections';
@@ -54,9 +53,6 @@ const App = () => {
       <a href="#main-content" className="skip-to-content">
         Skip to main content
       </a>
-
-      {/* Custom cursor — desktop only, aria-hidden */}
-      <Cursor />
 
       {/* Full-screen intro loader */}
       {isLoading && <Loader onComplete={handleLoaderComplete} />}

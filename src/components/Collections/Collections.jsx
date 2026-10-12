@@ -30,6 +30,7 @@ const Collections = () => {
   const [addedToast, setAddedToast] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [flyingItem, setFlyingItem] = useState(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const modalImgRef = useRef(null);
 
   // Keyboard escape to close modal
@@ -68,6 +69,7 @@ const Collections = () => {
 
   const closeModal = () => {
     setSelectedGarment(null);
+    setIsZoomed(false);
   };
 
   const handleAddToCart = () => {
@@ -234,6 +236,7 @@ const Collections = () => {
     setModalColorIndex(colorIndex);
     setModalSize('M');
     setModalQty(1);
+    setIsZoomed(false);
   };
 
   return (
@@ -412,16 +415,32 @@ const Collections = () => {
             <div className="collections-modal__grid">
               {/* Left Column: Interactive Swatch Image Stage */}
               <div className="collections-modal__media-col">
-                <div className="collections-modal__img-stage">
+                <div
+                  className={`collections-modal__img-stage ${isZoomed ? 'collections-modal__img-stage--zoomed' : ''}`}
+                  onClick={() => setIsZoomed((prev) => !prev)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsZoomed((prev) => !prev);
+                    }
+                  }}
+                  title={isZoomed ? 'Click to zoom out' : 'Click to zoom in 50%'}
+                  aria-label={isZoomed ? 'Zoom out product image' : 'Zoom in product image by 50%'}
+                >
                   <div className="collections-modal__img-glow" aria-hidden="true" />
                   <img
                     ref={modalImgRef}
                     key={selectedGarment.colors[modalColorIndex].image}
                     src={selectedGarment.colors[modalColorIndex].image}
                     alt={`${selectedGarment.title} in ${selectedGarment.colors[modalColorIndex].name}`}
-                    className="collections-modal__img"
+                    className={`collections-modal__img ${isZoomed ? 'collections-modal__img--zoomed' : ''}`}
                   />
                   <div className="collections-modal__ground-shadow" aria-hidden="true" />
+                  <span className="collections-modal__zoom-hint">
+                    {isZoomed ? '− Zoom Out' : '+ Click to Zoom (150%)'}
+                  </span>
                 </div>
 
                 <div className="collections-modal__color-label">

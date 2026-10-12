@@ -581,6 +581,12 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
   -webkit-mask-image: -webkit-radial-gradient(white, black); /* Fix Safari border-radius overflow clip bug */
+  cursor: zoom-in;
+  user-select: none;
+}
+
+.collections-modal__img-stage--zoomed {
+  cursor: zoom-out;
 }
 
 .collections-modal__img-glow {
@@ -595,6 +601,12 @@
   );
   filter: blur(28px);
   pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.collections-modal__img-stage--zoomed .collections-modal__img-glow {
+  transform: scale(1.35);
+  opacity: 0.6;
 }
 
 .collections-modal__img {
@@ -606,10 +618,41 @@
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+  transform: translateZ(0) scale(1);
   filter: drop-shadow(0 14px 24px rgba(43, 33, 26, 0.22));
   animation: clothPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  will-change: transform;
+}
+
+/* 50% more zoom (1.5x scale) on click */
+.collections-modal__img--zoomed {
+  transform: translateZ(0) scale(1.5); /* 50% zoom increase */
+  filter: drop-shadow(0 20px 36px rgba(43, 33, 26, 0.28));
+}
+
+.collections-modal__zoom-hint {
+  position: absolute;
+  bottom: 0.65rem;
+  right: 0.65rem;
+  background: rgba(43, 33, 26, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--champagne, #D9BC7A);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.25s ease, background-color 0.25s ease;
+}
+
+.collections-modal__img-stage:hover .collections-modal__zoom-hint {
+  background: rgba(43, 33, 26, 0.88);
 }
 
 @keyframes clothPop {
@@ -627,6 +670,12 @@
   background: radial-gradient(ellipse at center, rgba(43, 33, 26, 0.35) 0%, rgba(43, 33, 26, 0) 70%);
   border-radius: 50%;
   filter: blur(5px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.collections-modal__img-stage--zoomed .collections-modal__ground-shadow {
+  transform: translateX(-50%) scale(1.2);
+  opacity: 0.6;
 }
 
 .collections-modal__color-label {
