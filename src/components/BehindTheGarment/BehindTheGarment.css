@@ -1,0 +1,366 @@
+/* ═══════════════════════════════════════════════════════════════
+   BehindTheGarment.css — Cinematic Manufacturing Process Modal
+   Features:
+   - Fullscreen luxurious modal dialog with smooth backdrop blur
+   - Alternating zig-zag editorial layout for 6 stages
+   - Large cinematic photography with subtle hover scale
+   - Gold accent typography and generous whitespace
+   - Fluid responsiveness on all screen sizes
+   ═══════════════════════════════════════════════════════════════ */
+
+.behind-garment-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  overflow: hidden;
+  animation: bgmFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bgmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.behind-garment-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(31, 24, 18, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.behind-garment-modal__dialog {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1160px;
+  max-height: calc(100vh - 2.5rem);
+  max-height: calc(100dvh - 2.5rem);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  background-color: #FAF6F0;
+  border: 1px solid rgba(217, 188, 122, 0.65);
+  border-radius: var(--radius-lg, 24px);
+  box-shadow: 0 32px 90px rgba(31, 24, 18, 0.55);
+  padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1.25rem, 3.5vw, 3rem);
+  margin: auto;
+  animation: bgmSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom sleek scrollbar for modal */
+.behind-garment-modal__dialog::-webkit-scrollbar {
+  width: 6px;
+}
+
+.behind-garment-modal__dialog::-webkit-scrollbar-track {
+  background: rgba(221, 208, 190, 0.25);
+  border-radius: 4px;
+}
+
+.behind-garment-modal__dialog::-webkit-scrollbar-thumb {
+  background: var(--bronze);
+  border-radius: 4px;
+}
+
+@keyframes bgmSlideUp {
+  from { transform: translateY(28px) scale(0.97); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.behind-garment-modal__close {
+  position: sticky;
+  top: 0;
+  align-self: flex-end;
+  margin-bottom: -2.5rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: rgba(221, 208, 190, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--espresso);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border: 1px solid rgba(166, 124, 46, 0.35);
+  transition: all 0.25s ease;
+  z-index: 20;
+}
+
+.behind-garment-modal__close:hover {
+  background-color: var(--espresso);
+  color: var(--cream);
+  border-color: var(--espresso);
+  transform: rotate(90deg);
+}
+
+/* ── Section Header ─────────────────────────────────────────── */
+.behind-garment__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.behind-garment__title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.behind-garment__badge {
+  color: var(--bronze);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.behind-garment__title {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  color: var(--espresso);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.behind-garment__subtitle {
+  font-size: var(--fs-body);
+  color: var(--taupe);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+/* Horizontal Process Flow Tracker */
+.behind-garment__timeline-tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.85rem;
+  padding: 0.65rem 1.25rem;
+  background-color: #FAF6F0;
+  border: 1px solid rgba(221, 208, 190, 0.6);
+  border-radius: var(--radius-full);
+}
+
+.behind-garment__timeline-step {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--espresso);
+}
+
+.behind-garment__timeline-arrow {
+  color: var(--bronze);
+  font-size: 0.75rem;
+}
+
+/* ── 6-Stage Timeline List ──────────────────────────────────── */
+.behind-garment__steps-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  width: 100%;
+}
+
+/* ── Individual Stage Card (Alternating 2-Column Row) ────────── */
+.behind-garment__step-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: clamp(2rem, 4.5vw, 4.5rem);
+  background-color: #FAF6F0;
+  border: 1px solid rgba(221, 208, 190, 0.65);
+  border-radius: var(--radius-lg, 20px);
+  padding: clamp(1.5rem, 3.5vw, 3rem);
+  box-shadow: 0 6px 24px rgba(43, 33, 26, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.behind-garment__step-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(166, 124, 46, 0.45);
+  box-shadow: 0 20px 48px rgba(43, 33, 26, 0.08);
+}
+
+@media (min-width: 900px) {
+  .behind-garment__step-card {
+    grid-template-columns: 1.15fr 0.85fr;
+  }
+
+  .behind-garment__step-card--reversed {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .behind-garment__step-card--reversed .behind-garment__media-wrap {
+    order: 2;
+  }
+
+  .behind-garment__step-card--reversed .behind-garment__body {
+    order: 1;
+  }
+}
+
+/* ── Media Frame ────────────────────────────────────────────── */
+.behind-garment__media-wrap {
+  width: 100%;
+}
+
+.behind-garment__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.5;
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+  background-color: var(--sand);
+  box-shadow: 0 4px 18px rgba(43, 33, 26, 0.08);
+}
+
+.behind-garment__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.behind-garment__step-card:hover .behind-garment__img {
+  transform: scale(1.055);
+}
+
+.behind-garment__media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(31, 24, 18, 0.04) 0%,
+    rgba(31, 24, 18, 0.35) 100%
+  );
+  pointer-events: none;
+}
+
+.behind-garment__step-indicator {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(31, 24, 18, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  color: var(--champagne);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border: 1px solid rgba(217, 188, 122, 0.35);
+}
+
+/* ── Narrative Body ─────────────────────────────────────────── */
+.behind-garment__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.behind-garment__step-num-large {
+  position: absolute;
+  top: -1.75rem;
+  right: -0.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-weight: 800;
+  color: rgba(221, 208, 190, 0.35);
+  line-height: 1;
+  pointer-events: none;
+  z-index: -1;
+  user-select: none;
+}
+
+.behind-garment__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.behind-garment__category {
+  font-size: 0.6875rem;
+  color: var(--bronze);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.behind-garment__step-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  color: var(--espresso);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.behind-garment__step-headline {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--taupe);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.behind-garment__step-desc {
+  font-size: 0.875rem;
+  line-height: 1.68;
+  color: rgba(43, 33, 26, 0.82);
+  margin: 0;
+}
+
+/* ── Responsive Mobile Screens ──────────────────────────────── */
+@media (max-width: 639px) {
+  .behind-garment {
+    padding-block: clamp(3.5rem, 6vh, 5rem);
+  }
+
+  .behind-garment__timeline-tracker {
+    display: none; /* Keep clean and uncluttered on mobile screens */
+  }
+
+  .behind-garment__step-card {
+    padding: 1.25rem 1rem;
+    gap: 1.25rem;
+  }
+
+  .behind-garment__step-title {
+    font-size: 1.25rem;
+  }
+
+  .behind-garment__step-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+}

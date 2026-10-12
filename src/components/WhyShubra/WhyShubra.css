@@ -1,0 +1,414 @@
+/* ═══════════════════════════════════════════════════════════════
+   WhyShubra.css — Detailed Atelier Distinction Modal Styles
+   Features:
+   - Fullscreen luxurious modal overlay with smooth backdrop blur
+   - Clean architectural multi-column grid without numbering
+   - Gold/bronze accents on warm ivory background
+   - Generous breathing room and refined typography
+   ═══════════════════════════════════════════════════════════════ */
+
+.why-shubra-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  overflow: hidden;
+  animation: wsmFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes wsmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.why-shubra-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(31, 24, 18, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.why-shubra-modal__dialog {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1140px;
+  max-height: calc(100vh - 2.5rem);
+  max-height: calc(100dvh - 2.5rem);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  background-color: #FAF6F0;
+  border: 1px solid rgba(217, 188, 122, 0.65);
+  border-radius: var(--radius-lg, 24px);
+  box-shadow: 0 32px 90px rgba(31, 24, 18, 0.55);
+  padding: clamp(1.75rem, 4vw, 3.5rem) clamp(1.25rem, 3.5vw, 3rem);
+  margin: auto;
+  animation: wsmSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom sleek scrollbar for modal */
+.why-shubra-modal__dialog::-webkit-scrollbar {
+  width: 6px;
+}
+
+.why-shubra-modal__dialog::-webkit-scrollbar-track {
+  background: rgba(221, 208, 190, 0.25);
+  border-radius: 4px;
+}
+
+.why-shubra-modal__dialog::-webkit-scrollbar-thumb {
+  background: var(--bronze);
+  border-radius: 4px;
+}
+
+@keyframes wsmSlideUp {
+  from { transform: translateY(28px) scale(0.97); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.why-shubra-modal__close {
+  position: sticky;
+  top: 0;
+  align-self: flex-end;
+  margin-bottom: -2.5rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: rgba(221, 208, 190, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--espresso);
+  border: 1px solid rgba(200, 155, 96, 0.4);
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 14px rgba(43, 33, 26, 0.12);
+}
+
+.why-shubra-modal__close:hover {
+  background-color: var(--espresso);
+  color: var(--cream);
+  border-color: var(--espresso);
+  transform: rotate(90deg);
+}
+
+/* ── Modal Header ───────────────────────────────────────────── */
+.why-shubra-modal__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid rgba(43, 33, 26, 0.12);
+  margin-bottom: 2.5rem;
+}
+
+.why-shubra-modal__badge {
+  color: var(--bronze);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.why-shubra-modal__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  color: var(--espresso);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.why-shubra-modal__subtitle {
+  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  color: var(--taupe);
+  line-height: 1.6;
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+/* ── Quick Metrics Bar ──────────────────────────────────────── */
+.why-shubra-modal__metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+  max-width: 820px;
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(200, 155, 96, 0.35);
+  border-radius: 14px;
+}
+
+@media (min-width: 768px) {
+  .why-shubra-modal__metrics-bar {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.why-shubra-modal__metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.2rem;
+}
+
+.why-shubra-modal__metric-val {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--bronze);
+  line-height: 1.1;
+}
+
+.why-shubra-modal__metric-lbl {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(43, 33, 26, 0.7);
+  text-transform: uppercase;
+}
+
+/* ── Pillars Multi-Column Grid ──────────────────────────────── */
+.why-shubra-modal__pillars-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  margin-bottom: 2.75rem;
+}
+
+@media (min-width: 860px) {
+  .why-shubra-modal__pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 5th pillar spans harmoniously across both columns */
+  .why-shubra-modal__card:nth-child(5) {
+    grid-column: span 2;
+  }
+}
+
+.why-shubra-modal__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: clamp(1.5rem, 2.4vw, 2.2rem);
+  background: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.75);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(43, 33, 26, 0.03);
+  transition: all 0.3s ease;
+}
+
+.why-shubra-modal__card:hover {
+  border-color: rgba(200, 155, 96, 0.55);
+  box-shadow: 0 8px 30px rgba(43, 33, 26, 0.07);
+}
+
+.why-shubra-modal__card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 600px) {
+  .why-shubra-modal__card-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.why-shubra-modal__card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.why-shubra-modal__card-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--bronze);
+  text-transform: uppercase;
+}
+
+.why-shubra-modal__card-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 1.6vw, 1.55rem);
+  font-weight: 500;
+  color: var(--espresso);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.why-shubra-modal__card-tagline {
+  font-size: 0.85rem;
+  color: var(--taupe);
+  font-style: italic;
+  margin: 0;
+}
+
+.why-shubra-modal__card-tag {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.7rem;
+  background: rgba(200, 155, 96, 0.14);
+  color: var(--espresso);
+  border: 1px solid rgba(200, 155, 96, 0.35);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.why-shubra-modal__card-desc {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(43, 33, 26, 0.82);
+  margin: 0;
+}
+
+/* ── Specifications ─────────────────────────────────────────── */
+.why-shubra-modal__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.05rem 1.25rem;
+  background: rgba(247, 242, 236, 0.65);
+  border-left: 2.5px solid var(--bronze);
+  border-radius: 0 10px 10px 0;
+  margin-top: auto;
+}
+
+.why-shubra-modal__specs-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--espresso);
+  text-transform: uppercase;
+}
+
+.why-shubra-modal__specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.why-shubra-modal__specs-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  color: rgba(43, 33, 26, 0.82);
+  line-height: 1.45;
+}
+
+.why-shubra-modal__specs-bullet {
+  color: var(--bronze);
+  font-weight: 700;
+}
+
+/* ── Modal Footer Callout ───────────────────────────────────── */
+.why-shubra-modal__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem;
+  background: var(--espresso);
+  color: var(--cream);
+  border-radius: 16px;
+}
+
+@media (min-width: 768px) {
+  .why-shubra-modal__footer {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.why-shubra-modal__footer-text h4 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #FAF6F0;
+  margin: 0 0 0.25rem;
+}
+
+.why-shubra-modal__footer-text p {
+  font-size: 0.85rem;
+  color: rgba(250, 246, 240, 0.75);
+  margin: 0;
+}
+
+.why-shubra-modal__footer-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.6rem;
+  background: linear-gradient(135deg, var(--bronze), var(--champagne));
+  color: var(--espresso);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.why-shubra-modal__footer-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Responsive Polish ──────────────────────────────────────── */
+@media (max-width: 639px) {
+  .why-shubra-modal__dialog {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .why-shubra-modal__close {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    margin-bottom: -1.75rem;
+  }
+
+  .why-shubra-modal__metrics-bar {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}

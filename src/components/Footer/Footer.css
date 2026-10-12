@@ -200,6 +200,18 @@
   filter: brightness(1.15);
 }
 
+.footer__tagline {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--champagne);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
 .footer__brand-desc {
   font-size: 0.8125rem;
   line-height: 1.6;

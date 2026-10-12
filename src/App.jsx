@@ -25,6 +25,7 @@ import ClientsWork     from './components/ClientsWork/ClientsWork';
 import Craftsmanship   from './components/Craftsmanship/Craftsmanship';
 import Testimonials    from './components/Testimonials/Testimonials';
 import BulkCorporate   from './components/BulkCorporate/BulkCorporate';
+import OurWork         from './components/OurWork/OurWork';
 import Contact         from './components/Contact/Contact';
 import Footer          from './components/Footer/Footer';
 import FloatingWhatsApp from './components/FloatingWhatsApp/FloatingWhatsApp';
@@ -69,6 +70,7 @@ const App = () => {
         <CustomDesigner />
         <BulkCorporate />
         <ClientsWork />
+        <OurWork />
         <Testimonials />
         <Contact />
       </main>

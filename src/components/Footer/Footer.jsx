@@ -171,6 +171,10 @@ const Footer = () => {
               </div>
             </a>
 
+            <p className="footer__tagline">
+              Premium Garment Manufacturing in the UAE
+            </p>
+
             <p className="footer__brand-desc">
               Haute couture bespoke suiting and luxury institutional uniforms crafted with architectural precision in the United Arab Emirates.
             </p>

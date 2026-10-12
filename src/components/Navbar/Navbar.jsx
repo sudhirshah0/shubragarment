@@ -13,13 +13,29 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import confetti from 'canvas-confetti';
 import MagneticButton from '../MagneticButton/MagneticButton';
+import BehindTheGarment from '../BehindTheGarment/BehindTheGarment';
+import WhyShubra from '../WhyShubra/WhyShubra';
 import './Navbar.css';
 
 const NAV_LINKS = [
-  { label: 'About', href: '#about' },
+  {
+    label: 'About',
+    href: '#about',
+    subItems: [
+      { label: 'About Atelier', href: '#about' },
+      { label: 'Why Shubra', action: 'why-shubra', isModal: true },
+    ],
+  },
   { label: 'Collection', href: '#collections' },
   { label: 'Custom Design', href: '#custom-designer' },
-  { label: 'Corporate / B2B', href: '#corporate' },
+  {
+    label: 'Our Work',
+    href: '#our-work',
+    subItems: [
+      { label: 'Behind the Garment', action: 'behind-the-garment', isModal: true },
+      { label: 'Corporate / B2B', href: '#corporate' },
+    ],
+  },
   { label: 'Lookbook', href: '#lookbook' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -34,6 +50,19 @@ const Navbar = () => {
   // Checkout modal & order placed states
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
+
+  // Modal dialog states for Behind the Garment & Why Shubra
+  const [isBehindGarmentOpen, setIsBehindGarmentOpen] = useState(false);
+  const [isWhyShubraOpen, setIsWhyShubraOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileExpandedMenus, setMobileExpandedMenus] = useState({});
+
+  const toggleMobileSubmenu = (label) => {
+    setMobileExpandedMenus((prev) => ({
+      ...prev,
+      [label]: !prev[label],
+    }));
+  };
 
   // Authentication state (Login / Sign Up)
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -406,18 +435,84 @@ const Navbar = () => {
         {/* ── Desktop Navigation Links ────────────────────────── */}
         <nav className="navbar__nav" aria-label="Main Navigation">
           <ul className="navbar__menu">
-            {NAV_LINKS.map((item) => (
-              <li key={item.label} className="navbar__item">
-                <a
-                  href={item.href}
-                  className="navbar__link"
-                  onClick={(e) => handleNavClick(e, item.href)}
-                >
-                  <span className="navbar__link-label">{item.label}</span>
-                  <span className="navbar__link-line" aria-hidden="true" />
-                </a>
-              </li>
-            ))}
+            {NAV_LINKS.map((item) => {
+              if (item.subItems) {
+                return (
+                  <li
+                    key={item.label}
+                    className="navbar__item navbar__item--has-dropdown"
+                    onMouseEnter={() => setActiveDropdown(item.label)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <a
+                      href={item.href}
+                      className="navbar__link navbar__link--dropdown-trigger"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      aria-haspopup="true"
+                      aria-expanded={activeDropdown === item.label}
+                    >
+                      <span className="navbar__link-label">{item.label}</span>
+                      <span className="navbar__dropdown-caret" aria-hidden="true">▾</span>
+                      <span className="navbar__link-line" aria-hidden="true" />
+                    </a>
+
+                    {/* Luxury Hover Dropdown Panel */}
+                    <div className="navbar__dropdown-menu" role="menu">
+                      <div className="navbar__dropdown-arrow" aria-hidden="true" />
+                      <ul className="navbar__dropdown-list">
+                        {item.subItems.map((sub) => (
+                          <li key={sub.label} className="navbar__dropdown-item" role="none">
+                            {sub.isModal ? (
+                              <button
+                                type="button"
+                                className="navbar__dropdown-link navbar__dropdown-link--btn"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setActiveDropdown(null);
+                                  if (sub.action === 'why-shubra') {
+                                    setIsWhyShubraOpen(true);
+                                  } else {
+                                    setIsBehindGarmentOpen(true);
+                                  }
+                                }}
+                                role="menuitem"
+                              >
+                                <span className="navbar__dropdown-text">{sub.label}</span>
+                              </button>
+                            ) : (
+                              <a
+                                href={sub.href}
+                                className="navbar__dropdown-link"
+                                onClick={(e) => {
+                                  setActiveDropdown(null);
+                                  handleNavClick(e, sub.href);
+                                }}
+                                role="menuitem"
+                              >
+                                <span className="navbar__dropdown-text">{sub.label}</span>
+                              </a>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={item.label} className="navbar__item">
+                  <a
+                    href={item.href}
+                    className="navbar__link"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                  >
+                    <span className="navbar__link-label">{item.label}</span>
+                    <span className="navbar__link-line" aria-hidden="true" />
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -530,21 +625,89 @@ const Navbar = () => {
           </button>
 
           <ul className="navbar__mobile-list">
-            {NAV_LINKS.map((item, index) => (
-              <li
-                key={item.label}
-                className="navbar__mobile-item"
-                style={{ '--stagger': `${index * 0.06}s` }}
-              >
-                <a
-                  href={item.href}
-                  className="navbar__mobile-link"
-                  onClick={(e) => handleNavClick(e, item.href)}
+            {NAV_LINKS.map((item, index) => {
+              if (item.subItems) {
+                const isExpanded = !!mobileExpandedMenus[item.label];
+                return (
+                  <li
+                    key={item.label}
+                    className={`navbar__mobile-item navbar__mobile-item--has-sub ${
+                      isExpanded ? 'navbar__mobile-item--expanded' : ''
+                    }`}
+                    style={{ '--stagger': `${index * 0.06}s` }}
+                  >
+                    <div className="navbar__mobile-parent-row">
+                      <button
+                        type="button"
+                        className="navbar__mobile-link navbar__mobile-link--toggle"
+                        onClick={() => toggleMobileSubmenu(item.label)}
+                        aria-expanded={isExpanded}
+                      >
+                        <span className="navbar__mobile-text">{item.label}</span>
+                        <span
+                          className={`navbar__mobile-chevron ${
+                            isExpanded ? 'navbar__mobile-chevron--open' : ''
+                          }`}
+                          aria-hidden="true"
+                        >
+                          ▾
+                        </span>
+                      </button>
+                    </div>
+
+                    {/* Mobile Sub-Links (shown only when clicked/expanded) */}
+                    {isExpanded && (
+                      <div className="navbar__mobile-sublist">
+                        {item.subItems.map((sub) => (
+                          sub.isModal ? (
+                            <button
+                              key={sub.label}
+                              type="button"
+                              className="navbar__mobile-sublink navbar__mobile-sublink--btn"
+                              onClick={() => {
+                                setIsMobileOpen(false);
+                                if (sub.action === 'why-shubra') {
+                                  setIsWhyShubraOpen(true);
+                                } else {
+                                  setIsBehindGarmentOpen(true);
+                                }
+                              }}
+                            >
+                              <span>{sub.label}</span>
+                            </button>
+                          ) : (
+                            <a
+                              key={sub.label}
+                              href={sub.href}
+                              className="navbar__mobile-sublink"
+                              onClick={(e) => handleNavClick(e, sub.href)}
+                            >
+                              <span>{sub.label}</span>
+                            </a>
+                          )
+                        ))}
+                      </div>
+                    )}
+                  </li>
+                );
+              }
+
+              return (
+                <li
+                  key={item.label}
+                  className="navbar__mobile-item"
+                  style={{ '--stagger': `${index * 0.06}s` }}
                 >
-                  <span className="navbar__mobile-text">{item.label}</span>
-                </a>
-              </li>
-            ))}
+                  <a
+                    href={item.href}
+                    className="navbar__mobile-link"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                  >
+                    <span className="navbar__mobile-text">{item.label}</span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -983,6 +1146,18 @@ const Navbar = () => {
           </div>,
           document.body
         )}
+
+      {/* ── Behind the Garment Cinematic Modal ───────────────── */}
+      <BehindTheGarment
+        isOpen={isBehindGarmentOpen}
+        onClose={() => setIsBehindGarmentOpen(false)}
+      />
+
+      {/* ── Why Shubra Detailed Distinction Modal ────────────── */}
+      <WhyShubra
+        isOpen={isWhyShubraOpen}
+        onClose={() => setIsWhyShubraOpen(false)}
+      />
     </header>
   );
 };
