@@ -13,6 +13,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { collectionsData } from '../../data/collections';
@@ -379,15 +380,17 @@ const Collections = () => {
       {/* ═════════════════════════════════════════════════════════════
           GARMENT DETAILS & COLOR SELECTION MODAL POPUP
           ═════════════════════════════════════════════════════════════ */}
-      {selectedGarment && (
-        <div
-          className="collections-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-garment-title"
-          data-lenis-prevent
-          onClick={closeModal}
-        >
+      {selectedGarment &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="collections-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-garment-title"
+            data-lenis-prevent
+            onClick={closeModal}
+          >
           {/* Backdrop Click Closes Modal */}
           <div className="collections-modal__backdrop" aria-hidden="true" />
 
@@ -526,30 +529,34 @@ const Collections = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* ── Flying Cloth to Cart Animation Portal ───────────── */}
-      {flyingItem && (
-        <div
-          className="collections-flyer"
-          style={{
-            '--start-x': `${flyingItem.startX}px`,
-            '--start-y': `${flyingItem.startY}px`,
-            '--start-w': `${flyingItem.startW}px`,
-            '--start-h': `${flyingItem.startH}px`,
-            '--target-x': `${flyingItem.targetX}px`,
-            '--target-y': `${flyingItem.targetY}px`,
-          }}
-          aria-hidden="true"
-        >
-          <img
-            src={flyingItem.image}
-            alt=""
-            className="collections-flyer__img"
-          />
-        </div>
-      )}
+      {flyingItem &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className="collections-flyer"
+            style={{
+              '--start-x': `${flyingItem.startX}px`,
+              '--start-y': `${flyingItem.startY}px`,
+              '--start-w': `${flyingItem.startW}px`,
+              '--start-h': `${flyingItem.startH}px`,
+              '--target-x': `${flyingItem.targetX}px`,
+              '--target-y': `${flyingItem.targetY}px`,
+            }}
+            aria-hidden="true"
+          >
+            <img
+              src={flyingItem.image}
+              alt=""
+              className="collections-flyer__img"
+            />
+          </div>,
+          document.body
+        )}
     </section>
   );
 };
