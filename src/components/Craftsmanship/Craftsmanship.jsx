@@ -82,22 +82,19 @@ const Craftsmanship = () => {
               {/* Soft ambient backlight pedestal glow */}
               <div className="about__image-glow" aria-hidden="true" />
 
-              <img
-                ref={imageRef}
-                src="/images/shubra-garment-building.png"
-                alt="Shubra Garments Building — Production and Design Headquarters"
-                className="about__building-img"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source srcSet="/images/shubra-garment-building.webp" type="image/webp" />
+                <img
+                  ref={imageRef}
+                  src="/images/shubra-garment-building.png"
+                  alt="Shubra Garments Building — Production and Design Headquarters"
+                  className="about__building-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
 
-              {/* Realistic contact floor shadow */}
-              <div className="about__ground-shadow" aria-hidden="true" />
-
-              <div className="about__image-badge">
-                <span className="about__badge-dot" />
-                <span>SHARJAH, UAE • HEADQUARTERS</span>
-              </div>
+              {/* Bottom floor/badge removed per request - nothing in the lower part */}
             </div>
           </div>
 

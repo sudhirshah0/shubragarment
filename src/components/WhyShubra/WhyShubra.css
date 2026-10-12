@@ -111,35 +111,43 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.75rem;
-  padding-bottom: 2.25rem;
-  border-bottom: 1px solid rgba(43, 33, 26, 0.12);
-  margin-bottom: 2.5rem;
+  gap: 0.85rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(43, 33, 26, 0.1);
+  margin-bottom: 2.75rem;
 }
 
 .why-shubra-modal__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(166, 124, 46, 0.1);
+  border: 1px solid rgba(166, 124, 46, 0.28);
+  border-radius: 999px;
   color: var(--bronze);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.24em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .why-shubra-modal__title {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 3.8vw, 3.2rem);
-  font-weight: 400;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 700; /* Bold modern statement */
   color: var(--espresso);
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
   margin: 0;
 }
 
 .why-shubra-modal__subtitle {
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
   color: var(--taupe);
-  line-height: 1.6;
-  max-width: 68ch;
+  line-height: 1.65;
+  font-weight: 400;
+  max-width: 65ch;
   margin: 0 auto;
 }
 
@@ -149,12 +157,13 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   width: 100%;
-  max-width: 820px;
+  max-width: 860px;
   margin-top: 1.25rem;
-  padding: 1.25rem 1.5rem;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(200, 155, 96, 0.35);
-  border-radius: 14px;
+  padding: 1.25rem 1.75rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(221, 208, 190, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(43, 33, 26, 0.04);
 }
 
 @media (min-width: 768px) {
@@ -169,22 +178,23 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.2rem;
+  gap: 0.25rem;
 }
 
 .why-shubra-modal__metric-val {
   font-family: var(--font-heading);
-  font-size: 1.45rem;
-  font-weight: 600;
+  font-size: 1.65rem;
+  font-weight: 700; /* Bold impactful numbers */
   color: var(--bronze);
   line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .why-shubra-modal__metric-lbl {
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: 0.72rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: rgba(43, 33, 26, 0.7);
+  color: rgba(43, 33, 26, 0.72);
   text-transform: uppercase;
 }
 
@@ -192,7 +202,7 @@
 .why-shubra-modal__pillars-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.75rem;
+  gap: 1.85rem;
   margin-bottom: 2.75rem;
 }
 
@@ -210,104 +220,123 @@
 .why-shubra-modal__card {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
-  padding: clamp(1.5rem, 2.4vw, 2.2rem);
+  gap: 1.25rem;
+  padding: clamp(1.6rem, 2.6vw, 2.4rem);
   background: #FFFFFF;
-  border: 1px solid rgba(221, 208, 190, 0.75);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(43, 33, 26, 0.03);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(221, 208, 190, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(43, 33, 26, 0.04);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.why-shubra-modal__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bronze), transparent 80%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .why-shubra-modal__card:hover {
-  border-color: rgba(200, 155, 96, 0.55);
-  box-shadow: 0 8px 30px rgba(43, 33, 26, 0.07);
+  transform: translateY(-3px);
+  border-color: rgba(166, 124, 46, 0.6);
+  box-shadow: 0 14px 40px rgba(43, 33, 26, 0.09);
+}
+
+.why-shubra-modal__card:hover::before {
+  opacity: 1;
 }
 
 .why-shubra-modal__card-header {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
-@media (min-width: 600px) {
-  .why-shubra-modal__card-header {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-}
-
-.why-shubra-modal__card-meta {
+.why-shubra-modal__card-title-wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  flex: 1;
+  gap: 0.4rem;
+}
+
+.why-shubra-modal__card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.2rem;
 }
 
 .why-shubra-modal__card-badge {
   font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   color: var(--bronze);
   text-transform: uppercase;
 }
 
-.why-shubra-modal__card-title {
-  font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 1.6vw, 1.55rem);
-  font-weight: 500;
-  color: var(--espresso);
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.why-shubra-modal__card-tagline {
-  font-size: 0.85rem;
-  color: var(--taupe);
-  font-style: italic;
-  margin: 0;
-}
-
 .why-shubra-modal__card-tag {
-  align-self: flex-start;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  padding: 0.28rem 0.7rem;
-  background: rgba(200, 155, 96, 0.14);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.75rem;
+  background: rgba(166, 124, 46, 0.12);
   color: var(--espresso);
-  border: 1px solid rgba(200, 155, 96, 0.35);
+  border: 1px solid rgba(166, 124, 46, 0.32);
   border-radius: 999px;
   white-space: nowrap;
 }
 
-.why-shubra-modal__card-desc {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: rgba(43, 33, 26, 0.82);
+.why-shubra-modal__card-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 1.8vw, 1.7rem);
+  font-weight: 700; /* Bold clean heading */
+  color: var(--espresso);
+  letter-spacing: -0.02em;
+  line-height: 1.22;
   margin: 0;
 }
 
-/* ── Specifications ─────────────────────────────────────────── */
+.why-shubra-modal__card-tagline {
+  font-size: 0.88rem;
+  color: var(--taupe);
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.why-shubra-modal__card-desc {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: rgba(43, 33, 26, 0.85);
+  margin: 0;
+}
+
+/* ── Specifications / Highlights ────────────────────────────── */
 .why-shubra-modal__specs {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  padding: 1.05rem 1.25rem;
-  background: rgba(247, 242, 236, 0.65);
-  border-left: 2.5px solid var(--bronze);
-  border-radius: 0 10px 10px 0;
+  gap: 0.75rem;
+  padding: 1.15rem 1.35rem;
+  background: #FBF8F3;
+  border: 1px solid rgba(221, 208, 190, 0.6);
+  border-left: 3px solid var(--bronze);
+  border-radius: 12px;
   margin-top: auto;
 }
 
 .why-shubra-modal__specs-label {
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   color: var(--espresso);
   text-transform: uppercase;
 }
@@ -315,7 +344,7 @@
 .why-shubra-modal__specs-list {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -323,14 +352,22 @@
 
 .why-shubra-modal__specs-item {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-size: 0.82rem;
-  color: rgba(43, 33, 26, 0.82);
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: rgba(43, 33, 26, 0.88);
   line-height: 1.45;
 }
 
-.why-shubra-modal__specs-bullet {
+.why-shubra-modal__specs-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  background: rgba(166, 124, 46, 0.15);
   color: var(--bronze);
   font-weight: 700;
 }

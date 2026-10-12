@@ -4,7 +4,7 @@
    Each section is an empty placeholder awaiting implementation.
    ═══════════════════════════════════════════════════════════════════ */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, lazy, Suspense } from 'react';
 
 /* ── Styles ──────────────────────────────────────────────────────── */
 import './styles/global.css';
@@ -20,7 +20,6 @@ import Cursor          from './components/Cursor/Cursor';
 import Navbar          from './components/Navbar/Navbar';
 import Hero            from './components/Hero/Hero';
 import Collections     from './components/Collections/Collections';
-import CustomDesigner   from './components/CustomDesigner/CustomDesigner';
 import ClientsWork     from './components/ClientsWork/ClientsWork';
 import Craftsmanship   from './components/Craftsmanship/Craftsmanship';
 import Testimonials    from './components/Testimonials/Testimonials';
@@ -29,6 +28,9 @@ import OurWork         from './components/OurWork/OurWork';
 import Contact         from './components/Contact/Contact';
 import Footer          from './components/Footer/Footer';
 import FloatingWhatsApp from './components/FloatingWhatsApp/FloatingWhatsApp';
+
+/* ── Lazy Loaded Heavy Canvas Engine ─────────────────────────────── */
+const CustomDesigner = lazy(() => import('./components/CustomDesigner/CustomDesigner'));
 
 const App = () => {
   /* ── Loader state ────────────────────────────────────────────── */
@@ -67,7 +69,9 @@ const App = () => {
         <Hero />
         <Craftsmanship />
         <Collections />
-        <CustomDesigner />
+        <Suspense fallback={<section id="custom-designer" style={{ minHeight: '600px', backgroundColor: 'var(--cream)' }} />}>
+          <CustomDesigner />
+        </Suspense>
         <BulkCorporate />
         <ClientsWork />
         <OurWork />

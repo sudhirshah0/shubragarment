@@ -30,6 +30,7 @@
   text-align: center;
   gap: 0.75rem;
   width: 100%;
+  margin-top: clamp(40px, 4.5vh, 56px);
 }
 
 .custom-designer__title-row {
@@ -1212,22 +1213,40 @@
   transform: translateY(-1px);
 }
 
-/* Compact Select */
+/* Select with custom chevron and brand typography */
 .order-form__select {
   width: 100%;
-  padding: 0.55rem 0.75rem;
+  padding: 0.65rem 2.25rem 0.65rem 0.85rem;
   background-color: var(--linen);
   border: 1px solid var(--sand);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
   color: var(--espresso);
-  transition: border-color var(--transition-fast);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A67C2E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 11px 11px;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .order-form__select:focus {
   outline: none;
   border-color: var(--bronze);
+  background-color: var(--cream);
+}
+
+.order-form__select option {
+  background-color: #FAF6F0;
+  color: var(--espresso);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  padding: 0.5rem;
 }
 
 /* Compact Live Pricing Card */
@@ -1685,7 +1704,18 @@
   .order-form__textarea {
     width: 100%;
     box-sizing: border-box;
-    font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+    font-size: 0.8125rem !important; /* Minimal, clean proportional size on mobile */
+    padding: 0.55rem 0.75rem !important;
+  }
+
+  .order-form__select {
+    padding-right: 2rem !important;
+    background-size: 10px 10px !important;
+    background-position: right 0.75rem center !important;
+  }
+
+  .order-form__select option {
+    font-size: 0.8125rem !important;
   }
 
   .order-form__actions {

@@ -172,28 +172,34 @@ const WhyShubra = ({ isOpen, onClose }) => {
           </div>
         </header>
 
-        {/* Detailed Pillars Architectural Grid (No Numbering) */}
+        {/* Detailed Pillars Architectural Grid (Easy, Modern cards with Bold headings & Icons) */}
         <div className="why-shubra-modal__pillars-grid">
           {DETAILED_PILLARS.map((pillar) => (
             <article key={pillar.id} className="why-shubra-modal__card">
               <div className="why-shubra-modal__card-header">
-                <div className="why-shubra-modal__card-meta">
-                  <span className="why-shubra-modal__card-badge label">{pillar.badge}</span>
+                <div className="why-shubra-modal__card-title-wrap">
+                  <div className="why-shubra-modal__card-topline">
+                    <span className="why-shubra-modal__card-badge label">{pillar.badge}</span>
+                    <span className="why-shubra-modal__card-tag">{pillar.metric}</span>
+                  </div>
                   <h3 className="why-shubra-modal__card-title">{pillar.title}</h3>
                   <p className="why-shubra-modal__card-tagline">{pillar.tagline}</p>
                 </div>
-                <div className="why-shubra-modal__card-tag">{pillar.metric}</div>
               </div>
 
               <p className="why-shubra-modal__card-desc">{pillar.desc}</p>
 
               {/* Specification Checkpoints */}
               <div className="why-shubra-modal__specs">
-                <span className="why-shubra-modal__specs-label">STANDARDS & ATELIER PROTOCOLS:</span>
+                <span className="why-shubra-modal__specs-label">Key Highlights & Protocols</span>
                 <ul className="why-shubra-modal__specs-list">
                   {pillar.highlights.map((item) => (
                     <li key={item} className="why-shubra-modal__specs-item">
-                      <span className="why-shubra-modal__specs-bullet" aria-hidden="true">—</span>
+                      <span className="why-shubra-modal__specs-check" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </span>
                       <span>{item}</span>
                     </li>
                   ))}
