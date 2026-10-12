@@ -16,7 +16,7 @@ const FOOTER_COLLECTIONS = [
 
 const FOOTER_SERVICES = [
   { label: 'Live 3D Custom Designer', href: '#custom-designer' },
-  { label: 'The 4-Step Atelier Process', href: '#how-it-works' },
+  { label: 'Atelier Craftsmanship & Process', href: '#about' },
   { label: 'Floating Horsehair Canvas', href: '#craftsmanship' },
   { label: 'Enterprise Fleet & Uniforms', href: '#corporate' },
   { label: 'Traveling VIP Master Tailor', href: '#contact' },
